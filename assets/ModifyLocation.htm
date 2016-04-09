@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+This page is for modifying an existing location. This page URL should be called 
+with a POST variable containing the UniqueID of the location to be modified.
+
+The program has following flow:
+-Retrieve the location UniqueID from the URL (done)
+-Open the location XML file (done)
+-Populate the text boxes with the information in the XML
+-Submit the data Modify (node) web service when the submit button is clicked.
+-->
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		
+    <title>Modify Location</title>
+
+		
+	</head>
+  
+	<body>
+
+    <!-- Create a hidden form. This is used to process the URL. -->
+    <FORM NAME="hiddenform">
+    <INPUT TYPE="hidden" NAME="hiddentext" SIZE="35">
+    </form>
+
+    <div id="status">
+        <p>Loading the page...  If this message does not go away in a few seconds, then this page was unable to connect to the server.</p>
+    </div>
+  
+    <!--
+      Note that the form below calls the same web-service as the AddNew.html form. 
+      The Node.js code that runs on the server is smart enough to know that submitting
+      data on a UniqueID that already exists means that the location is getting updated.
+    -->
+    <form>
+      <p>UniqueID: <textarea name="uniqueid" rows="1" cols="80"></textarea></p><br>
+      <p>Enter a Username for the map marker: <br>
+      <textarea name="username" id="username" rows="1" cols="80"></textarea></p>
+      <p>Enter a title for the map marker: <br>
+      <textarea name="title" id="title" rows="1" cols="80"></textarea></p>
+      <p>Enter the latitude: <br>
+      <textarea name="latitude" id="latitude" rows="1" cols="80"></textarea></p>
+      <p>Enter the longitude: <br>
+      <textarea name="longitude" id="longitude" rows="1" cols="80"></textarea></p>
+      <p>Enter a <b>summary</b> of the location: <br>
+      <textarea name="summary" id="summary" rows="10" cols="80"></textarea></p>
+      <p>Enter a detailed <b>description</b> of the location: <br>
+      <textarea name="description" id="description" rows="20" cols="80"></textarea></p>
+      <br></br>
+      <input type="button" value="Submit Location" onclick="send_data()"/>
+    </form>
+  </body>
+  
+  <script src="./js/jquery.js"></script>
+  <script src="./js/jquery.csv-0.71.js"></script>
+  <script src="server-data.js"></script> <!-- Put your server connection data in this file. -->
+  <script>
+
+    // Global Variables
+    var xmlDoc;
+
+    //var ServerURL = '.'; //Use this for local server
+    //var ServerURL = 'http://ec2-54-201-251-131.us-west-2.compute.amazonaws.com'; //Live preview server
+    var ServerURL = 'http://'+serverData.webServer.url+":"+serverData.webServer.port;
+
+    // Wait until the DOM has loaded before querying the document
+    $(document).ready(function(){
+      //debugger;
+      //Update the Form so that it points to the correct server.
+      //$('form').last().attr('action', ServerURL+'/add_new');
+      
+      //Create a custom event for when the XML file is finished loading.
+      var XMLevent = new CustomEvent('XMLLoaded', {
+      });
+
+      // RETRIEVE THE URL WHICH CONTAINS THE PASSED IN UNIQUEID
+      //Create a variable for the URL (not a string).
+      var locate = window.location 
+      //Dump the URL data into the hidden form, forcing it into a string of text.
+      document.hiddenform.hiddentext.value = locate 
+      //Read the URL out of the hidden text box.
+      var text = document.hiddenform.hiddentext.value 
+
+      //This function retrieves the UniqueID value from the URL string.
+      function delineate2(str){
+          point = str.lastIndexOf("=");
+          return(str.substring(point+1,str.length));
+      }
+
+      var UniqueID = delineate2(text);
+
+      // Retrieve the XML file for this marker.
+      // Call the XMLevent after the file finishes loading.
+      var xmlFile = new XMLHttpRequest();
+      var FileName = "./locations/" + UniqueID + ".xml";
+      xmlFile.open("GET", FileName, true);
+      xmlFile.onreadystatechange = function() {
+        if (xmlFile.readyState === 4) {  // Makes sure the document is ready to parse.
+          if (xmlFile.status === 200) {  // Makes sure it's found the file.
+
+            // Parse the XML from the raw text
+            var parser = new DOMParser();
+            xmlDoc = parser.parseFromString(xmlFile.responseText, "text/xml");
+
+            // Call the XMLEvent to signal that the XML is finished loading
+            document.dispatchEvent(XMLevent)
+
+          }
+        }
+      }
+      xmlFile.send(null); //Execute the file request.
+
+
+      // Create an event listener that executes after the XML file has finished loading.
+      document.addEventListener('XMLLoaded', function (e) {
+        //debugger;
+        // FILL IN THE TEXT BOXES WITH THE INFORMATION FROM THE XML
+        $('#status').text('XML successfully retrieved from server!');
+
+        //UniqueID
+        document.forms[1].uniqueid.value = UniqueID;
+        
+        //Title
+        document.forms[1].title.value = xmlDoc.getElementsByTagName("Title")[0].childNodes[0].nodeValue;
+
+        //Latitude
+        document.forms[1].latitude.value = xmlDoc.getElementsByTagName("Latitude")[0].childNodes[0].nodeValue;
+
+        //Longitude
+        document.forms[1].longitude.value = xmlDoc.getElementsByTagName("Longitude")[0].childNodes[0].nodeValue;
+
+        //Summary
+        document.forms[1].summary.value = xmlDoc.getElementsByTagName("Summary")[0].childNodes[0].nodeValue;
+
+        //Description
+        document.forms[1].description.value = xmlDoc.getElementsByTagName("Description")[0].childNodes[0].nodeValue;
+
+      }, false);
+
+
+    });
+    
+    //This function send the form data to the server. It mimics the behavior of a conventional HTML form,
+    //but allows the flexibility of a JavaScript program.
+    var send_data = function() {
+      //debugger;
+
+      // RETRIEVE THE URL WHICH CONTAINS THE PASSED IN UNIQUEID
+      //Create a variable for the URL (not a string).
+      var locate = window.location 
+      //Dump the URL data into the hidden form, forcing it into a string of text.
+      document.hiddenform.hiddentext.value = locate 
+      //Read the URL out of the hidden text box.
+      var text = document.hiddenform.hiddentext.value 
+
+      //This function retrieves the UniqueID value from the URL string.
+      function delineate2(str){
+          point = str.lastIndexOf("=");
+          return(str.substring(point+1,str.length));
+      }
+
+      var UniqueID = delineate2(text);
+
+      var location_info = {        
+        'uniqueid': UniqueID,
+        'username': $('#username').val(),
+        'title': $('#title').val(),
+        'latitude': $('#latitude').val(),
+        'longitude': $('#longitude').val(),
+        'summary': $('#summary').val(),
+        'description': $('#description').val()
+      };
+
+      //Upload the new form to the server
+      $.get('http://'+serverData.dbServer.url+':'+serverData.dbServer.port+'/add_new', location_info, function (data) { 
+        //debugger;
+        if( data.slice(3,10) == "Success" ) {
+          alert('Location information uploaded to server successfully.');
+          
+          $('form').hide();
+          $('#status').html('<p><a href="'+ServerURL+'/MultipleMaps.html">Click here to go back to the main map.</a></p>')
+        } else {
+          alert('Location information not uploaded to server!');
+        }
+
+      });
+      
+    }
+  </script>
+</html>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LocationXML>
+  <LocationEntity>
+    <UniqueID>63081957</UniqueID>
+    <Title>Lopez Islander Resort and Marina</Title>
+    <UserName>Chris</UserName>
+    <CurrentVersion>0</CurrentVersion>
+    <DateUpdated>Sun Sep 21 2014 04:52:52 GMT+0000 (UTC)</DateUpdated>
+    <Latitude>48.514472</Latitude>
+    <Longitude>-122.914052</Longitude>
+    <Summary>This is the summary for Lopez Islander Resort and Marina.</Summary>
+    <Description>
+      This is the Description section for Lopez Islander Resort and Marina
+    </Description>
+  </LocationEntity>
+</LocationXML>

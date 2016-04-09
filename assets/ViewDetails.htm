@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		
+    <title>Location Details</title>
+
+		
+	</head>
+  
+	<body>
+
+    <!-- Create a hidden form. This is used to process the URL. -->
+    <FORM NAME="hiddenform">
+      <INPUT TYPE="hidden" NAME="hiddentext" SIZE="35">
+    </form>
+    
+    
+    <p>
+      This page downloads the XML file for a particular location and displays the detailed data on that location. The XML can contain strings to any type of data: images, URLs, filenames, etc. This example only contains text, like summaries and descriptions. 
+    </p>  
+    <br>
+    <h2>Summary:</h2>
+    <p id="Summary">
+      Waiting for data to download...
+    </p>
+    <br>
+    <h2>Full Description:</h2>
+    <p id="Description">
+      If this text does not dissapear within a few seconds, then the page was not able to connect to the server.
+    </p>
+    <br>
+      <p id="EditLink">Edit Location Details</p>
+      <p id="HomeLink"><a href="./MultipleMaps.html">Back to Multiple Maps page.</a></p>
+    
+    
+  </body>
+    
+  <script src="./js/jquery.js"></script>
+  <script src="./js/jquery.csv-0.71.js"></script>
+  <script src="server-data.js"></script> <!-- Put your server connection data in this file. -->
+  <script>
+
+    // Global Variables
+    var xmlDoc;
+
+    //var ServerURL = '.'; //Use this for local server
+    //var ServerURL = 'http://ec2-54-201-251-131.us-west-2.compute.amazonaws.com/'; //Live preview server
+    var ServerURL = 'http://'+serverData.webServer.url+":"+serverData.webServer.port;
+
+    // Wait until the DOM has loaded before querying the document
+    $(document).ready(function(){
+
+      //Create a custom event for when the XML file is finished loading.
+      var XMLevent = new CustomEvent('XMLLoaded', {
+      });
+
+      // RETRIEVE THE URL WHICH CONTAINS THE PASSED IN UNIQUEID
+      //Create a variable for the URL (not a string).
+      var locate = window.location 
+      //Dump the URL data into the hidden form, forcing it into a string of text.
+      document.hiddenform.hiddentext.value = locate 
+      //Read the URL out of the hidden text box.
+      var text = document.hiddenform.hiddentext.value 
+
+      //This function retrieves the UniqueID value from the URL string.
+      function delineate2(str){
+          point = str.lastIndexOf("=");
+          return(str.substring(point+1,str.length));
+      }
+
+      var UniqueID = delineate2(text);
+
+      console.log("UniqueID is " +UniqueID);
+
+      // Retrieve the XML file for this marker.
+      // Call the XMLevent after the file finishes loading.
+      var xmlFile = new XMLHttpRequest();
+      var FileName = "./locations/" + UniqueID + ".xml";
+      xmlFile.open("GET", FileName, true);
+      xmlFile.onreadystatechange = function() {
+        if (xmlFile.readyState === 4) {  // Makes sure the document is ready to parse.
+          if (xmlFile.status === 200) {  // Makes sure it's found the file.
+
+            // Parse the XML from the raw text
+            var parser = new DOMParser();
+            xmlDoc = parser.parseFromString(xmlFile.responseText, "text/xml");
+
+            // Call the XMLEvent to signal that the XML is finished loading
+            document.dispatchEvent(XMLevent)
+
+          }
+        }
+      }
+      xmlFile.send(null); //Execute the file request.
+
+
+      // Create an event listener that executes after the XML file has finished loading.
+      document.addEventListener('XMLLoaded', function (e) {
+
+        var XMLStrings = ValidateXML();   //Validate the XML before writing it to the webpage.
+                                          //This handles empty XML entities.
+
+        //This is not used in the page. It is used for debugging and possibly passing data to other functions.
+        var contentstring = '<div id="LocationInfo">' +
+          '<h1>' + XMLStrings.title + '</h1>' +
+          '<br>' +
+          '<p> Summary: ' + XMLStrings.summary + '</p>' +
+          '<br>' +
+          '<p> Last Updated by: ' + XMLStrings.username + '</p>' +
+          '<br>' +
+          '<p> Revision number: ' + XMLStrings.currentversion + '</p>' +
+          '<br>' +
+          '<p> Updated on: ' + XMLStrings.dateupdated + '</p>' +
+          '<br>' +
+          '<p> Latitude: ' + XMLStrings.latitude + '</p>' +
+          '<br>' +
+          '<p> Longitude: ' + XMLStrings.longitude + '</p>' +
+          '<br>' +
+          '<p> Description: ' + XMLStrings.description + '</p>' +
+          '<br>' +
+          '<p><a href="http://ec2-54-201-251-131.us-west-2.compute.amazonaws.com/ModifyLocation.htm?UniqueID='+UniqueID+'">Modify Location Information</a></p>'+
+          '</div>';          
+        //$(document).append(contentstring);
+
+        //Update the DOM with data from the XML file.
+        $('#Summary').html(XMLStrings.summary);
+        $('#Description').html(XMLStrings.description);
+        $('#EditLink').html('<small><a href="ModifyLocation.htm?UniqueID=' + UniqueID + '" >Edit Location Details</a></small>');
+
+      }, false);
+
+      /* This function validates the XML. If an XML element does not exist, 
+      then it is created and the content becomes a blank string. This prevents
+      errors by ensuring all expected XML entities exist in the object. */        
+      function ValidateXML() {
+        //This function relies on the global variable xmlDoc.
+
+        var XMLStrings = new Object();
+
+        if(xmlDoc.getElementsByTagName("Title")[0].childNodes[0] != undefined)
+          XMLStrings.title = xmlDoc.getElementsByTagName("Title")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.title = "";
+
+        if(xmlDoc.getElementsByTagName("Summary")[0].childNodes[0] != undefined)
+          XMLStrings.summary = xmlDoc.getElementsByTagName("Summary")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.summary = "";
+
+        if(xmlDoc.getElementsByTagName("UserName")[0].childNodes[0] != undefined)
+          XMLStrings.username = xmlDoc.getElementsByTagName("UserName")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.username = "";
+
+        if(xmlDoc.getElementsByTagName("CurrentVersion")[0].childNodes[0] != undefined)
+          XMLStrings.currentversion = xmlDoc.getElementsByTagName("CurrentVersion")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.currentversion = "";
+
+        if(xmlDoc.getElementsByTagName("DateUpdated")[0].childNodes[0] != undefined)
+          XMLStrings.dateupdated = xmlDoc.getElementsByTagName("DateUpdated")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.dateupdated = "";
+
+        if(xmlDoc.getElementsByTagName("Latitude")[0].childNodes[0] != undefined)
+          XMLStrings.latitude = xmlDoc.getElementsByTagName("Latitude")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.latitude = "";
+
+        if(xmlDoc.getElementsByTagName("Longitude")[0].childNodes[0] != undefined)
+          XMLStrings.longitude = xmlDoc.getElementsByTagName("Longitude")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.longitude = "";
+
+        if(xmlDoc.getElementsByTagName("Description")[0].childNodes[0] != undefined)
+          XMLStrings.description = xmlDoc.getElementsByTagName("Description")[0].childNodes[0].nodeValue;
+        else
+          XMLStrings.description = "";
+
+
+        return XMLStrings;
+      }
+
+    });
+  </script>
+</html>

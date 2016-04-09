@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+    <title>Add New Location</title>    
+</head>
+<body style="height:100%">
+  <p id="status">A couple things to note:
+    <ul>
+      <li>The UniqueID field blank should exist but be left blank when creating a new location and submitting it to the Node webservice.</li>
+      <li>You can make up any UserName you want. There is no logic behind this value at the moment.</li>
+    </ul>  
+  </p>
+  <br><br>
+
+
+
+  <!-- Using jQuery allows for dynamic configuration of server. -->
+  <form>
+	  <p>Leave this UniqueID field blank: <br>
+	  <textarea name="uniqueid" rows="1" cols="80" disabled></textarea></p>
+      <p>Enter a Username for the map marker: <br>
+	  <textarea name="username" id="username" rows="1" cols="80"></textarea></p>
+      <p>Enter a title for the map marker: <br>
+	  <textarea name="title" id="title" rows="1" cols="80"></textarea></p>
+	  <p>Enter the latitude: <br>
+	  <textarea name="latitude" id="latitude" rows="1" cols="80"></textarea></p>
+	  <p>Enter the longitude: <br>
+	  <textarea name="longitude" id="longitude" rows="1" cols="80"></textarea></p>
+	  <p>Enter a <b>summary</b> of the location: <br>
+	  <textarea name="summary" id="summary" rows="10" cols="80"></textarea></p>
+	  <p>Enter a detailed <b>description</b> of the location: <br>
+	  <textarea name="description" id="description" rows="20" cols="80"></textarea></p>
+	  <br></br>
+	  <input type="button" value="Submit Location" onclick="send_data()" />
+ </form>
+
+</body>
+
+  <script src="./js/jquery.js"></script>
+  <script src="server-data.js"></script> <!-- Put your server connection data in this file. -->
+  <script type="text/javascript">
+
+    var ServerURL = 'http://'+serverData.webServer.url+":"+serverData.webServer.port;
+    
+    //This function send the form data to the server. It mimics the behavior of a conventional HTML form,
+    //but allows the flexibility of a JavaScript program.
+    var send_data = function() {
+    
+    var location_info = {        
+        'uniqueid': '',
+        'username': $('#username').val(),
+        'title': $('#title').val(),
+        'latitude': $('#latitude').val(),
+        'longitude': $('#longitude').val(),
+        'summary': $('#summary').val(),
+        'description': $('#description').val()
+      };
+
+      //Upload the new form to the server
+      $.get('http://'+serverData.dbServer.url+':'+serverData.dbServer.port+'/add_new', location_info, function (data) { 
+        //debugger;
+        if( data.slice(3,10) == "Success" ) {
+          alert('Location information uploaded to server successfully.');
+          
+          $('form').hide();
+          $('#status').html('<a href="'+ServerURL+'/MultipleMaps.html">Click here to go back to the main map.</a>')
+        } else {
+          alert('Location information not uploaded to server!');
+        }
+
+      });
+      
+    }
+  </script>
+
+</html>

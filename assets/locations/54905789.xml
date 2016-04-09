@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LocationXML>
+  <LocationEntity>
+    <UniqueID>54905789</UniqueID>
+    <Title>Friday Harbor</Title>
+    <UserName>Chris</UserName>
+    <CurrentVersion>0</CurrentVersion>
+    <DateUpdated>Sun Sep 21 2014 04:52:52 GMT+0000 (UTC)</DateUpdated>
+    <Latitude>48.536755</Latitude>
+    <Longitude>-123.015203</Longitude>
+    <Summary>This is the summary for Friday Harbor</Summary>
+    <Description>
+      This is the Description section for Chris
+    </Description>
+  </LocationEntity>
+</LocationXML>

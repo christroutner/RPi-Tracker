@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LocationXML>
+  <LocationEntity>
+    <UniqueID>83672069</UniqueID>
+    <Title>Rosario Resort</Title>
+    <UserName>TestUser3</UserName>
+    <CurrentVersion>0</CurrentVersion>
+    <DateUpdated>Sun Sep 21 2014 04:52:52 GMT+0000 (UTC)</DateUpdated>
+    <Latitude>48.646648</Latitude>
+    <Longitude>-122.869549</Longitude>
+    <Summary>This is the summary for Rosario Resort.</Summary>
+    <Description>
+      This is the Description section for Rosario Resort
+    </Description>
+  </LocationEntity>
+</LocationXML>

@@ -134,6 +134,12 @@ listener.connect(function() {
     console.log('Connected to GPS');
 });
 
+//not going to happen, parse is false
+listener.on('TPV', function(data) {
+  console.log(data);
+});
+
+
 // parse is false, so raw data get emitted.
 listener.on('raw', function(data) {
   console.log(data);

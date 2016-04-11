@@ -24,7 +24,9 @@ var today = new Date();
 var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.json';
 
 fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
-  if (err) throw err;
+  if (err) {
+    debugger;
+  }
   jsonFile.data = JSON.parse(data);
 });
 

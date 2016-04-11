@@ -257,6 +257,10 @@ var timeout = 2000; //1000 = 1 second.
 var fileSaveCnt = 5; //Number of intervals until the file is saved.
 var timerCnt = 0; //Used to track timer calls.
 var intervalHandle = setInterval(function() {
+  
+  listener.disconnect(function() {
+      console.log('Disconnected');
+  });
   debugger;
   
   //Increment the counter.
@@ -271,6 +275,9 @@ var intervalHandle = setInterval(function() {
   }
   long = long/coordinateBuffer.length;
   lat = lat/coordinateBuffer.length;
+  
+  //Clear the coordinateBuffer
+  coordinateBuffer = [];
   
   //Add the data points to the GeoJSON object
   jsonFile.data.features.push(

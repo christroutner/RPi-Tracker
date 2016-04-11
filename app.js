@@ -6,6 +6,7 @@
 var express = require('express');
 //var querystring = require("querystring");
 var requestHandlers = require("./requestHandlers.js");
+var gpsd = require('./lib/gpsd');
 
 
 var app = express();
@@ -114,6 +115,31 @@ app.use('/send_email', function(request, response, next) {
   
 });
 */
+
+/*
+ * GPS Connection
+ */
+var listener = new gpsd.Listener({
+    port: 2947,
+    hostname: 'localhost',
+    logger:  {
+        info: function() {},
+        warn: console.warn,
+        error: console.error
+    },
+    parse: false
+});
+
+listener.connect(function() {
+    console.log('Connected to GPS');
+});
+
+// parse is false, so raw data get emitted.
+listener.on('raw', function(data) {
+  console.log(data);
+});
+
+
 
 /*
  * Start it up

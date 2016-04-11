@@ -285,7 +285,8 @@ var intervalHandle = setInterval(function() {
   jsonFile.data.features.push(
     { 
       "type": "Feature",
-      "geometry": {"type": "Point", "coordinates": [long, lat]}
+      "geometry": {"type": "Point", "coordinates": [long, lat]},
+      "properties": {"timestamp": timeStamp}
     }
   );
   

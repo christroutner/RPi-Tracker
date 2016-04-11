@@ -145,6 +145,8 @@ listener.on('raw', function(data) {
   console.log(data);
 });
 
+listener.watch({class: 'WATCH', nmea: true});
+
 
 
 /*

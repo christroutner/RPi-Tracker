@@ -230,7 +230,7 @@ listener.on('raw', function(data) {
       
       //Push the newest coordinate into the buffer.
       coordinateBuffer.push(
-        [long, lat, 0]; //third number is elevation, to be implemented at a later date.
+        [long, lat, 0] //third number is elevation, to be implemented at a later date.
         //{ 
         //  "type": "Feature",
         //  "geometry": {"type": "Point", "coordinates": [long, lat]}

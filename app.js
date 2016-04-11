@@ -154,19 +154,32 @@ listener.on('raw', function(data) {
       var month = Number(data.slice(20,22))-1;
       var day = Number(data.slice(17,19));
       var hour = Number(data.slice(7,9));
-      var minute = Number(data.slice(10,12));
+      var minute = Number(data.slice(9,11));
       var second = Number(data.slice(11,13));
       var millisecond = Number(data.slice(14,16));
       
       var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
       
+      console.log(data);
       console.log('GPS Time Stamp: '+gpsDate);
       console.log('Minute: '+minute);
       
       break;
       
     case "GPGGA":
-      debugger;
+      //debugger;
+      
+      //North and West Coordinates
+      //var lat = data.slice(14,23)+data.slice(24,25);
+      //var long = data.slice(26,36)+data.slice(37,38);
+      
+      //Google Map & GeoJSON Coordinates
+      //Have to divide by 100 to get the decimal place in the right spot.
+      var lat = Number(data.slice(14,23))/100;
+      var long = Number(data.slice(26,36))/100;
+      
+      console.log(data);
+      console.log('Coordinates: '+lat+', '+long);
       
       break;
       

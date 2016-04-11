@@ -202,7 +202,7 @@ listener.on('raw', function(data) {
       //var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
       //console.log('GPS Time Stamp: '+gpsDate);
       
-      timeStamp = new Date(year, month, day, hour, minute, second, millisecond
+      timeStamp = new Date(year, month, day, hour, minute, second, millisecond);
       
       break;
       

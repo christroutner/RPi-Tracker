@@ -306,7 +306,7 @@ var intervalHandle = setInterval(function() {
             console.log('Error while trying to write file output.');
             console.log(err);
           } else {
-            console.log('GPS data file updated.')
+            console.log('GPS data file updated. Time Stamp: '+timeStamp);
           }
           
         });
@@ -319,7 +319,7 @@ var intervalHandle = setInterval(function() {
             console.log('Error while trying to write file output.');
             console.log(err);
           } else {
-            console.log('GPS data file updated.')
+            console.log('GPS data file updated. Time Stamp: '+timeStamp);
           }
           
         });

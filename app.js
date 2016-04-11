@@ -130,8 +130,7 @@ var listener = new gpsd.Listener({
     parse: false
 });
 
-listener.connect(function() {
-  debugger;  
+listener.connect(function() {  
   console.log('Connected to GPS');
 });
 
@@ -143,7 +142,34 @@ listener.connect(function() {
 
 // parse is false, so raw data get emitted.
 listener.on('raw', function(data) {
-  debugger;
+  //debugger;
+  
+  var nmeaCode = data.slice(1,6);
+  
+  //Choose a different action based on the incoming NMEA sentence header
+  switch(nmeaCode) {
+    case "GPZDA":
+      //Note Hour, Minute, Second, Microsecond is in UTC format.
+      var year = Number(data.slice(23,27));
+      var month = Number(data.slice(20,22));
+      var day = Number(data.slice(17,19));
+      var hour = Number(data.slice(7,9));
+      var minute = Number(data.slice(10,12);
+      var second = Number(data.slice(11,13));
+      var millisecond = Number(data.slice(14,16));
+      
+      var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
+      
+      console.log('GPS Time Stamp: '+gpsDate);
+      
+      break;
+      
+    case default:
+      //console.log('Rejected '+nmeaCode);
+      console.log(data);
+      break;
+  }
+  
   console.log(data);
 });
 

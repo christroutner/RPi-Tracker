@@ -7,11 +7,26 @@ var express = require('express');
 //var querystring = require("querystring");
 var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
+var fs = require('fs');
 
 
 var app = express();
 var port = 3000;
 
+
+/*
+ * Open a JSON file for recording GPS data
+ */
+var jsonFile = new Object();
+jsonFile.fileRead = false;
+
+var today = new Date();
+var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.json';
+
+fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
+  if (err) throw err;
+  jsonFile.data = JSON.parse(data);
+});
 
 
 /*
@@ -160,9 +175,8 @@ listener.on('raw', function(data) {
       
       var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
       
-      console.log(data);
+      //console.log(data);
       console.log('GPS Time Stamp: '+gpsDate);
-      console.log('Minute: '+minute);
       
       break;
       
@@ -175,10 +189,13 @@ listener.on('raw', function(data) {
       
       //Google Map & GeoJSON Coordinates
       //Have to divide by 100 to get the decimal place in the right spot.
+      //Note: I'm making the long negative because I know this is correct for my hemisphere.
+      //This should really be algorithmically calculated based on the compass letter that is
+      //is contained in data.slice(37,38).
       var lat = Number(data.slice(14,23))/100;
-      var long = Number(data.slice(26,36))/100;
+      var long = -1*Number(data.slice(26,36))/100;
       
-      console.log(data);
+      //console.log(data);
       console.log('Coordinates: '+lat+', '+long);
       
       break;

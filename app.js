@@ -45,11 +45,12 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
       console.log('Error opening the JSON file.');
       throw err;
     }
+    
+  } else {
+    //If the file already exists, the read it in.
+    jsonFile.data = JSON.parse(data);
+    jsonFile.fileRead = true;
   }
-  
-  //If the file already exists, the read it in.
-  jsonFile.data = JSON.parse(data);
-  jsonFile.fileRead = true;
 });
 
 

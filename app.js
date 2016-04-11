@@ -49,6 +49,7 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
     }
     
   } else {
+    debugger;
     //If the file already exists, the read it in.
     jsonFile.data = JSON.parse(data);
     jsonFile.fileRead = true;
@@ -262,7 +263,7 @@ var intervalHandle = setInterval(function() {
   //    console.log('Disconnected');
   //});
   //listener.unwatch();
-  debugger;
+  //debugger;
   
   //Increment the counter.
   timerCnt++;
@@ -296,7 +297,7 @@ var intervalHandle = setInterval(function() {
     
     if(jsonFile.fileRead) {
       if(jsonFile.exists) {
-        debugger;
+        //debugger;
         
         fs.writeFile('./data/'+fileName, fileOutput, function (err) {
           if(err) {
@@ -309,7 +310,7 @@ var intervalHandle = setInterval(function() {
         });
         
       } else {
-        debugger;
+        //debugger;
 
         fs.writeFile('./data/'+fileName, fileOutput, function (err) {
           if(err) {

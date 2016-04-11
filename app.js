@@ -131,7 +131,8 @@ var listener = new gpsd.Listener({
 });
 
 listener.connect(function() {
-    console.log('Connected to GPS');
+  debugger;  
+  console.log('Connected to GPS');
 });
 
 //not going to happen, parse is false
@@ -142,6 +143,7 @@ listener.connect(function() {
 
 // parse is false, so raw data get emitted.
 listener.on('raw', function(data) {
+  debugger;
   console.log(data);
 });
 

@@ -154,7 +154,7 @@ listener.on('raw', function(data) {
       var month = Number(data.slice(20,22));
       var day = Number(data.slice(17,19));
       var hour = Number(data.slice(7,9));
-      var minute = Number(data.slice(10,12);
+      var minute = Number(data.slice(10,12));
       var second = Number(data.slice(11,13));
       var millisecond = Number(data.slice(14,16));
       

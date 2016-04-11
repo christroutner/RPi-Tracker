@@ -164,7 +164,7 @@ listener.on('raw', function(data) {
       
       break;
       
-    case default:
+    default:
       //console.log('Rejected '+nmeaCode);
       console.log(data);
       break;

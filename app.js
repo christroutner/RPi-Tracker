@@ -151,7 +151,7 @@ listener.on('raw', function(data) {
     case "GPZDA":
       //Note Hour, Minute, Second, Microsecond is in UTC format.
       var year = Number(data.slice(23,27));
-      var month = Number(data.slice(20,22));
+      var month = Number(data.slice(20,22))-1;
       var day = Number(data.slice(17,19));
       var hour = Number(data.slice(7,9));
       var minute = Number(data.slice(10,12));
@@ -161,6 +161,12 @@ listener.on('raw', function(data) {
       var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
       
       console.log('GPS Time Stamp: '+gpsDate);
+      console.log('Minute: '+minute);
+      
+      break;
+      
+    case "GPGGA":
+      debugger;
       
       break;
       

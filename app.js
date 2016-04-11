@@ -254,8 +254,9 @@ listener.watch({class: 'WATCH', nmea: true});
 /*
  * Timer event to record GPS data to a file
  */ 
-var timeout = 5000; //1000 = 1 second.
-var fileSaveCnt = 5; //Number of intervals until the file is saved.
+var timeout = 30000; //1000 = 1 second.
+var fileSaveCnt = 1; //Number of intervals until the file is saved.
+
 var timerCnt = 0; //Used to track timer calls.
 var intervalHandle = setInterval(function() {
   

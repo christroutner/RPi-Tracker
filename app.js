@@ -25,9 +25,31 @@ var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'
 
 fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
   if (err) {
-    debugger;
+    //debugger;
+    
+    //The file doesn't exist, so create the GeoJSON structure from scratch.
+    if( err.code == "ENOENT" ) {
+      jsonFile.data = 
+        { "type": "FeatureCollection",
+          "features": [
+            //{ "type": "Feature",
+            //  "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+            //  "properties": {"prop0": "value0"}
+            //}
+           ]
+         };
+      jsonFile.fileRead = true;
+      
+    //Handle unknown errors.
+    } else {
+      console.log('Error opening the JSON file.');
+      throw err;
+    }
   }
+  
+  //If the file already exists, the read it in.
   jsonFile.data = JSON.parse(data);
+  jsonFile.fileRead = true;
 });
 
 
@@ -157,6 +179,8 @@ listener.connect(function() {
 //});
 
 
+var coordinateBuffer = []; //Used to collect coordinate and time data between timer events.
+var timeStamp = new Date(); //Stores the most recent timestamp from the GPS.
 // parse is false, so raw data get emitted.
 listener.on('raw', function(data) {
   //debugger;
@@ -175,10 +199,10 @@ listener.on('raw', function(data) {
       var second = Number(data.slice(11,13));
       var millisecond = Number(data.slice(14,16));
       
-      var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
+      //var gpsDate = new Date(year, month, day, hour, minute, second, millisecond);
+      //console.log('GPS Time Stamp: '+gpsDate);
       
-      //console.log(data);
-      console.log('GPS Time Stamp: '+gpsDate);
+      timeStamp = new Date(year, month, day, hour, minute, second, millisecond
       
       break;
       
@@ -198,17 +222,25 @@ listener.on('raw', function(data) {
       var long = -1*Number(data.slice(26,36))/100;
       
       //console.log(data);
-      console.log('Coordinates: '+lat+', '+long);
+      //console.log('Coordinates: '+lat+', '+long);
+      
+      //Push the newest coordinate into the buffer.
+      coordinateBuffer.push(
+        { 
+          "type": "Feature",
+          "geometry": {"type": "Point", "coordinates": [lat, long]}
+        }
+      );
       
       break;
       
     default:
       //console.log('Rejected '+nmeaCode);
-      console.log(data);
+      //console.log(data);
       break;
   }
   
-  console.log(data);
+  //console.log(data);
 });
 
 listener.watch({class: 'WATCH', nmea: true});

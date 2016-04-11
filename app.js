@@ -19,6 +19,7 @@ var port = 3000;
  */
 var jsonFile = new Object();
 jsonFile.fileRead = false;
+jsonFile.exists = false;
 
 var today = new Date();
 var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.json';
@@ -28,7 +29,7 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
     //debugger;
     
     //The file doesn't exist, so create the GeoJSON structure from scratch.
-    if( err.code == "ENOENT" ) {
+    if( err.code == "ENOENT" ) {      
       jsonFile.data = 
         { "type": "FeatureCollection",
           "features": [
@@ -39,6 +40,7 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
            ]
          };
       jsonFile.fileRead = true;
+      jsonFile.exists = false;
       
     //Handle unknown errors.
     } else {
@@ -50,6 +52,7 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
     //If the file already exists, the read it in.
     jsonFile.data = JSON.parse(data);
     jsonFile.fileRead = true;
+    jsonFile.exists = true;
   }
 });
 
@@ -227,10 +230,11 @@ listener.on('raw', function(data) {
       
       //Push the newest coordinate into the buffer.
       coordinateBuffer.push(
-        { 
-          "type": "Feature",
-          "geometry": {"type": "Point", "coordinates": [lat, long]}
-        }
+        [long, lat, 0]; //third number is elevation, to be implemented at a later date.
+        //{ 
+        //  "type": "Feature",
+        //  "geometry": {"type": "Point", "coordinates": [long, lat]}
+        //}
       );
       
       break;
@@ -246,10 +250,79 @@ listener.on('raw', function(data) {
 
 listener.watch({class: 'WATCH', nmea: true});
 
+/*
+ * Timer event to record GPS data to a file
+ */ 
+var timeout = 10000; //1000 = 1 second.
+var timerCnt = 0; //Used to track timer calls.
+var intervalHandle = setInterval(function() {
+  debugger;
+  
+  //Increment the counter.
+  timerCnt++;
+  
+  //Average all the lat and longs in the coordinate buffer.
+  var lat = 0;
+  var long = 0;
+  for( var i = 0; i < coordinateBuffer.length; i++ ) {
+    long = lat+coordinateBuffer[i][0];
+    lat = lat+coordinateBuffer[i][1];
+  }
+  long = long/coordinateBuffer.length;
+  lat = lat/coordinateBuffer.length;
+  
+  //Add the data points to the GeoJSON object
+  jsonFile.data.features.push(
+    { 
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [long, lat]}
+    }
+  );
+  
+  
+  //Update the file every 10 timer events.
+  if( timerCnt >= 10 ) {
+    
+    var fileOutput = JSON.stringify(jsonFile.data, null, 4);
+    
+    if(jsonFile.fileRead) {
+      if(jsonFile.exists) {
+        debugger;
+        
+        fs.writeFile('./data/'+fileName, fileOutput, function (err) {
+          if(err) {
+            console.log('Error while trying to write file output.');
+            console.log(err);
+          } else {
+            console.log('GPS data file updated.')
+          }
+          
+        });
+        
+      } else {
+        debugger;
+
+        fs.writeFile('./data/'+fileName, fileOutput, function (err) {
+          if(err) {
+            console.log('Error while trying to write file output.');
+            console.log(err);
+          } else {
+            console.log('GPS data file updated.')
+          }
+          
+        });
+      }
+
+    }
+    
+    timerCnt = 0;
+  }
+  
+}, timeout);
 
 
 /*
- * Start it up
+ * Start up the Express web server
  */
 app.listen(process.env.PORT || port);
 console.log('Express started on port ' + port);

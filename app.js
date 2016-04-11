@@ -253,7 +253,7 @@ listener.watch({class: 'WATCH', nmea: true});
 /*
  * Timer event to record GPS data to a file
  */ 
-var timeout = 2000; //1000 = 1 second.
+var timeout = 5000; //1000 = 1 second.
 var fileSaveCnt = 5; //Number of intervals until the file is saved.
 var timerCnt = 0; //Used to track timer calls.
 var intervalHandle = setInterval(function() {
@@ -261,7 +261,7 @@ var intervalHandle = setInterval(function() {
   //listener.disconnect(function() {
   //    console.log('Disconnected');
   //});
-  listener.unwatch();
+  //listener.unwatch();
   debugger;
   
   //Increment the counter.
@@ -271,7 +271,7 @@ var intervalHandle = setInterval(function() {
   var lat = 0;
   var long = 0;
   for( var i = 0; i < coordinateBuffer.length; i++ ) {
-    long = lat+coordinateBuffer[i][0];
+    long = long+coordinateBuffer[i][0];
     lat = lat+coordinateBuffer[i][1];
   }
   long = long/coordinateBuffer.length;

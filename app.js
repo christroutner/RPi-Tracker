@@ -258,9 +258,10 @@ var fileSaveCnt = 5; //Number of intervals until the file is saved.
 var timerCnt = 0; //Used to track timer calls.
 var intervalHandle = setInterval(function() {
   
-  listener.disconnect(function() {
-      console.log('Disconnected');
-  });
+  //listener.disconnect(function() {
+  //    console.log('Disconnected');
+  //});
+  listener.unwatch();
   debugger;
   
   //Increment the counter.

@@ -304,7 +304,7 @@ var intervalHandle = setInterval(function() {
   
   //Add the data point to the GeoJSON object (for a LineString)
   //The toFixed() function rounds the decimal places, but turns it into a string, hence the Number() wrapper.
-  jsonFile.data.features[0].geometry.coordinates.push([Number(long.toFixed(8)), Number(lat.toFixed(8)), 0.0]);
+  jsonFile.data.features[0].geometry.coordinates.push([Number(long.toFixed(8)), Number(lat.toFixed(8)), 0.01]);
   jsonFile.data.features[0].properties.timestamp.push(timeStamp);
   
   

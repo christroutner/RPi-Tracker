@@ -292,15 +292,19 @@ var intervalHandle = setInterval(function() {
   //Clear the coordinateBuffer
   coordinateBuffer = [];
   debugger;
-  //Add the data points to the GeoJSON object
-  jsonFile.data.features.push(
-    { 
-      "type": "Feature",
-      //"geometry": {"type": "Point", "coordinates": [long, lat]},
-      "geometry": {"type": "LineString", "coordinates": [long, lat]},
-      "properties": {"timestamp": timeStamp}
-    }
-  );
+  
+  //Add the data points to the GeoJSON object (for a point)
+  //jsonFile.data.features.push(
+  //  { 
+  //    "type": "Feature",
+  //    "geometry": {"type": "Point", "coordinates": [long, lat]},
+  //    "properties": {"timestamp": timeStamp}
+  //  }
+  //);
+  
+  //Add the data point to the GeoJSON object (for a LineString)
+  jsonFile.data.features[0].geometry.coordinates.push([long, lat]);
+  jsonFile.data.features[0].properties.timestamp.push(timeStamp);
   
   
   //Update the file every 10 timer events.

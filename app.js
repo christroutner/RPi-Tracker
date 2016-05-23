@@ -37,6 +37,16 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
             //  "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
             //  "properties": {"prop0": "value0"}
             //}
+            
+            { "type": "Feature",
+              "geometry": {
+                "type": "LineString",
+                "coordinates": []
+              },
+              "properties": {
+                "timestamp": []
+              }
+            }
            ]
          };
       jsonFile.fileRead = true;
@@ -281,12 +291,13 @@ var intervalHandle = setInterval(function() {
   
   //Clear the coordinateBuffer
   coordinateBuffer = [];
-  
+  debugger;
   //Add the data points to the GeoJSON object
   jsonFile.data.features.push(
     { 
       "type": "Feature",
-      "geometry": {"type": "Point", "coordinates": [long, lat]},
+      //"geometry": {"type": "Point", "coordinates": [long, lat]},
+      "geometry": {"type": "LineString", "coordinates": [long, lat]},
       "properties": {"timestamp": timeStamp}
     }
   );

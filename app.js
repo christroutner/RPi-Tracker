@@ -171,6 +171,19 @@ app.use('/send_email', function(request, response, next) {
 */
 
 /*
+ * Utility function for converting between Degrees, Minutes Seconds (Raw GPS output) and Decimal Degree (Google Maps) format.
+ */
+function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+    var dd = degrees + minutes/60 + seconds/(60*60);
+
+    if (direction == "S" || direction == "W") {
+        dd = dd * -1;
+    } // Don't do anything for N or E
+    return dd;
+}
+
+
+/*
  * GPS Connection
  */
 var listener = new gpsd.Listener({
@@ -234,8 +247,10 @@ listener.on('raw', function(data) {
       //Note: I'm making the long negative because I know this is correct for my hemisphere.
       //This should really be algorithmically calculated based on the compass letter that is
       //is contained in data.slice(37,38).
-      var lat = Number(data.slice(14,23))/100;
-      var long = -1*Number(data.slice(26,36))/100;
+      //var lat = Number(data.slice(14,23))/100;
+      //var long = -1*Number(data.slice(26,36))/100;
+      debugger;
+      var lat = ConvertDMStoDD(Number(data.slice(14,15)),Number(data.slice(16,17)),Number(data.slice(19,23)),"N");
       
       //console.log(data);
       //console.log('Coordinates: '+lat+', '+long);

@@ -250,6 +250,15 @@ listener.on('raw', function(data) {
       //var lat = Number(data.slice(14,23))/100;
       //var long = -1*Number(data.slice(26,36))/100;
       
+      var ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
+          var dd = degrees + minutes/60 + seconds/(60*60);
+
+          if (direction == "S" || direction == "W") {
+              dd = dd * -1;
+          } // Don't do anything for N or E
+          return dd;
+      }
+      
       //Retrieve Lat and Long, but convert from DMS to DD
       //debugger;
       var lat = ConvertDMStoDD(Number(data.slice(14,16)),Number(data.slice(16,18)),Number(data.slice(19,23)),data.slice(24,25));

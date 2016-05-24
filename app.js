@@ -173,7 +173,7 @@ app.use('/send_email', function(request, response, next) {
 /*
  * Utility function for converting between Degrees, Minutes Seconds (Raw GPS output) and Decimal Degree (Google Maps) format.
  */
-function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+var ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
     var dd = degrees + minutes/60 + seconds/(60*60);
 
     if (direction == "S" || direction == "W") {

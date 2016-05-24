@@ -249,11 +249,14 @@ listener.on('raw', function(data) {
       //is contained in data.slice(37,38).
       //var lat = Number(data.slice(14,23))/100;
       //var long = -1*Number(data.slice(26,36))/100;
-      debugger;
-      var lat = ConvertDMStoDD(Number(data.slice(14,15)),Number(data.slice(16,17)),Number(data.slice(19,23)),"N");
+      
+      //Retrieve Lat and Long, but convert from DMS to DD
+      //debugger;
+      var lat = ConvertDMStoDD(Number(data.slice(14,16)),Number(data.slice(16,18)),Number(data.slice(19,23)),data.slice(24,25));
+      var long = ConvertDMStoDD(Number(data.slice(26,29)), Number(data.slice(29,31)), Number(data.slice(32,36)), data.slice(37,38));
       
       //console.log(data);
-      //console.log('Coordinates: '+lat+', '+long);
+      console.log('Coordinates: '+lat+', '+long);
       
       //Push the newest coordinate into the buffer.
       coordinateBuffer.push(

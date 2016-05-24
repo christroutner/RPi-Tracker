@@ -14,15 +14,6 @@ var app = express();
 var port = 3000;
 
 
-var ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
-    var dd = degrees + minutes/60 + seconds/(60*60);
-
-    if (direction == "S" || direction == "W") {
-        dd = dd * -1;
-    } // Don't do anything for N or E
-    return dd;
-}
-
 /*
  * Open a JSON file for recording GPS data
  */
@@ -182,7 +173,6 @@ app.use('/send_email', function(request, response, next) {
 /*
  * Utility function for converting between Degrees, Minutes Seconds (Raw GPS output) and Decimal Degree (Google Maps) format.
  */
-/*
 var ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
     var dd = degrees + minutes/60 + seconds/(60*60);
 
@@ -191,7 +181,7 @@ var ConvertDMSToDD = function(degrees, minutes, seconds, direction) {
     } // Don't do anything for N or E
     return dd;
 }
-*/
+
 
 /*
  * GPS Connection
@@ -268,8 +258,8 @@ listener.on('raw', function(data) {
       var long = ConvertDMSToDD(Number(data.slice(26,29)), Number(data.slice(29,31)), Number(data.slice(32,36))/100, data.slice(37,38));
       
       //console.log(data);
-      console.log('Lat: '+data.slice(14,16)+','+data.slice(16,18)+','+data.slice(19,23)+','+data.slice(24,25));
-      console.log('Coordinates: '+lat+', '+long);
+      //console.log('Lat: '+data.slice(14,16)+','+data.slice(16,18)+','+Number(data.slice(19,23))/100+','+data.slice(24,25));
+      //console.log('Coordinates: '+lat+', '+long);
       
       //Push the newest coordinate into the buffer.
       coordinateBuffer.push(

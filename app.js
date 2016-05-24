@@ -264,8 +264,8 @@ listener.on('raw', function(data) {
       
       //Retrieve Lat and Long, but convert from DMS to DD
       //debugger;
-      var lat = ConvertDMSToDD(Number(data.slice(14,16)),Number(data.slice(16,18)),Number(data.slice(19,23)),data.slice(24,25));
-      var long = ConvertDMSToDD(Number(data.slice(26,29)), Number(data.slice(29,31)), Number(data.slice(32,36)), data.slice(37,38));
+      var lat = ConvertDMSToDD(Number(data.slice(14,16)),Number(data.slice(16,18)),Number(data.slice(19,23))/100,data.slice(24,25));
+      var long = ConvertDMSToDD(Number(data.slice(26,29)), Number(data.slice(29,31)), Number(data.slice(32,36))/100, data.slice(37,38));
       
       //console.log(data);
       console.log('Lat: '+data.slice(14,16)+','+data.slice(16,18)+','+data.slice(19,23)+','+data.slice(24,25));

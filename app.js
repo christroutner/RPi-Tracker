@@ -59,7 +59,7 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
     }
     
   } else {
-    debugger;
+    //debugger;
     //If the file already exists, the read it in.
     jsonFile.data = JSON.parse(data);
     jsonFile.fileRead = true;

@@ -212,7 +212,7 @@ var timeStamp = new Date(); //Stores the most recent timestamp from the GPS.
 // parse is false, so raw data get emitted.
 listener.on('raw', function(data) {
   //debugger;
-  console.log(data);
+  //console.log(data);
   
   var nmeaCode = data.slice(1,6);
   

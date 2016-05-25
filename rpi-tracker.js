@@ -8,6 +8,7 @@ var express = require('express');
 var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
+var tokml = require('tokml');
 
 
 var app = express();
@@ -24,6 +25,7 @@ jsonFile.exists = false;
 //Generate a file name based on the current date.
 var today = new Date();
 var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.json';
+var fileNameKML = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.kml';
 
 //Read in the log file if one already exists.
 fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
@@ -236,8 +238,14 @@ listener.watch({class: 'WATCH', nmea: true});
 /*
  * Timer event to record GPS data to a file
  */ 
-var timeout = 30000;  //1000 = 1 second.
-var fileSaveCnt = 10; //Number of intervals until the file is saved.
+
+//Production
+//var timeout = 30000;  //1000 = 1 second.
+//var fileSaveCnt = 10; //Number of intervals until the file is saved.
+
+//Testing
+var timeout = 15000;  //1000 = 1 second.
+var fileSaveCnt = 1; //Number of intervals until the file is saved.
 
 var timerCnt = 0; //Used to track the number of timer calls.
 
@@ -284,12 +292,13 @@ var intervalHandle = setInterval(function() {
   jsonFile.data.features[0].properties.timestamp.push(timeStamp);
   
   
-  //Update the file every 10 timer events.
+  //Update the file every fileSaveCnt timer events.
   if( timerCnt >= fileSaveCnt ) {
     
     var fileOutput = JSON.stringify(jsonFile.data, null, 4);
     
     if(jsonFile.fileRead) {
+      /*
       if(jsonFile.exists) {
         //debugger;
         
@@ -305,7 +314,7 @@ var intervalHandle = setInterval(function() {
         
       } else {
         //debugger;
-
+      */
         fs.writeFile('./data/'+fileName, fileOutput, function (err) {
           if(err) {
             console.log('Error while trying to write file output.');
@@ -315,8 +324,23 @@ var intervalHandle = setInterval(function() {
           }
           
         });
-      }
+      //}
 
+      debugger;
+      //Convert the GeoJSON to KML
+      var kmlString = tokml(fileOutput);
+      
+      //Write out the KML data
+      fs.writeFile('./data/'+fileNameKML, kmlString, function (err) {
+        if(err) {
+          console.log('Error while trying to write KML file output.');
+          console.log(err);
+        } else {
+          console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
+        }
+
+      });
+      
     }
     
     timerCnt = 0;

@@ -1,6 +1,6 @@
 # RPi-Tracker
 
-The RPi-tracker is a Node/Express.js application designed to run on the Raspberry Pi mini-computer. It uses a BU-353 USB GPS to create a simple tracking device. GPS coordinates are logged to SD card. Data can be downloaded in GeoJSON, KML, or GPX format. See [the project page on RPiOVN.com](http://rpiovn.com/page/simple-tracking-device) for more details.
+The RPi-tracker is a Node/Express.js application designed to run on the Raspberry Pi mini-computer. It uses a BU-353 USB GPS to create a simple tracking device. GPS coordinates are logged to the devices SD card. Data can be downloaded in GeoJSON, KML, or GPX format. See [the project page on RPiOVN.com](http://rpiovn.com/page/simple-tracking-device) for more details.
 
 ## Current State
 This program is currently in pre-Alpha development. It's very rough. So far logging in GeoJSON and KML formats has been achieved. The next step is to get GPX format. After that I'll start working on the UI.
@@ -8,17 +8,17 @@ This program is currently in pre-Alpha development. It's very rough. So far logg
 The ultimate goal of the software is for the device to be configurable from a cell phone or computer over WiFi. The RPi will be able to switch between an Access Point (acting like a wifi router) and a wireless client (like a computer or cell phone). It will serve up a web page that lists the available tracking logs that can be downloaded in the various formats.
 
 ## Installation
-Installation structions are still being created, but consiste of the following general steps:
+Installation instructions are still being created, but consist of the following general steps:
 
 1. Connect your RPi to the internet and bring up a command line.
-2. Install git with the command 'sudo apt-get install git'
+2. Install git with the command `sudo apt-get install git`
 3. [Follow these instructions](http://weworkweplay.com/play/raspberry-pi-nodejs/) to install node on the Raspberry Pi.
-4. Clone this repository with this command 'git clone https://github.com/christroutner/RPi-Tracker'
-5. Change into the 'RPi-Tracker' directory.
-6. Install the depenencies with the command 'npm install'
-7. Run the program with 'node app.js'
+4. Clone this repository with this command `git clone https://github.com/christroutner/RPi-Tracker`
+5. Change into the `RPi-Tracker` directory.
+6. Install the dependencies with the command `npm install`
+7. Run the program with `node app.js`
 
-I'm missing some steps there. I'll come back and refine this section once I have a psudo-stable version.
+I'm missing some steps there. I'll come back and refine this section once I have a pseudo-stable version.
 
 # Licensing
 This software is covered by a modified MIT license.

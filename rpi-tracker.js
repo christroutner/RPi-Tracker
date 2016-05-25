@@ -275,7 +275,7 @@ var intervalHandle = setInterval(function() {
   
   //Clear the coordinateBuffer
   coordinateBuffer = [];
-  debugger;
+  //debugger;
   
   //Add the data points to the GeoJSON object (for a Point)
   //jsonFile.data.features.push(

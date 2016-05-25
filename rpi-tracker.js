@@ -326,9 +326,9 @@ var intervalHandle = setInterval(function() {
         });
       //}
 
-      debugger;
+      //debugger;
       //Convert the GeoJSON to KML
-      var kmlString = tokml(fileOutput);
+      var kmlString = tokml(jsonFile.data);
       
       //Write out the KML data
       fs.writeFile('./data/'+fileNameKML, kmlString, function (err) {

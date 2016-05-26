@@ -18,9 +18,9 @@ var port = 3000;
 /*
  * Open a JSON file for recording GPS data
  */
-var jsonLinePoint = new Object();
-jsonLinePoint.fileRead = false;
-jsonLinePoint.exists = false;
+var jsonPointTimeStamp = new Object();
+jsonPointTimeStamp.fileRead = false;
+jsonPointTimeStamp.exists = false;
 
 var jsonLineString = new Object();
 jsonLineString.fileRead = false;

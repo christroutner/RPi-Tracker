@@ -26,6 +26,8 @@ jsonFile.exists = false;
 var today = new Date();
 var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.json';
 var fileNameKML = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.kml';
+var docName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+" Tracking Data";
+var docDesc = "Tracking data captured with the Raspberry Pi on "+today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2);
 
 //Read in the log file if one already exists.
 fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
@@ -51,7 +53,9 @@ fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
                 "coordinates": []
               },
               "properties": {
-                "timestamp": []
+                "timestamp": [],
+                "documentName": docName,
+                "documentDescription": docDesc
               }
             }
 

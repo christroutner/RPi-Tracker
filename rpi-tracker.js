@@ -352,8 +352,8 @@ var intervalHandle = setInterval(function() {
   
   //Format the long and lat
   //The toFixed() function rounds the decimal places, but turns it into a string, hence the Number() wrapper.
-  formattedLong = Number(long.toFixed(8));
-  formattedLat = Number(lat.toFixed(8));
+  var formattedLong = Number(long.toFixed(8));
+  var formattedLat = Number(lat.toFixed(8));
   
   //Add the data points to the GeoJSON object (for a Point)
   jsonPointTimeStamp.data.features.push(

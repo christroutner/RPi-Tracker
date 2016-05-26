@@ -18,64 +18,119 @@ var port = 3000;
 /*
  * Open a JSON file for recording GPS data
  */
-var jsonFile = new Object();
-jsonFile.fileRead = false;
-jsonFile.exists = false;
+var jsonLinePoint = new Object();
+jsonLinePoint.fileRead = false;
+jsonLinePoint.exists = false;
+
+var jsonLineString = new Object();
+jsonLineString.fileRead = false;
+jsonLineString.exists = false;
 
 //Generate a file name based on the current date.
 var today = new Date();
-var fileName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.json';
-var fileNameKML = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'.kml';
+var fileNameGeoJSONPoint = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-PT'+'.json';
+var fileNameGeoJSONLineString = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-LS'+'.json';
+var fileNameKMLPoint = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-PT'+'.kml';
+var fileNameKMLLineString = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-LS'+'.kml';
 var docName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+" Tracking Data";
 var docDesc = "Tracking data captured with the Raspberry Pi on "+today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2);
 
-//Read in the log file if one already exists.
-fs.readFile('./data/'+fileName, 'utf8', function(err, data) {
+//Read in the log files if they already exists. Otherwise create a new file.
+//First log file.
+fs.readFile('./data/'+fileNameGeoJSONPoint, 'utf8', function(err, data) {
   if (err) {
     //debugger;
     
     //The file doesn't exist, so create the GeoJSON structure from scratch.
-    if( err.code == "ENOENT" ) {      
-      jsonFile.data = 
-        { "type": "FeatureCollection",
-          "features": [
-            
-            //This format is used for recording Points.
-            //{ "type": "Feature",
-            //  "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
-            //  "properties": {"prop0": "value0"}
-            //}
-
-            //This format is used for recording LineString data. More appropriate for a breadcrumb trail.
-            { "type": "Feature",
-              "geometry": {
-                "type": "LineString",
-                "coordinates": []
-              },
-              "properties": {
-                "timestamp": [],
-                "documentName": docName,
-                "documentDescription": docDesc
-              }
+    if( err.code == "ENOENT" ) {    
+      
+      jsonPointTimeStamp.data = 
+      {
+        "type": "FeatureCollection",
+          "features": 
+        [            
+          { 
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [-122.36459, 48.30898]},
+            "properties": 
+            {
+              "timestamp": "",
+              "name": ""
             }
-
-           ]
-         };
-      jsonFile.fileRead = true;
-      jsonFile.exists = false;
+          }
+        ]
+      };
+      
+    debugger;
+  
+      //Set flags for file handling.
+      jsonPointTimeStamp.fileRead = true;
+      jsonPointTimeStamp.exists = false;
       
     //Handle unknown errors.
     } else {
-      console.log('Error opening the JSON file.');
+      console.log('Error opening the JSON Point file.');
       throw err;
     }
     
   } else {
     //debugger;
     //If the file already exists, the read it in.
-    jsonFile.data = JSON.parse(data);
-    jsonFile.fileRead = true;
-    jsonFile.exists = true;
+    jsonPointTimeStamp.data = JSON.parse(data);
+    jsonPointTimeStamp.fileRead = true;
+    jsonPointTimeStamp.exists = true;
+  }
+});
+
+//Second log file.
+fs.readFile('./data/'+fileNameGeoJSONLineString, 'utf8', function(err, data) {
+  if (err) {
+    //debugger;
+    
+    //The file doesn't exist, so create the GeoJSON structure from scratch.
+    if( err.code == "ENOENT" ) {    
+      
+      jsonLineString.data = 
+        { 
+          "type": "FeatureCollection",
+          "features": 
+          [
+
+            //This format is used for recording LineString data. More appropriate for a breadcrumb trail.
+            { 
+              "type": "Feature",
+              "geometry": {
+                "type": "LineString",
+                "coordinates": []
+              },
+              "properties": {
+                //"timestamp": [],
+                "name": docName,
+                "description": docDesc
+              }
+            }
+         ]
+      };
+      
+      
+    debugger;
+  
+      //Set flags for file handling.
+      jsonLineString.fileRead = true;
+      jsonLineString.exists = false;
+      
+    //Handle unknown errors.
+    } else {
+      console.log('Error opening the JSON LineString file.');
+      throw err;
+    }
+    
+  } else {
+    //debugger;
+    //If the file already exists, the read it in.
+    jsonLineString.data = JSON.parse(data);
+    jsonLineString.fileRead = true;
+    jsonLineString.exists = true;
   }
 });
 
@@ -219,13 +274,27 @@ listener.on('raw', function(data) {
       //Push the newest coordinate into the buffer.
       coordinateBuffer.push(
         [long, lat, 0.01] //third number is elevation, to be implemented at a later date.
-        
-        //this code used to record Points instead of LineString
+      );
+      
+      /*
+      coordinatePointBuffer.push(
+        //this code used to record Points
         //{ 
         //  "type": "Feature",
         //  "geometry": {"type": "Point", "coordinates": [long, lat]}
         //}
+        
+        { 
+          "type": "Feature",
+          "geometry": {"type": "Point", "coordinates": [long, lat]},
+          "properties": 
+          {
+            "timestamp": timeStamp,
+            "name": timeStamp
+          }
+        }
       );
+      */
       
       break;
       
@@ -279,68 +348,91 @@ var intervalHandle = setInterval(function() {
   
   //Clear the coordinateBuffer
   coordinateBuffer = [];
-  //debugger;
+  debugger;
+  
+  //Format the long and lat
+  //The toFixed() function rounds the decimal places, but turns it into a string, hence the Number() wrapper.
+  formattedLong = Number(long.toFixed(8));
+  formattedLat = Number(lat.toFixed(8));
   
   //Add the data points to the GeoJSON object (for a Point)
-  //jsonFile.data.features.push(
-  //  { 
-  //    "type": "Feature",
-  //    "geometry": {"type": "Point", "coordinates": [long, lat]},
-  //    "properties": {"timestamp": timeStamp}
-  //  }
-  //);
+  jsonPointTimeStamp.data.features.push(
+    { 
+      "type": "Feature",
+      "geometry": {"type": "Point", "coordinates": [formattedLong, formattedLat, 0.01]},
+      "properties": {
+        "timestamp": timeStamp,
+        "name": timeStamp
+      }
+    }
+  );
   
   //Add the data point to the GeoJSON object (for a LineString)
-  //The toFixed() function rounds the decimal places, but turns it into a string, hence the Number() wrapper.
-  jsonFile.data.features[0].geometry.coordinates.push([Number(long.toFixed(8)), Number(lat.toFixed(8)), 0.01]);
-  jsonFile.data.features[0].properties.timestamp.push(timeStamp);
+  jsonLineString.data.features[0].geometry.coordinates.push([formattedLong, formattedLat, 0.01]);
+  //jsonFile.data.features[0].properties.timestamp.push(timeStamp);
   
   
   //Update the file every fileSaveCnt timer events.
   if( timerCnt >= fileSaveCnt ) {
     
-    var fileOutput = JSON.stringify(jsonFile.data, null, 4);
+    var filePointTimeStampOutput = JSON.stringify(jsonPointTimeStamp.data, null, 4);
+    var fileLineStringOutput = JSON.stringify(jsonLineString.data, null, 4);
     
-    if(jsonFile.fileRead) {
-      /*
-      if(jsonFile.exists) {
-        //debugger;
-        
-        fs.writeFile('./data/'+fileName, fileOutput, function (err) {
-          if(err) {
-            console.log('Error while trying to write file output.');
-            console.log(err);
-          } else {
-            console.log('GPS data file updated. Time Stamp: '+timeStamp);
-          }
-          
-        });
-        
-      } else {
-        //debugger;
-      */
-        fs.writeFile('./data/'+fileName, fileOutput, function (err) {
-          if(err) {
-            console.log('Error while trying to write file output.');
-            console.log(err);
-          } else {
-            console.log('GPS data file updated. Time Stamp: '+timeStamp);
-          }
-          
-        });
-      //}
+    //used for debugging.
+    console.log('tick...');
+    
+    //Write out the GeoJSON and KML Point files.
+    if(jsonPointTimeStamp.fileRead) {
 
-      //debugger;
-      //Convert the GeoJSON to KML
-      var kmlString = tokml(jsonFile.data);
-      
-      //Write out the KML data
-      fs.writeFile('./data/'+fileNameKML, kmlString, function (err) {
+      fs.writeFile('./data/'+fileNameGeoJSONPoint, filePointTimeStampOutput, function (err) {
         if(err) {
-          console.log('Error while trying to write KML file output.');
+          console.log('Error while trying to write GeoJSON Point file output.');
           console.log(err);
         } else {
-          console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
+          //console.log('GPS data file updated. Time Stamp: '+timeStamp);
+        }
+
+      });
+
+      //Convert the GeoJSON to KML
+      var kmlString = tokml(jsonPointTimeStamp.data);
+      
+      //Write out the KML data
+      fs.writeFile('./data/'+fileNameKMLPoint, kmlString, function (err) {
+        if(err) {
+          console.log('Error while trying to write KML Point file output.');
+          console.log(err);
+        } else {
+          //console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
+        }
+
+      });
+      
+    }
+    
+    //Write out the GeoJSON and KML LineString files..
+    if(jsonLineString.fileRead) {
+
+      fs.writeFile('./data/'+fileNameGeoJSONLineString, fileLineStringOutput, function (err) {
+        if(err) {
+          console.log('Error while trying to write GeoJSON LineString file output.');
+          console.log(err);
+        } else {
+          //console.log('GPS data file updated. Time Stamp: '+timeStamp);
+        }
+
+      });
+
+      //Convert the GeoJSON to KML
+      kmlString = tokml(jsonLineString.data);
+      
+      //Write out the KML data
+      fs.writeFile('./data/'+fileNameKMLLineString, kmlString, function (err) {
+        if(err) {
+          console.log('Error while trying to write KML LineString file output.');
+          console.log(err);
+        } else {
+          //console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
         }
 
       });

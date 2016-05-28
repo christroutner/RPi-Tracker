@@ -68,19 +68,18 @@
         tempRow.attr('id', '');
 
         //Populate the new row with data from the model.
-        tempRow.find('th').text(data[0].slice(5,15));
-        var fileName = model.get('fileName');
-        tempRow.find('th').html('<a href="#/">'+fileName+'</a>');
-        tempRow.find('th').find('a').attr('onclick', 'global.fileLibraryView.editPost('+i+')');
-
-        //Add the on-click function to the Delete button.
-        tempRow.find('.postCol4').find('button').attr('onclick', 'global.fileLibraryView.deleteFile(global.fileUploadCollection.models['+i+'].id)');
+        var fileDate = data[0].slice(18,28);
+        tempRow.find('th').text(fileDate);
+        tempRow.find('JLN').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLN</a>');
+        tempRow.find('JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
+        tempRow.find('KLN').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLN</a>');
+        tempRow.find('KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
 
         //Remove the 'hidden' attribute copied from the example row.
         tempRow.show();
 
         //Append the new row to the DOM.
-        global.fileLibraryView.$el.find('#filesTable').append(tempRow);
+        $('#logTable').append(tempRow);
       }
       
     });

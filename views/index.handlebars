@@ -15,7 +15,7 @@
         
           <div class="row">
             <div class="col-xs-12">
-              <a class="btn btn-danger center-block" href="#/" role="button" id="trackingControlBtn">Stop Tracking</a>
+              <a class="btn btn-warning center-block" href="#/" role="button" id="trackingControlBtn">Stop Tracking</a>
             </div>
           </div>
           
@@ -26,14 +26,17 @@
                 <div class="form-group">
                   <label for="logFile">Select a Log File:</label>
                   <select class="form-control" name="logFile" id="logFile">
-                    <option value=""></option>
+                    <option value="" hidden></option>
                   </select>
                 </div>
 
                 <div class="form-group">
                   <label for="fileFormat">Select a Format:</label>
                   <select class="form-control" name="fileFormat" id="fileFormat">
-                    <option value=""></option>
+                    <option value="KLS">KML Line String</option>
+                    <option value="GLS">GeoJson Line String</option>
+                    <option value="KPT">KML Point with Timestamp</option>
+                    <option value="GPT">GeoJson Point with Timestamp</option>
                   </select>
                 </div>
             </form>
@@ -76,25 +79,29 @@
       
       for( var i = 0; i < fileList.length; i++ ) {
       
+        
         //Clone the example row provided in the template.
-        var tempRow = $('#logRow').clone();
+        var tempOption = $('#logFile').find('option').clone();
 
         //Clear the ID copied from the example row.
-        tempRow.attr('id', '');
+        //tempRow.attr('id', '');
 
-        //Populate the new row with data from the model.
+        //Populate the select element with data from the model.
         var fileDate = data[i].slice(18,28);
-        tempRow.find('th').text(fileDate);
-        tempRow.find('.JLS').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLS</a>');
-        tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
-        tempRow.find('.KLS').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLS</a>');
-        tempRow.find('.KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
+        tempOption.text(fileDate);
+        tempOption.val(fileDate);
+        
+        //tempRow.find('th').text(fileDate);
+        //tempRow.find('.JLS').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLS</a>');
+        //tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
+        //tempRow.find('.KLS').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLS</a>');
+        //tempRow.find('.KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
 
         //Remove the 'hidden' attribute copied from the example row.
-        tempRow.show();
+        tempOption.show();
 
         //Append the new row to the DOM.
-        $('#logTable').append(tempRow);
+        $('#logFile').append(tempOption);
       }
       
     });

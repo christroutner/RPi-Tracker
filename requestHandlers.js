@@ -392,11 +392,11 @@ incremented.
 ******************************************************************************/
 function listLogFiles(request, response, next) {
   console.log("Request handler 'listLogFiles()' was called.");
-  debugger;
+  //debugger;
   //Execute a list of the data files.
   //Filtering for just *-LS.json reduces noise and complexity, since I know there will be 4 files and what the end of their file names will be.
   exec('ls ./assets/logfiles/20*-LS.json', function(err, stdout, stderr) {
-    debugger;
+    //debugger;
     
     //Split the string by the new line character.
     var fileList = stdout.split("\n");

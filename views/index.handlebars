@@ -72,6 +72,9 @@
 <script type=text/javascript>
   $(document).ready(function() {
     debugger;
+  
+  
+    //Retrieve the list of log files from the server and use the data to build out the drop-down list.
     $.get('/listLogFiles', '', function(data) {
       debugger;
       
@@ -79,23 +82,13 @@
       
       for( var i = 0; i < fileList.length; i++ ) {
       
-        
         //Clone the example option provided in the template.
         var tempOption = $('#logFile').find('option').first().clone();
-
-        //Clear the ID copied from the example row.
-        //tempRow.attr('id', '');
 
         //Populate the select element with data from the model.
         var fileDate = data[i].slice(18,28);
         tempOption.text(fileDate);
         tempOption.val(fileDate);
-        
-        //tempRow.find('th').text(fileDate);
-        //tempRow.find('.JLS').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLS</a>');
-        //tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
-        //tempRow.find('.KLS').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLS</a>');
-        //tempRow.find('.KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
 
         //Remove the 'hidden' attribute copied from the example row.
         tempOption.show();
@@ -105,5 +98,21 @@
       }
       
     });
+  
+    //Create click handler for Stop/Start Tracking button.
+    $('#trackingControlBtn').click(function() {
+      debugger;
+    });
+  
+    //Create click handler for Download button
+    $('#downloadLogBtn').click(function() {
+      debugger;
+    });
+  
+    //Create click handler for Download button
+    $('#deleteLogBtn').click(function() {
+      debugger;
+    });
+  
   })
 </script>

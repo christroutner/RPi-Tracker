@@ -378,6 +378,7 @@ var intervalHandle = setInterval(function() {
     
     //used for debugging.
     console.log('tick...');
+    debugger;
     
     //Write out the GeoJSON and KML Point files.
     if(jsonPointTimeStamp.fileRead) {

@@ -64,7 +64,7 @@ and false will turn it off.
 ******************************************************************************/
 function queryTracking(request, response, next) {
   
-  if(isTracking) {
+  if(listener.isConnected()) {
     debugger;
   } else {
     debugger;

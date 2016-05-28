@@ -70,10 +70,10 @@
         //Populate the new row with data from the model.
         var fileDate = data[0].slice(18,28);
         tempRow.find('th').text(fileDate);
-        tempRow.find('JLN').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLN</a>');
-        tempRow.find('JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
-        tempRow.find('KLN').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLN</a>');
-        tempRow.find('KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
+        tempRow.find('.JLN').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLN</a>');
+        tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
+        tempRow.find('.KLN').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLN</a>');
+        tempRow.find('.KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
 
         //Remove the 'hidden' attribute copied from the example row.
         tempRow.show();

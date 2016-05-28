@@ -19,18 +19,18 @@
             <thead> 
               <tr> 
                 <th>Date</th> 
-                <th>GeoJSON LineString</th> 
-                <th>GeoJSON Point</th> 
-                <th>KML LineString</th>
-                <th>KML Point</th>
+                <th>JSON LS</th> 
+                <th>JSON PT</th> 
+                <th>KML LS</th>
+                <th>KML PT</th>
               </tr> 
             </thead> 
             <tbody id="logTable"> 
               <tr id="logRow" hidden> 
                 <th scope=row></th> 
-                <td class="JLN"></td> 
+                <td class="JLS"></td> 
                 <td class="JPT"></td> 
-                <td class="KLN"></td> 
+                <td class="KLS"></td> 
                 <td class="KPT"></td> 
               </tr> 
             </tbody> 
@@ -70,9 +70,9 @@
         //Populate the new row with data from the model.
         var fileDate = data[0].slice(18,28);
         tempRow.find('th').text(fileDate);
-        tempRow.find('.JLN').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLN</a>');
+        tempRow.find('.JLS').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLS</a>');
         tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
-        tempRow.find('.KLN').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLN</a>');
+        tempRow.find('.KLS').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLS</a>');
         tempRow.find('.KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
 
         //Remove the 'hidden' attribute copied from the example row.

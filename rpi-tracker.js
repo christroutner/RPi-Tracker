@@ -17,7 +17,7 @@ var port = 3000;
 /*
  * Global Variables
  */
-var app.locals.isTracking = false;
+app.locals.isTracking = false;
 
 
 /*

@@ -19,7 +19,7 @@ var exec = require('child_process').exec; //Used to execute command line instruc
 //var Location = new Object(); //Location object
 //var CustomEvent = new events(); //Custom event object
 //var globalResponse = new Object(); //Used to pass response context between functions.
-var isTracking = false;
+
 
 // CUSTOMIZATION VARIABLES
 //var wwwDir = '/inetpub/wwwroot/'  //Windows 2008 Server

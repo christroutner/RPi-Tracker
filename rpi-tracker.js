@@ -345,6 +345,10 @@ var intervalHandle = setInterval(function() {
   long = long/coordinateBuffer.length;
   lat = lat/coordinateBuffer.length;
   
+  //Exit if the buffer is full of NaN values.
+  if(isNaN(long) || isNan(lat))
+    return;
+  
   //Clear the coordinateBuffer
   coordinateBuffer = [];
   

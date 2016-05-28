@@ -11,6 +11,7 @@ var et = require('elementtree'); //Library used for XML parsing.
 var events = require('events').EventEmitter; //Event emitter library.
 var rander = require('rander'); //Library used to generate UniqueIDs.
 var ya_csv = require('ya-csv'); //Ya-csv library used to output csv files.
+var exec = require('child_process').exec; //Used to execute command line instructions.
 
 //GLOBAL VARIABLES
 var CSVData = new Array(); //Object to hold CSV data
@@ -373,6 +374,35 @@ return str;
 
 }
 
+
+/******************************************************************************
+Summary:
+listLogFiles() performs a listing of the 'data' directory and returns an array
+of strings representing the file names in that directory.
+
+Flow:
+-If a blank value for UniqueID is passed in the postData, than an new
+location is created and a new 8-digit random UniqueID is generated.
+-If a UniqueID is passed in and it matches an existing UniqueID in the CSV
+file...
+--then the old XML file will be moved to the backup folder and the version
+number is appended to the file name.
+--A new XML file is created for that location and the version number is
+incremented.
+******************************************************************************/
+function listLogFiles(request, response, next) {
+  console.log("Request handler 'listLogFiles()' was called.");
+  debugger;
+  //Execute a list of the data files.
+  //Filtering for just *-LS.json reduces noise and complexity, since I know there will be 4 files and what the end of their file names will be.
+  exec('ls data/20*-LS.json', function(err, stdout, stderr) {
+    debugger;
+    
+  });
+}
+
+
 //exports.start = start;
 //exports.upload = upload;
 exports.add_new = add_new;
+exports.listLogFiles = listLogFiles;

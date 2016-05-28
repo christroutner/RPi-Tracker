@@ -181,7 +181,7 @@ app.get('/', function(request, response, next) {
 //They are left here to create a template for when I'm ready to start working on the UI, which will be served up as a web page.
 //app.use('/start', requestHandlers.start);
 //app.use('/upload', requestHandlers.upload);
-app.use('/add_new', requestHandlers.add_new);
+//app.use('/add_new', requestHandlers.add_new);
 app.use('/listLogFiles', requestHandlers.listLogFiles);
 
 

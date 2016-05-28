@@ -68,7 +68,7 @@
         tempRow.attr('id', '');
 
         //Populate the new row with data from the model.
-        var fileDate = data[0].slice(18,28);
+        var fileDate = data[i].slice(18,28);
         tempRow.find('th').text(fileDate);
         tempRow.find('.JLS').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLS</a>');
         tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');

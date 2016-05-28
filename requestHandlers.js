@@ -62,7 +62,12 @@ Optionally an boolean 'tracking' argument can be input. True will turn on tracki
 and false will turn it off.
 ******************************************************************************/
 function queryTracking(request, response, next) {
-  debugger;
+  
+  if(isTracking) {
+    debugger;
+  } else {
+    debugger;
+  }
 }
 
 

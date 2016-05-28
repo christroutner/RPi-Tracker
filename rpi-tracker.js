@@ -8,7 +8,7 @@ var express = require('express');
 var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
-var tokml = require('tokml');
+var tokml = require('tokml'); //Used for converting GeoJSON to KML.
 
 
 var app = express();
@@ -60,8 +60,6 @@ fs.readFile('./data/'+fileNameGeoJSONPoint, 'utf8', function(err, data) {
           }
         ]
       };
-      
-    debugger;
   
       //Set flags for file handling.
       jsonPointTimeStamp.fileRead = true;
@@ -216,7 +214,7 @@ var listener = new gpsd.Listener({
 listener.connect(function() {  
   //Dev Note: This message gets displayed weather or not the device was actually able to connect to the GPS. I need a way to write out to the console
   //weather the GPS was successful or not.
-  debigger''
+  debugger;
   console.log('Connected to GPS');
 });
 
@@ -349,7 +347,6 @@ var intervalHandle = setInterval(function() {
   
   //Clear the coordinateBuffer
   coordinateBuffer = [];
-  debugger;
   
   //Format the long and lat
   //The toFixed() function rounds the decimal places, but turns it into a string, hence the Number() wrapper.

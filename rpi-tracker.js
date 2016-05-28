@@ -17,7 +17,7 @@ var port = 3000;
 /*
  * Global Variables
  */
-//var isTracking = false;
+var app.locals.isTracking = false;
 
 
 /*
@@ -222,7 +222,7 @@ listener.connect(function() {
   //Dev Note: This message gets displayed weather or not the device was actually able to connect to the GPS. I need a way to write out to the console
   //weather the GPS was successful or not.
   console.log('Connected to GPS');
-  //isTracking = true;
+  app.locals.isTracking = true;
 });
 
 

@@ -395,7 +395,7 @@ function listLogFiles(request, response, next) {
   debugger;
   //Execute a list of the data files.
   //Filtering for just *-LS.json reduces noise and complexity, since I know there will be 4 files and what the end of their file names will be.
-  exec('ls data/20*-LS.json', function(err, stdout, stderr) {
+  exec('ls ./assets/logfilesdata/20*-LS.json', function(err, stdout, stderr) {
     debugger;
     
     //Split the string by the new line character.

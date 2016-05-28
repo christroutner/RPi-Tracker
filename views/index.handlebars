@@ -13,6 +13,28 @@
         
         <div class="tab-pane active" id="tab1">
           <p>This tab should automatically load with a list of the available log files.</p>
+          
+          <!-- Prototype table that is filled in with log files -->
+          <table class="table table-striped"> 
+            <thead> 
+              <tr> 
+                <th>Date</th> 
+                <th>GeoJSON LineString</th> 
+                <th>GeoJSON Point</th> 
+                <th>KML LineString</th>
+                <th>KML Point</th>
+              </tr> 
+            </thead> 
+            <tbody id="logTable"> 
+              <tr id="logRow" hidden> 
+                <th scope=row></th> 
+                <td class="JLN"></td> 
+                <td class="JPT"></td> 
+                <td class="KLN"></td> 
+                <td class="KPT"></td> 
+              </tr> 
+            </tbody> 
+          </table>
         </div>
 
         <div class="tab-pane" id="tab2">
@@ -34,6 +56,32 @@
     debugger;
     $.get('/listLogFiles', '', function(data) {
       debugger;
+      
+      var fileList = data;
+      
+      for( var i = 0; i < fileList.length; i++ ) {
+      
+        //Clone the example row provided in the template.
+        var tempRow = $('#logRow').clone();
+
+        //Clear the ID copied from the example row.
+        tempRow.attr('id', '');
+
+        //Populate the new row with data from the model.
+        tempRow.find('th').text(data[0].slice(5,15));
+        var fileName = model.get('fileName');
+        tempRow.find('th').html('<a href="#/">'+fileName+'</a>');
+        tempRow.find('th').find('a').attr('onclick', 'global.fileLibraryView.editPost('+i+')');
+
+        //Add the on-click function to the Delete button.
+        tempRow.find('.postCol4').find('button').attr('onclick', 'global.fileLibraryView.deleteFile(global.fileUploadCollection.models['+i+'].id)');
+
+        //Remove the 'hidden' attribute copied from the example row.
+        tempRow.show();
+
+        //Append the new row to the DOM.
+        global.fileLibraryView.$el.find('#filesTable').append(tempRow);
+      }
       
     });
   })

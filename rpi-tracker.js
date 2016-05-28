@@ -382,7 +382,7 @@ var intervalHandle = setInterval(function() {
     //Write out the GeoJSON and KML Point files.
     if(jsonPointTimeStamp.fileRead) {
 
-      fs.writeFile('./data/'+fileNameGeoJSONPoint, filePointTimeStampOutput, function (err) {
+      fs.writeFile('./assets/logfiles/'+fileNameGeoJSONPoint, filePointTimeStampOutput, function (err) {
         if(err) {
           console.log('Error while trying to write GeoJSON Point file output.');
           console.log(err);
@@ -396,7 +396,7 @@ var intervalHandle = setInterval(function() {
       var kmlString = tokml(jsonPointTimeStamp.data);
       
       //Write out the KML data
-      fs.writeFile('./data/'+fileNameKMLPoint, kmlString, function (err) {
+      fs.writeFile('./assets/logfiles/'+fileNameKMLPoint, kmlString, function (err) {
         if(err) {
           console.log('Error while trying to write KML Point file output.');
           console.log(err);
@@ -411,7 +411,7 @@ var intervalHandle = setInterval(function() {
     //Write out the GeoJSON and KML LineString files..
     if(jsonLineString.fileRead) {
 
-      fs.writeFile('./data/'+fileNameGeoJSONLineString, fileLineStringOutput, function (err) {
+      fs.writeFile('./assets/logfiles/'+fileNameGeoJSONLineString, fileLineStringOutput, function (err) {
         if(err) {
           console.log('Error while trying to write GeoJSON LineString file output.');
           console.log(err);
@@ -425,7 +425,7 @@ var intervalHandle = setInterval(function() {
       kmlString = tokml(jsonLineString.data);
       
       //Write out the KML data
-      fs.writeFile('./data/'+fileNameKMLLineString, kmlString, function (err) {
+      fs.writeFile('./assets/logfiles/'+fileNameKMLLineString, kmlString, function (err) {
         if(err) {
           console.log('Error while trying to write KML LineString file output.');
           console.log(err);

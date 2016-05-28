@@ -14,6 +14,11 @@ var tokml = require('tokml'); //Used for converting GeoJSON to KML.
 var app = express();
 var port = 3000;
 
+/*
+ * Global Variables
+ */
+var isTracking = false;
+
 
 /*
  * Open a JSON file for recording GPS data
@@ -183,6 +188,7 @@ app.get('/', function(request, response, next) {
 //app.use('/upload', requestHandlers.upload);
 //app.use('/add_new', requestHandlers.add_new);
 app.use('/listLogFiles', requestHandlers.listLogFiles);
+app.use('/queryTracking', requestHandlers.queryTracking);
 
 
 /*
@@ -216,6 +222,7 @@ listener.connect(function() {
   //Dev Note: This message gets displayed weather or not the device was actually able to connect to the GPS. I need a way to write out to the console
   //weather the GPS was successful or not.
   console.log('Connected to GPS');
+  isTracking = true;
 });
 
 

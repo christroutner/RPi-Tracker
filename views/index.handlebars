@@ -73,7 +73,6 @@
   $(document).ready(function() {
     //debugger;
   
-  
     //Retrieve the list of log files from the server and use the data to build out the drop-down list.
     $.get('/listLogFiles', '', function(data) {
       //debugger;
@@ -99,9 +98,18 @@
       
     });
   
+    //Query the state of the tracking device
+    $.get('/queryTracking', '', function(data) {
+      debugger;
+      
+      //Have the Start/Stop button reflect the current state of the tracking device.
+    });
+  
     //Create click handler for Stop/Start Tracking button.
     $('#trackingControlBtn').click(function() {
       debugger;
+      
+      //Toggle the state of the tracking device.
     });
   
     //Create click handler for Download button
@@ -109,7 +117,7 @@
       debugger;
     });
   
-    //Create click handler for Download button
+    //Create click handler for Delete button
     $('#deleteLogBtn').click(function() {
       debugger;
     });

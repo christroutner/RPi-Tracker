@@ -14,10 +14,10 @@ var ya_csv = require('ya-csv'); //Ya-csv library used to output csv files.
 var exec = require('child_process').exec; //Used to execute command line instructions.
 
 //GLOBAL VARIABLES
-var CSVData = new Array(); //Object to hold CSV data
-var UniqueIDList = new Array(); //List of UniqueIDs in the CSV file
-var Location = new Object(); //Location object
-var CustomEvent = new events(); //Custom event object
+//var CSVData = new Array(); //Object to hold CSV data
+//var UniqueIDList = new Array(); //List of UniqueIDs in the CSV file
+//var Location = new Object(); //Location object
+//var CustomEvent = new events(); //Custom event object
 //var globalResponse = new Object(); //Used to pass response context between functions.
 
 // CUSTOMIZATION VARIABLES
@@ -66,6 +66,7 @@ number is appended to the file name.
 --A new XML file is created for that location and the version number is
 incremented.
 ******************************************************************************/
+/*
 function add_new(request, response, next) {
   console.log("Request handler 'add_new' was called.");
 
@@ -105,8 +106,9 @@ function add_new(request, response, next) {
   //CSVLoaded event after the CSV file has been loaded into memory. 
   //globalResponse = response;  //Pass response object to global.
 }
+*/
 
-
+/*
 function LoadCSV() {
   debugger;
   var i;
@@ -294,9 +296,11 @@ CustomEvent.on('CSVLoaded', function(localinput) {
   //Close the response.
   //globalResponse.end();
 });
+*/
 
 //Returns true if the UniqueID exists in the UniqueIDList object.
 //Returns false otherwise.
+/*
 function DoesUniqueIDExist(strUniqueID) {
   debugger;
   var i;
@@ -360,12 +364,14 @@ function WriteCSV() {
   CSVOutputFile.end(); //Close the file.
   console.log("CSV file updated.");
 }
+*/
 
 /*
 This function is used to validate empty strings before writing them to XML.
 If a string is blank, then a space is added. Reading XML errors on empty
 strings, so it's better to save it as a blank space.
 */
+/*
 function ValidateString(str) {
 
 if(str == "")
@@ -373,7 +379,7 @@ if(str == "")
 return str;
 
 }
-
+*/
 
 /******************************************************************************
 Summary:
@@ -415,5 +421,5 @@ function listLogFiles(request, response, next) {
 
 //exports.start = start;
 //exports.upload = upload;
-exports.add_new = add_new;
+//exports.add_new = add_new;
 exports.listLogFiles = listLogFiles;

@@ -402,7 +402,7 @@ function listLogFiles(request, response, next) {
     var fileList = stdout.split("\n");
     
     //If any elements are empty strings, then remove them.
-    for(var i = 0; i<fileList.length(); i++) {
+    for(var i = 0; i<fileList.length; i++) {
       if(fileList[i] == "") {
         fileList.splice(i, 1);
       }

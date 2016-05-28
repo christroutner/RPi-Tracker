@@ -398,6 +398,17 @@ function listLogFiles(request, response, next) {
   exec('ls data/20*-LS.json', function(err, stdout, stderr) {
     debugger;
     
+    //Split the string by the new line character.
+    var fileList = stdout.split("\n");
+    
+    //If any elements are empty strings, then remove them.
+    for(var i = 0; i<fileList.length(); i++) {
+      if(fileList[i] == "") {
+        fileList.splice(i, 1);
+      }
+    }
+    
+    response.send(fileList);
   });
 }
 

@@ -120,15 +120,17 @@
     $('#trackingControlBtn').click(function() {
       debugger;
       
+      var data = new Object();
+      
       //Toggle the state of the tracking device.
       if(isTracking) {
-        var changeState = false;
-        $.get('/queryTracking', changeState, function(data) {
+        var data.changeState = false;
+        $.get('/queryTracking', data, function(data) {
           debugger;
         });
       } else {
-        var changeState = true;
-        $.get('/queryTracking', changeState, function(data) {
+        var data.changeState = true;
+        $.get('/queryTracking', data, function(data) {
           debugger;
         });
       }

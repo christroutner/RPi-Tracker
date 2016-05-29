@@ -82,12 +82,14 @@ function queryTracking(request, response, next) {
     debugger;
     if(changeState) {
       app.locals.listener.disconnect(function() {
+        debugger;
         console.log('GPS Disconnected');
         request.app.locals.isTracking = false;
         response.send('false');
       });
     } else {
       app.locals.listener.connect(function() {
+        debugger;
         console.log('GPS Connected');
         request.app.locals.isTracking = true;
         response.send('true');

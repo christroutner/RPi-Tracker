@@ -225,6 +225,9 @@ listener.connect(function() {
   app.locals.isTracking = true;
 });
 
+//Save the listener to the Express app locals so I can access it in the request handlers.
+app.locals.listener = listener;
+
 
 var coordinateBuffer = []; //Used to collect coordinate and time data between timer events.
 var timeStamp = new Date(); //Stores the most recent timestamp from the GPS.

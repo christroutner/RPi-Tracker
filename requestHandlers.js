@@ -64,6 +64,8 @@ and false will turn it off.
 ******************************************************************************/
 function queryTracking(request, response, next) {
   
+  var changeState = request.query.changeState;
+  
   if(request.app.locals.isTracking) {
     debugger;
   } else {

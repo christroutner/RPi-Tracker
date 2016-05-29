@@ -122,11 +122,13 @@
       
       //Toggle the state of the tracking device.
       if(isTracking) {
-        $.get('/queryTracking', false, function(data) {
+        var changeState = false;
+        $.get('/queryTracking', changeState, function(data) {
           debugger;
         });
       } else {
-        $.get('/queryTracking', true, function(data) {
+        var changeState = true;
+        $.get('/queryTracking', changeState, function(data) {
           debugger;
         });
       }

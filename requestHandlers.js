@@ -80,7 +80,7 @@ function queryTracking(request, response, next) {
   //Set the state of tracking if a changeState value was passed in.
   } else {
     debugger;
-    if(changeState) {
+    if(changeState == false) {
       request.app.locals.listener.disconnect(function() {
         debugger;
         console.log('GPS Disconnected');

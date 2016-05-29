@@ -127,11 +127,27 @@
         data.changeState = false;
         $.get('/queryTracking', data, function(data) {
           debugger;
+          if(data == false) {
+            $('#trackingControlBtn').removeClass('btn-warning');
+            $('#trackingControlBtn').addClass('btn-success');
+            $('#trackingControlBtn').text('Start Tracking');
+            isTracking = false;
+          } else {
+            console.log('Problem with tracking control. (1)')
+          }
         });
       } else {
         data.changeState = true;
         $.get('/queryTracking', data, function(data) {
           debugger;
+          if( data == true ) {
+            $('#trackingControlBtn').removeClass('btn-success');
+            ('#trackingControlBtn').addClass('btn-warning');
+            $('#trackingControlBtn').text('Stop Tracking');
+            isTracking = true;
+          } else {
+            console.log('Problem with tracking control. (2)')
+          }
         });
       }
       

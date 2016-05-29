@@ -63,13 +63,36 @@ Optionally an boolean 'tracking' argument can be input. True will turn on tracki
 and false will turn it off.
 ******************************************************************************/
 function queryTracking(request, response, next) {
+  debugger;
   
   var changeState = request.query.changeState;
   
-  if(request.app.locals.isTracking) {
-    debugger;
+  //Send the value of the isTracking state variable if no changeState value was passed in.
+  if( changeState == undefined ) {
+    if(request.app.locals.isTracking) {
+      //debugger;
+      response.send(true);
+    } else {
+      //debugger;
+      response.send(false);
+    }
+    
+  //Set the state of tracking if a changeState value was passed in.
   } else {
     debugger;
+    if(changeState) {
+      app.locals.listener.disconnect(function() {
+        console.log('GPS Disconnected');
+        request.app.locals.isTracking = false;
+        response.send('false');
+      });
+    } else {
+      app.locals.listener.connect(function() {
+        console.log('GPS Connected');
+        request.app.locals.isTracking = true;
+        response.send('true');
+      });
+    }
   }
 }
 

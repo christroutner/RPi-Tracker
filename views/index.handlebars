@@ -70,6 +70,8 @@
 </div>
 
 <script type=text/javascript>
+  var isTracking = true;
+  
   $(document).ready(function() {
     //debugger;
   
@@ -103,6 +105,15 @@
       debugger;
       
       //Have the Start/Stop button reflect the current state of the tracking device.
+      if(!data) {
+        $('#trackingControlBtn').removeClass('btn-warning');
+        $('#trackingControlBtn').addClass('btn-success');
+        $('#trackingControlBtn').text('Start Tracking');
+        isTracking = true;
+      } else {
+        //The control button displays 'Stop Tracking' by default on load.
+        isTracking = false;
+      }
     });
   
     //Create click handler for Stop/Start Tracking button.
@@ -110,6 +121,18 @@
       debugger;
       
       //Toggle the state of the tracking device.
+      if(isTracking) {
+        $.get('/queryTracking', false, function(data) {
+          debugger;
+        });
+      } else {
+        $.get('/queryTracking', true, function(data) {
+          debugger;
+        });
+      }
+      
+      
+      
     });
   
     //Create click handler for Download button

@@ -188,7 +188,7 @@
       var downloadURL = "/logfiles/"+logFile+extension;
       
       //Initialize the download
-      document.createElement('a');
+      var link = document.createElement('a');
       link.download = "data:text/html,RPi-Tracker-Log-File!", "RPi-Tracker-Log-File.txt";
       link.href = downloadURL;
       link.click();

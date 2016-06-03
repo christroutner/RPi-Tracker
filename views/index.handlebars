@@ -158,6 +158,40 @@
     //Create click handler for Download button
     $('#downloadLogBtn').click(function() {
       debugger;
+      
+      //Exit if button was clicked accidentally without first selecting a log file.
+      if( $('#logFile').val() == "" ) {
+        alert('Please select a log file first.');
+        return;
+      }
+      
+      var logFile = $('#logFile').val();
+      var extention = "";
+      
+      var format = $('#fileFormat').val();
+      switch(format) {
+        case "KLS":
+          extension = "-LS.kml";
+          break;
+        case "GLS":
+          extension = "-LS.json";
+          break;
+        case "KPT":
+          extension = "-PT.kml";
+          break;
+        case "GPT":
+          extension = "-PT.json";
+          break;
+      }
+      
+      //Generate the download URL.
+      var downloadURL = "/logfiles/"+logFile+extension;
+      
+      //Initialize the download
+      document.createElement('a');
+      link.download = "data:text/html,RPi-Tracker-Log-File!", "RPi-Tracker-Log-File.txt";
+      link.href = downloadURL;
+      link.click();
     });
   
     //Create click handler for Delete button

@@ -102,7 +102,7 @@
   
     //Query the state of the tracking device
     $.get('/queryTracking', '', function(data) {
-      debugger;
+      //debugger;
       
       //Have the Start/Stop button reflect the current state of the tracking device.
       if(!data) {
@@ -118,7 +118,7 @@
   
     //Create click handler for Stop/Start Tracking button.
     $('#trackingControlBtn').click(function() {
-      debugger;
+      //debugger;
       
       var data = new Object();
       
@@ -126,7 +126,7 @@
       if(isTracking) {
         data.changeState = false;
         $.get('/queryTracking', data, function(data) {
-          debugger;
+          //debugger;
           if(data == "false") {
             $('#trackingControlBtn').removeClass('btn-warning');
             $('#trackingControlBtn').addClass('btn-success');
@@ -139,7 +139,7 @@
       } else {
         data.changeState = true;
         $.get('/queryTracking', data, function(data) {
-          debugger;
+          //debugger;
           if( data == "true" ) {
             $('#trackingControlBtn').removeClass('btn-success');
             $('#trackingControlBtn').addClass('btn-warning');

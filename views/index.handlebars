@@ -189,7 +189,7 @@
       
       //Initialize the download
       var link = document.createElement('a');
-      link.download = "data:text/html,RPi-Tracker-Log-File!", "RPi-Tracker-Log-File.txt";
+      link.download = logFile+extension, "RPi-Tracker-Log-File.txt";
       link.href = downloadURL;
       link.click();
     });

@@ -197,6 +197,16 @@
     //Create click handler for Delete button
     $('#deleteLogBtn').click(function() {
       debugger;
+      
+      //Exit if button was clicked accidentally without first selecting a log file.
+      if( $('#logFile').val() == "" ) {
+        alert('Please select a log file first.');
+        return;
+      }
+      
+      var logFile = $('#logFile').val();
+      
+      //Need to create a server call to delete a given logFile name.
     });
   
   })

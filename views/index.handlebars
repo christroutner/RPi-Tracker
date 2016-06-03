@@ -34,9 +34,9 @@
                   <label for="fileFormat">Select a Format:</label>
                   <select class="form-control" name="fileFormat" id="fileFormat">
                     <option value="KLS">KML Line String</option>
-                    <option value="GLS">GeoJson Line String</option>
+                    <option value="GLS">GeoJSON Line String</option>
                     <option value="KPT">KML Point with Timestamp</option>
-                    <option value="GPT">GeoJson Point with Timestamp</option>
+                    <option value="GPT">GeoJSON Point with Timestamp</option>
                   </select>
                 </div>
             </form>
@@ -189,7 +189,7 @@
       
       //Initialize the download
       var link = document.createElement('a');
-      link.download = logFile+extension, "RPi-Tracker-Log-File.txt";
+      link.download = logFile+extension;
       link.href = downloadURL;
       link.click();
     });

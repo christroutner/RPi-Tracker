@@ -57,6 +57,12 @@
 
         <div class="tab-pane" id="tab2">
           <p>This tab will allow the user to control the WiFi settings, switching back and forth between <b>wireless client</b> and <b>access point</b> modes.</p>
+          
+          <div class="row">
+            <div class="col-xs-12">
+              <a class="btn btn-default center-block" href="#/" role="button" id="wifiBtn">Get WiFi Info</a>
+            </div>
+          </div>
         </div>
 
         <div class="tab-pane" id="tab3">
@@ -74,6 +80,8 @@
   
   $(document).ready(function() {
     //debugger;
+  
+    // START TRACKER CONTROL CODE
   
     //Retrieve the list of log files from the server and use the data to build out the drop-down list.
     $.get('/listLogFiles', '', function(data) {
@@ -208,6 +216,30 @@
       
       //Need to create a server call to delete a given logFile name.
     });
+    
+    // END TRACKER CONTROL CODE
+    
+    
+    
+    
+    // START WIFI CONTROL CODE
+    
+    //Create click handler for Wifi button. This is just used for testing right now.
+    $('#wifiBtn').click(function() {
+      debugger;
+      
+      $.get('/wifiSettings', '', function(data) {
+        debugger;
+      })
+    });
+    
+    // END WIFI CONTROL CODE
+    
+    
+    
+    
+    // START SETTINGS TAB CONTROL
   
+    // END SETTINGS TAB CONTROL
   })
 </script>

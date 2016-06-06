@@ -3,7 +3,7 @@
 The RPi-tracker is a Node/Express.js application designed to run on the Raspberry Pi mini-computer. It uses a BU-353 USB GPS to create a simple tracking device. GPS coordinates are logged to the devices SD card. Data can be downloaded in GeoJSON, KML, or GPX format. See [the project page on RPiOVN.com](http://rpiovn.com/page/simple-tracking-device) for more details.
 
 ## Current State
-This program is currently in pre-Alpha development. It's very rough. So far logging in GeoJSON and KML formats has been achieved. The next step is to get GPX format. After that I'll start working on the UI.
+This program is currently in pre-Alpha development. It's very rough. So far logging in GeoJSON and KML formats has been achieved. The next step is to develop the UI.
 
 The ultimate goal of the software is for the device to be configurable from a cell phone or computer over WiFi. The RPi will be able to switch between an Access Point (acting like a wifi router) and a wireless client (like a computer or cell phone). It will serve up a web page that lists the available tracking logs that can be downloaded in the various formats.
 
@@ -35,7 +35,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## Additional Conditions
 As additional conditions to the standard MIT license above, the following conditions also apply:
 
-Commercial use of the Software is encouraged. Any products using the Software which obtain more than $10,000 USD in annual gross sales agree to pay a royalty of 2% of those gross sales to the copyright holder. 
+1. Commercial use of the Software is encouraged. Any products using the Software which obtain more than $10,000 USD in annual gross sales agree to pay a royalty of 2% of those gross sales to the copyright holder.
+
+2. Attribution in the form of a link to RPiOVN.com is required in the header of any source code files that make use of source code from this project.
 
 # Attribution
 This project makes use of the following Libraries:

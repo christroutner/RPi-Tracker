@@ -189,6 +189,7 @@ app.get('/', function(request, response, next) {
 //app.use('/add_new', requestHandlers.add_new);
 app.use('/listLogFiles', requestHandlers.listLogFiles);
 app.use('/queryTracking', requestHandlers.queryTracking);
+app.use('/wifiSettings', requestHandlers.wifiSettings);
 
 
 /*

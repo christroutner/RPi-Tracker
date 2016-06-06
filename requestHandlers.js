@@ -98,7 +98,17 @@ function queryTracking(request, response, next) {
   }
 }
 
+/******************************************************************************
+Summary:
+wifiSettings() allows configuration of the WiFi interface.
+******************************************************************************/
+function wifiSettings(request, response, next) {
+  debugger;
+  
+  response.send(true);
+}
 
 
 exports.listLogFiles = listLogFiles;
 exports.queryTracking = queryTracking;
+exports.wifiSettings = wifiSettings;

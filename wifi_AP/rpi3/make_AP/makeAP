@@ -1,0 +1,52 @@
+#!/bin/bash
+# Switch the RPi from normal wifi to an AP
+# Based on this adafruit tutorial: https://learn.adafruit.com/setting-up-a-raspberry-pi-as-a-wifi-access-point/install-software
+# Run this script with sudo or as su
+
+echo "SCRIPT LOG: installing hostapd and isc-dhcp-server..."
+sudo apt-get update
+sudo apt-get install -y hostapd isc-dhcp-server
+
+echo "SCRIPT LOG: copying configuration files..."
+sudo cp dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo cp isc-dhcp-server /etc/default/isc-dhcp-server
+sudo ifdown wlan0
+sudo cp interfaces /etc/network/interfaces
+sudo ifconfig wlan0 192.168.42.1
+sudo cp hostapd.conf /etc/hostapd/hostapd.conf
+sudo cp hostapd /etc/default/hostapd
+sudo cp sysctl.conf /etc/sysctl.conf
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+echo "SCRIPT LOG: editing IP Tables..."
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+
+#sudo cp interfaces2 /etc/network/interfaces
+
+echo "SCRIPT LOG: Overwriting hostapd with modified version..."
+#unzip adafruit_hostapd_14128.zip /home/pi
+sudo cp adafruit_hostapd_14128.zip /home/pi
+cd /home/pi
+rm hostapd
+sudo unzip /home/pi/adafruit_hostapd_14128.zip
+sudo mv /usr/sbin/hostapd /usr/sbin/hostapd.ORIG
+sudo cp /home/pi/hostapd /usr/sbin/hostapd
+sudo chmod 755 /usr/sbin/hostapd
+
+#echo "SCRIPT LOG: Starting hostapd..."
+#sudo /usr/sbin/hostapd /etc/hostapd/hostapd.conf
+
+echo "SCRIPT LOG: configuring AP services for reboot..."
+sudo service hostapd start
+sudo service isc-dhcp-server start
+sudo update-rc.d hostapd enable
+sudo update-rc.d isc-dhcp-server enable
+
+sudo mv /usr/share/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service /home/pi/wifi_AP
+
+echo "SCRIPT LOG: Reboot device and RPi should now act as an access point named Pi_AP"
+
+

@@ -5,8 +5,8 @@
     <div class="span4">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab1" data-toggle="tab">Log Files</a></li>
-        <li><a href="#tab2" data-toggle="tab">WiFi</a></li>
-        <li><a href="#tab3" data-toggle="tab">Settings</a></li>
+        <li><a href="#tab2" data-toggle="tab">Settings</a></li>
+        <li><a href="#tab3" data-toggle="tab"></a>WiFi</li>
       </ul>
 
       <div class="tab-content" >
@@ -67,7 +67,33 @@
         <!-- START WIFI CONFIGURATION TAB -->
         <div class="tab-pane" id="tab3">
           
-          <p>This tab will allow the user to control the WiFi settings, switching back and forth between <b>wireless client</b> and <b>access point</b> modes.</p>
+          <p>
+            This tab allows you to control the WiFi settings. You can use these settings to switch the Raspberry Pi
+            <b>wireless client</b> and <b>access point</b> (AP) modes. An AP mode allows the Raspberry Pi to function
+            as a wireless router, allowing cell phones and laptops to connect to it directly over WiFi. However, in
+            AP mode, the device will not be able to connect to the internet. To connect to the internet, you'll need
+            to configure the Raspberry Pi as a wireless client and fill in the information in needs to connect to
+            your local WiFi router.
+          </p>
+          
+          <div class="row">
+            <h2>RPi Configured As:</h2>
+            <form class="form-inline">
+              <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Access Point
+                  </label>
+                </div>
+                
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> WiFi Client
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
           
           <div class="row">
             <div class="col-xs-12">

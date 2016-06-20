@@ -8,9 +8,10 @@
     {
       "ssid": "Verizon-MiFi6620L-C7AA",
       "psk": "8e8e255e",
-      "key_mgmt": WPA-PSK
+      "key_mgmt": "WPA-PSK"
     }
   ],
+  
   "wifiAPSettings": {
     "ssid": "Pi_AP",
     "channel": 6

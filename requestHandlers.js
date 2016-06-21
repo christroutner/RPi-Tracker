@@ -12,7 +12,7 @@ var events = require('events').EventEmitter; //Event emitter library.
 var rander = require('rander'); //Library used to generate UniqueIDs.
 var ya_csv = require('ya-csv'); //Ya-csv library used to output csv files.
 var exec = require('child_process').exec; //Used to execute command line instructions.
-var serverSettings = require('./server_settings.json');
+var serverSettings = require('./assets/server_settings.json');
 
 //GLOBAL VARIABLES
 //var CSVData = new Array(); //Object to hold CSV data

@@ -141,7 +141,8 @@
 </div>
 
 <script type=text/javascript>
-  var isTracking = true;
+  var isTracking = true;  //Tracks the state of the device. Tracking = true. Not tracking = false.
+  var serverSettings = new Object(); //Used to hold the data in server_settings.json.
   
   $(document).ready(function() {
     //debugger;
@@ -289,8 +290,20 @@
     
     // START WIFI CONTROL CODE
     
+    //Initialize the WiFi settings tab based on the server_settings.json data.
     $.getJSON('/server_settings.json', '', function(data) {
       debugger;
+      
+      //Copy the JSON data to a global variable.
+      serverSettings = data;
+      
+      //1 = Access Point
+      if(data.wifiType == 1) {
+        $('#optionsCheckbox1').prop("checked", true);
+      //2 = WiFi Client
+      } else if(data.wifiType == 2) {
+        $('#optionsCheckbox2').prop("checked", true);
+      }
     });
     
     //Create click handler for Wifi button. This is just used for testing right now.

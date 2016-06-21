@@ -174,8 +174,8 @@ $(document).ready(function() {
 
   debugger;
   //Assign the click event handler to the checkboxes
-  $('#optionsCheckbox1').click(eventHandler);
-  $('#optionsCheckbox2').click(eventHandler);
+  $('#optionsCheckbox1').click(wifiCheckboxHandler);
+  $('#optionsCheckbox2').click(wifiCheckboxHandler);
 
   // END WIFI CONTROL CODE
 

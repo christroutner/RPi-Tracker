@@ -173,6 +173,9 @@ $(document).ready(function() {
   });
 
 
+  //Assign the click event handler to the checkboxes
+  $('#optionsCheckbox1').click(eventHandler);
+  $('#optionsCheckbox2').click(eventHandler);
 
   // END WIFI CONTROL CODE
 
@@ -183,3 +186,12 @@ $(document).ready(function() {
 
   // END SETTINGS TAB CONTROL
 })
+
+
+// START UTILITY FUNCTIONS
+function wifiCheckboxHandler(eventHandler) {
+  debugger;
+  
+  
+}
+// END UTILITY FUNCTIONS

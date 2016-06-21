@@ -172,7 +172,7 @@ $(document).ready(function() {
     })
   });
 
-
+  debugger;
   //Assign the click event handler to the checkboxes
   $('#optionsCheckbox1').click(eventHandler);
   $('#optionsCheckbox2').click(eventHandler);

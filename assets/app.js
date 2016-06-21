@@ -200,8 +200,8 @@ function wifiCheckboxHandler(eventHandler) {
   otherCheckbox = $(otherCheckbox); //jQuery object
   
   //If both check boxes are true...
-  if( (otherCheckbox.prop('checked') == true) && ($this.prop('checked') == true) ) {
-    
+  if( (otherCheckbox.prop('checked') == true) && ($this.prop('checked') == false) ) {
+    debugger;
     //If wifiType is currently set to AP...
     if(serverSettings.wifiType == 1) {
       
@@ -218,7 +218,7 @@ function wifiCheckboxHandler(eventHandler) {
     
   //If this was an accidental uncheck...
   } else {
-    
+    debugger;
     //Force UI when in AP mode.
     if(serverSettings.wifiType == 1) {
       

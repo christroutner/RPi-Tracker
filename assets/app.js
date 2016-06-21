@@ -202,15 +202,19 @@ function wifiCheckboxHandler(eventHandler) {
   //If both check boxes are true...
   if( (otherCheckbox.prop('checked') == true) && ($this.prop('checked') == true) ) {
     debugger;
+    
+    //uncheck the other checkbox
+    otherCheckbox.prop('checked', false);
+    
     //If wifiType is currently set to AP...
     if(serverSettings.wifiType == 1) {
       
-      otherCheckbox.prop('checked', true); //Uncheck the AP
+      //otherCheckbox.prop('checked', false); //Uncheck the AP
       serverSettings.wifiType = 2;  //Assign wifiType to wifi client
       
     //Otherwise if wifiType is set to 2 (wifi client)  
     } else {
-      otherCheckbox.prop('checked', true); //Uncheck the wifi client box.
+       //Uncheck the wifi client box.
       serverSettings.wifiType = 1; //Assign wifiType to AP mode
     }
     

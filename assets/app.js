@@ -199,6 +199,39 @@ function wifiCheckboxHandler(eventHandler) {
   var otherCheckbox =':checkbox:not('+"#"+this.id+')'; //jQuery selector
   otherCheckbox = $(otherCheckbox); //jQuery object
   
+  //If both check boxes are true...
+  if( (otherCheckbox.prop('checked') == true) && ($this.prop('checked') == true) ) {
+    
+    //If wifiType is currently set to AP...
+    if(serverSettings.wifiType == 1) {
+      
+      $this.prop('checked', false); //Uncheck the AP
+      serverSettings.wifiType = 2;  //Assign wifiType to wifi client
+      
+    //Otherwise if wifiType is set to 2 (wifi client)  
+    } else {
+      otherCheckbox.prop('checked', false); //Uncheck the wifi client box.
+      serverSettings.wifiType = 1; //Assign wifiType to AP mode
+    }
+    
+    //Pass server_settings to server to update file.
+    
+  //If this was an accidental uncheck...
+  } else {
+    
+    //Force UI when in AP mode.
+    if(serverSettings.wifiType == 1) {
+      
+      $('#optionsCheckbox1').prop('checked', true);
+      $('#optionsCheckbox2').prop('checked', false);
+      
+    //Force UI in wireless client moe.
+    } else {
+      $('#optionsCheckbox1').prop('checked', false);
+      $('#optionsCheckbox2').prop('checked', true);
+    }
+  }
+  
   debugger;
   
 }

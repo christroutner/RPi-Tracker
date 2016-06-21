@@ -192,6 +192,14 @@ $(document).ready(function() {
 function wifiCheckboxHandler(eventHandler) {
   debugger;
   
+  //'this' referres to the HTML element that created the event. Reference it with a local jQuery object.
+  $this = $(this);
+  
+  //Find the other checkbox that did not initiate the event.
+  var otherCheckbox =':checkbox:not('+"#"+this.id+')'; //jQuery selector
+  otherCheckbox = $(otherCheckbox); //jQuery object
+  
+  debugger;
   
 }
 // END UTILITY FUNCTIONS

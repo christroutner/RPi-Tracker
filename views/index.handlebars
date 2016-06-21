@@ -104,7 +104,31 @@
                 <!-- <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> -->
                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                   <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    <p>
+                      Making the Raspberry Pi an Access Point will turn it into a WiFi hostspot, according to the settings below:
+                    </p>
+                    
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="apSSID" class="col-xs-2 control-label">SSID:</label>
+                        <div class="col-xs-10">
+                          <input type="text" class="form-control" id="apSSID" placeholder="Hotspot Name">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="apPSK" class="col-xs-2 control-label">PSK:</label>
+                        <div class="col-xs-10">
+                          <input type="text" class="form-control" id="apPSK" placeholder="Password">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="apEncryption" class="col-xs-2 control-label">Encryption Type:</label>
+                        <div class="col-xs-10">
+                          <input type="text" class="form-control" id="apEncryption" value="WPA-PSK" readonly>
+                        </div>
+                      </div>                      
+                    </form>
+                    
                   </div>
                 </div>
               </div>

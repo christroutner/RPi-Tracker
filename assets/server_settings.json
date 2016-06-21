@@ -1,0 +1,38 @@
+{
+  "wifiClientSettings": [
+    {
+      "ssid": "Solace",
+      "psk": "ffffffff",
+      "key_mgmt": "WPA-PSK",
+      "connectionVerified": true //Set to true when the Pi can connect to the net or the 'confirm' button is pressed when switching to wifi client mode.
+    },
+    {
+      "ssid": "Verizon-MiFi6620L-C7AA",
+      "psk": "8e8e255e",
+      "key_mgmt": "WPA-PSK",
+      "connectionVerified": true
+    }
+  ],
+  
+  "wifiAPSettings": {
+    "ssid": "Pi_AP",
+    "psk": "raspberry",
+    "channel": 6
+  },
+  
+  "previousSettings": {
+    "wifiAP": {
+      "ssid": "Pi_AP",
+      "psk": "raspberry",
+      "channel": 6
+    },
+    "wifiClient": {
+      "none": null
+    }
+  },
+  
+  "rebootConfirmationNeeded": "false",
+  "wifiType": 1, //1 = wifi client. 2 = Access Point
+  
+  
+}

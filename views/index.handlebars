@@ -146,7 +146,7 @@
   $(document).ready(function() {
     //debugger;
   
-    // START TRACKER CONTROL CODE
+    // START TRACKER & LOG FILE CONTROL CODE
   
     //Retrieve the list of log files from the server and use the data to build out the drop-down list.
     $.get('/listLogFiles', '', function(data) {
@@ -282,12 +282,16 @@
       //Need to create a server call to delete a given logFile name.
     });
     
-    // END TRACKER CONTROL CODE
+    // END TRACKER & LOG FILE CONTROL CODE
     
     
     
     
     // START WIFI CONTROL CODE
+    
+    $.getJSON('/server_settings.json', '', function(data) {
+      debugger;
+    });
     
     //Create click handler for Wifi button. This is just used for testing right now.
     $('#wifiBtn').click(function() {

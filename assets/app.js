@@ -149,7 +149,7 @@ $(document).ready(function() {
 
   //Initialize the WiFi settings tab based on the server_settings.json data.
   $.getJSON('/server_settings.json', '', function(data) {
-    debugger;
+    //debugger;
 
     //Copy the JSON data to a global variable.
     serverSettings = data;
@@ -172,7 +172,7 @@ $(document).ready(function() {
     })
   });
 
-  debugger;
+  //debugger;
   //Assign the click event handler to the checkboxes
   $('#optionsCheckbox1').click(wifiCheckboxHandler);
   $('#optionsCheckbox2').click(wifiCheckboxHandler);

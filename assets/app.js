@@ -190,7 +190,7 @@ $(document).ready(function() {
 
 // START UTILITY FUNCTIONS
 function wifiCheckboxHandler(eventHandler) {
-  debugger;
+  //debugger;
   
   //'this' referres to the HTML element that created the event. Reference it with a local jQuery object.
   $this = $(this);
@@ -201,20 +201,16 @@ function wifiCheckboxHandler(eventHandler) {
   
   //If both check boxes are true...
   if( (otherCheckbox.prop('checked') == true) && ($this.prop('checked') == true) ) {
-    debugger;
+    //debugger;
     
     //uncheck the other checkbox
     otherCheckbox.prop('checked', false);
     
     //If wifiType is currently set to AP...
     if(serverSettings.wifiType == 1) {
-      
-      //otherCheckbox.prop('checked', false); //Uncheck the AP
       serverSettings.wifiType = 2;  //Assign wifiType to wifi client
-      
     //Otherwise if wifiType is set to 2 (wifi client)  
     } else {
-       //Uncheck the wifi client box.
       serverSettings.wifiType = 1; //Assign wifiType to AP mode
     }
     
@@ -222,7 +218,7 @@ function wifiCheckboxHandler(eventHandler) {
     
   //If this was an accidental uncheck...
   } else {
-    debugger;
+    //debugger;
     //Force UI when in AP mode.
     if(serverSettings.wifiType == 1) {
       
@@ -236,7 +232,6 @@ function wifiCheckboxHandler(eventHandler) {
     }
   }
   
-  debugger;
   
 }
 // END UTILITY FUNCTIONS

@@ -176,22 +176,21 @@ $(document).ready(function() {
     for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
       
       //Clone the blank datalist.option element.
-      var tmpItem = $('#clientSSIDList').find('option').first().clone();
+      var tmpItem = $('#savedClients').find('option').first().clone();
       
       //Fill out the value and text of the option element.
       tmpItem.val(serverSettings.wifiClientSettings[i].ssid);
-      //tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
       
       //Append the option to the datalist.
-      $('#clientSSIDList').append(tmpItem);
-      
+      $('#savedClients').append(tmpItem);
       
     }
     
     //$('#clientSSID').on('change', function(eventData) {
-    $('#clientSSID').bind('select', function() {
+    $('#savedClients').bind('select', function() {
       debugger;
     });
+    
     
     debugger;
   });

@@ -314,6 +314,8 @@ function wifiCheckboxHandler(eventHandler) {
 function updateClientSettings() {
   debugger;
   
+  var checkFlag = false;
+  
   var clientSSID = $('#clientSSID').val();
   
   //Loop through all the entries in wifiClientSettings
@@ -324,11 +326,16 @@ function updateClientSettings() {
       serverSettings.wifiClientSettings[i].psk = $('#clientPSK').val();
       serverSettings.wifiClientSettings[i].key_mgmt = $('#clientEncryption').val();
       serverSettings.wifiClientSettings[i].connectionVerified = "false";
+      
+      checkFlag = true; //Set the flag so I can skip the statement below.
+      
+      break;
     }
   }
   
   //If the value of the clientSSID text box did not match a saved entry, create a new entry.
-  if( (i==serverSettings.wifiClientSettings.length-1) && (clientSSID != serverSettings.wifiClientSettings[i].ssid) ) {
+  //if( (i==serverSettings.wifiClientSettings.length-1) && (clientSSID != serverSettings.wifiClientSettings[i].ssid) ) {
+  if(!checkFlag) {
     var newEntry = {
       "ssid": $('#clientSSID').val(),
       "psk": $('#clientPSK').val(),

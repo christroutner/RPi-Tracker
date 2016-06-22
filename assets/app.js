@@ -215,19 +215,35 @@ $(document).ready(function() {
   });
 
   
-  //Create click handler for Wifi button. This is just used for testing right now.
+  //Create click handler for 'Save Settings' Wifi button. 
   $('#wifiBtn').click(function() {
-    //debugger;
+    debugger;
 
+    //Update the wifiAPSettings in the serverSettings.
+    serverSettings.wifiAPSettings.ssid = $('#apSSID').val();
+    serverSettings.wifiAPSettings.psk = $('#apPSK').val();
+    serverSettings.wifiAPSettings.channel = Number($('#apChannel').val());
+    
+    //Add or update the wifiClientSettings
+    updateClientSettings();
+    
+    //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/wifiSettings', serverSettings, function(data) {
       //debugger;
       if(data == true) {
         console.log('server_settings.json updated with WiFi Settings.');
       } else {
         console.error('server_settings.json changes rejected by server!');
-      }
-      
+      }      
     })
+    
+    //Throw up the modal if a reboot is required.
+    if(serverSettings.rebootConfirmationNeeded == true) {
+      console.log('About to reboot. serverSettings.rebootConfirmationNeeded = '+serverSettings.rebootConfirmationNeeded);
+      
+      alert('The Raspberry Pi in now rebooting and implementing the new settings. Please wait a few minutes, then navigate back to this page'
+           +' and confirm these settings or the old settings will be restored.');
+    }
   });
 
   
@@ -292,7 +308,35 @@ function wifiCheckboxHandler(eventHandler) {
       $('#optionsCheckbox2').prop('checked', true);
     }
   }
+}
+
+//This function is called by the #wifiBtn click handler. It's purpose is to update the server settings appropriately from the information on the WiFi tab.
+function updateClientSettings() {
+  debugger;
   
+  var clientSSID = $('#clientSSID').val();
   
+  //Loop through all the entries in wifiClientSettings
+  for(var i=0; i < serverSettings.wifiClientSettings.length; i++) {
+    
+    //If the value in the clientSSID text box matches a saved entry, update the entry.
+    if(clientSSID == serverSettings.wifiClientSettings[i].ssid) {
+      serverSettings.wifiClientSettings[i].psk = $('#clientPSK').val();
+      serverSettings.wifiClientSettings[i].key_mgmt = $('#clientEncryption').val();
+      serverSettings.wifiClientSettings[i].connectionVerified = "false";
+    }
+  }
+  
+  //If the value of the clientSSID text box did not match a saved entry, create a new entry.
+  if( (i==serverSettings.wifiClientSettings.length-1) && (clientSSID != serverSettings.wifiClientSettings[i].ssid) ) {
+    var newEntry = {
+      "ssid": $('#clientSSID').val(),
+      "psk": $('#clientPSK').val(),
+      "key_mgmt": $('#clientEncryption').val(),
+      "connectionVerified": "false"
+    };
+    
+    servverSettings.wifiClientSettings.push(newEntry);
+  }
 }
 // END UTILITY FUNCTIONS

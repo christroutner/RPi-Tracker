@@ -125,6 +125,13 @@ function wifiSettings(request, response, next) {
 
     });
     
+    //Write out new wpa_supplicant.conf file
+    write_wpa_supplicant();
+    
+    //Write out new hostapd.conf file
+    
+    //Based on the current settings, copy the new file to the proper location
+    
     response.send(true);
   } else {
     response.send(false)
@@ -132,6 +139,37 @@ function wifiSettings(request, response, next) {
   
   //response.send(true);
   
+}
+
+//This function is called by wifiSettings(). It's purpose is to write out a new wpa_supplicant file.
+function write_wpa_supplicant() {
+  debugger;
+  
+  var outStr = "";
+  
+  //Write out file header
+  outStr += "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n";
+  outStr += "update_config=1\n";
+  outStr += "country=GB\n\n";
+  
+  for(var i=0; i < serverSettings.wifiClientSettings.length; i++) {
+    outStr += "network={\n";
+    outStr += '\tssid="'+serverSettings.wifiClientSettings[i].ssid+'"\n';
+    outStr += '\tpsk="'+serverSettings.wifiClientSettings[i].psk+'"\n';
+    outStr += '\tkey_mgmt='+serverSettings.wifiClientSettings[i].key_mgmt+'\n';
+    outStr += "}/n/n";
+  }
+  
+  //Write out the KML data
+  fs.writeFile('./wifi_AP/rpi3/wifi_client/wpa_supplicant.conf', outStr, function (err) {
+    if(err) {
+      console.log('Error in write_wpa_supplicant() while trying to write wpa_supplicant.conf file.');
+      console.log(err);
+    } else {
+      console.log('write_wpa_supplicant() executed. wpa_supplicant.conf updated.');
+    }
+
+  });
 }
 
 

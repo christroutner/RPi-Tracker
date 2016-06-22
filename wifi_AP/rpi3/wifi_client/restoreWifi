@@ -15,6 +15,9 @@ sudo update-rc.d isc-dhcp-server disable
 #Put the original hostapd file back
 #sudo mv /bin/hostapd /usr/sbin/hostapd
 
+#Replace wpa_supplicant.conf file
+sudo mv wpa_supplicant.conf /etc/wpa_supplicant/
+
 #Flush IP Tables
 echo "SCRIPT LOG: flushing IP tables..."
 sudo iptables -t nat -F
@@ -34,6 +37,7 @@ sudo rm /etc/hostapd/hostapd.conf
 sudo cp sysctl.conf /etc/sysctl.conf
 
 
-echo "SCRIPT LOG: Done! Reboot to activate WiFi."
+echo "SCRIPT LOG: Done! Rebooting to activate WiFi."
+sudo reboot now
 
 

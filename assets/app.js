@@ -180,7 +180,7 @@ $(document).ready(function() {
       
       //Fill out the value and text of the option element.
       tmpItem.val(serverSettings.wifiClientSettings[i].ssid);
-      tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
+      //tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
       
       //Append the option to the datalist.
       $('#clientSSIDList').append(tmpItem);

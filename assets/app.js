@@ -273,9 +273,9 @@ function wifiCheckboxHandler(eventHandler) {
       serverSettings.wifiType = 1; //Assign wifiType to AP mode
     }
     
-    //Pass server_settings to server to update file.
-    
-    //Throw up warning modal.
+    //Set the reboot flag
+    serverSettings.rebootConfirmationNeeded = true;
+    //The warning to the user will be generated when they click on the 'Save' button.
     
   //If this was an accidental uncheck...
   } else {

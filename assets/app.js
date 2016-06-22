@@ -163,15 +163,17 @@ $(document).ready(function() {
     }
   });
 
+  
   //Create click handler for Wifi button. This is just used for testing right now.
   $('#wifiBtn').click(function() {
     debugger;
 
-    $.get('/wifiSettings', '', function(data) {
+    $.get('/wifiSettings', serverSettings, function(data) {
       debugger;
     })
   });
 
+  
   //debugger;
   //Assign the click event handler to the checkboxes
   $('#optionsCheckbox1').click(wifiCheckboxHandler);
@@ -215,6 +217,8 @@ function wifiCheckboxHandler(eventHandler) {
     }
     
     //Pass server_settings to server to update file.
+    
+    //Throw up warning modal.
     
   //If this was an accidental uncheck...
   } else {

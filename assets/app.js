@@ -149,7 +149,7 @@ $(document).ready(function() {
 
   //Initialize the WiFi settings tab based on the server_settings.json data.
   $.getJSON('/server_settings.json', '', function(data) {
-    //debugger;
+    debugger;
 
     //Copy the JSON data to a global variable.
     serverSettings = data;

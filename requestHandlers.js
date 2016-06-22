@@ -114,7 +114,7 @@ function wifiSettings(request, response, next) {
     //Save the passed in server settings to the global variable serverSettings.
     serverSettings = request.query;
     
-    //Write out the KML data
+    //Write out the server_settings.json file.
     fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
       if(err) {
         console.log('Error in wifiSettings() while trying to write server_settings.json file.');
@@ -131,9 +131,30 @@ function wifiSettings(request, response, next) {
     //Write out new hostapd.conf file
     write_hostapd();
     
-    //Based on the current settings, copy the new file to the proper location
-    
     response.send(true);
+    
+    //If the reboot flag is set, then prepare to reboot the Pi
+    if(serverSettings.rebootConfirmationNeeded == "true") {
+      debugger;
+      
+      //AP
+      if(serverSettings.wifiType == 1) {
+        
+        exec('sudo -A '+sudoPassword+' ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
+          debugger;
+        });
+        
+      //Client
+      } else if(serverSettings.wifiType == 2) {
+        
+        exec('sudo -A '+sudoPassword+' ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
+          debugger;
+        });
+        
+      }
+    }
+  
+  //This handles garbage queries. Return false.
   } else {
     response.send(false)
   }

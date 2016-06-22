@@ -138,14 +138,14 @@ function wifiSettings(request, response, next) {
       debugger;
       
       //AP
-      if(serverSettings.wifiType == 1) {
+      if(serverSettings.wifiType == "1") {
         console.log('Running makeAP...');
         exec('sudo ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
           debugger;
         });
         
       //Client
-      } else if(serverSettings.wifiType == 2) {
+      } else if(serverSettings.wifiType == "2") {
         console.log('Running restoreWifi...');
         exec('sudo ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
           debugger;

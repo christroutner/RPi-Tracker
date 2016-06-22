@@ -186,7 +186,7 @@ $(document).ready(function() {
       $('#clientSSIDList').append(tmpItem);
       
       //$('#clientSSID').on('change', function(eventData) {
-      $('#clientSSIDList').bind('select', function(eventData) {
+      $('#clientSSIDList').bind('select', function() {
         debugger;
       });
     }

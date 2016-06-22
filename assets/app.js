@@ -187,8 +187,7 @@ $(document).ready(function() {
       
     }
     
-    //$('#clientSSID').on('change', function(eventData) {
-    $('#savedClients').bind('select', function() {
+    $('#savedClients').on('change', function(eventData) {
       debugger;
     });
     

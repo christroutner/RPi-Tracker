@@ -185,11 +185,13 @@ $(document).ready(function() {
       //Append the option to the datalist.
       $('#clientSSIDList').append(tmpItem);
       
-      //$('#clientSSID').on('change', function(eventData) {
-      $('#clientSSIDList').bind('select', function() {
-        debugger;
-      });
+      
     }
+    
+    //$('#clientSSID').on('change', function(eventData) {
+    $('#clientSSID').bind('select', function() {
+      debugger;
+    });
     
     debugger;
   });

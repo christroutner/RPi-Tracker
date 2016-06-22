@@ -115,7 +115,7 @@ function wifiSettings(request, response, next) {
     serverSettings = request.query;
     
     //Write out the KML data
-    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings), function (err) {
+    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
       if(err) {
         console.log('Error in wifiSettings() while trying to write server_settings.json file.');
         console.log(err);
@@ -124,10 +124,14 @@ function wifiSettings(request, response, next) {
       }
 
     });
+    
+    response.send(true);
+  } else {
+    response.send(false)
   }
   
   //response.send(true);
-  response.send(JSON.stringify(serverSettings));
+  
 }
 
 

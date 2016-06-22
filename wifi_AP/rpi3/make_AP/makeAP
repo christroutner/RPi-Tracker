@@ -4,7 +4,7 @@
 # Run this script with sudo or as su
 
 echo "SCRIPT LOG: installing hostapd and isc-dhcp-server..."
-sudo apt-get update
+#sudo apt-get update
 sudo apt-get install -y hostapd isc-dhcp-server libnl-dev
 
 echo "SCRIPT LOG: copying configuration files..."

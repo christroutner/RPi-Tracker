@@ -184,6 +184,10 @@ $(document).ready(function() {
       
       //Append the option to the datalist.
       $('#clientSSIDList').append(tmpItem);
+      
+      $('#clientSSIDList').on('change', function(eventData) {
+        debugger;
+      });
     }
     
     debugger;

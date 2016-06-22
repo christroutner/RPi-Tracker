@@ -38,6 +38,6 @@ sudo cp sysctl.conf /etc/sysctl.conf
 
 
 echo "SCRIPT LOG: Done! Rebooting to activate WiFi."
-sudo reboot now
+#sudo reboot now
 
 

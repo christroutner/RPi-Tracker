@@ -64,9 +64,11 @@ Optionally an boolean 'tracking' argument can be input. True will turn on tracki
 and false will turn it off.
 ******************************************************************************/
 function queryTracking(request, response, next) {
-  debugger;
+  //debugger;
   
   var changeState = request.query.changeState;
+  
+  console.log("Request handler 'queryTracking()' was called.");
   
   //Send the value of the isTracking state variable if no changeState value was passed in.
   if( changeState == undefined ) {
@@ -80,17 +82,17 @@ function queryTracking(request, response, next) {
     
   //Set the state of tracking if a changeState value was passed in.
   } else {
-    debugger;
+    //debugger;
     if(changeState == "false") {
       request.app.locals.listener.disconnect(function() {
-        debugger;
+        //debugger;
         console.log('GPS Disconnected');
         request.app.locals.isTracking = false;
         response.send('false');
       });
     } else {
       request.app.locals.listener.connect(function() {
-        debugger;
+        //debugger;
         console.log('GPS Connected');
         request.app.locals.isTracking = true;
         response.send('true');
@@ -106,7 +108,23 @@ wifiSettings() allows configuration of the WiFi interface.
 function wifiSettings(request, response, next) {
   debugger;
   
+  //Just a general test to verify that the request doesn't contain garbage, but an expected data structure.
+  if(request.query.wifiType < 3) {
+    
+    //Save the passed in server settings to the global variable serverSettings.
+    serverSettings = request.query;
+    
+    //Write out the KML data
+    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings), function (err) {
+      if(err) {
+        console.log('Error in wifiSettings() while trying to write server_settings.json file.');
+        console.log(err);
+      } else {
+        console.log('wifiSettings() executed. server_settings.json updated.');
+      }
 
+    });
+  }
   
   //response.send(true);
   response.send(JSON.stringify(serverSettings));

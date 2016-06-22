@@ -187,8 +187,23 @@ $(document).ready(function() {
       
     }
     
+    //Fill in the WiFi Client settings when a saved AP is selected.
     $('#savedClients').on('change', function(eventData) {
       debugger;
+      
+      //If the blank entry is selected, then return. Do nothing.
+      if($('#savedClients').find(':selected').val() == "")
+        return;
+      
+      //Get the value of the selected item.
+      var selectedIndex = $('#savedClients').find(':selected').val();
+      
+      //Fill out the client form.
+      $('#clientSSID').val(serverSettings.wifiClientSettings[selectedIndex].ssid);
+      $('#clientPSK').val(serverSettings.wifiClientSettings[selectedIndex].psk);
+      $('#clientEncryption').val(serverSettings.wifiClientSettings[selectedIndex].key_mgmt);
+      
+      
     });
     
     

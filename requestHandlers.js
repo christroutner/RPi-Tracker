@@ -129,6 +129,7 @@ function wifiSettings(request, response, next) {
     write_wpa_supplicant();
     
     //Write out new hostapd.conf file
+    write_hostapd();
     
     //Based on the current settings, copy the new file to the proper location
     
@@ -143,7 +144,7 @@ function wifiSettings(request, response, next) {
 
 //This function is called by wifiSettings(). It's purpose is to write out a new wpa_supplicant file.
 function write_wpa_supplicant() {
-  debugger;
+  //debugger;
   
   var outStr = "";
   
@@ -157,16 +158,48 @@ function write_wpa_supplicant() {
     outStr += '\tssid="'+serverSettings.wifiClientSettings[i].ssid+'"\n';
     outStr += '\tpsk="'+serverSettings.wifiClientSettings[i].psk+'"\n';
     outStr += '\tkey_mgmt='+serverSettings.wifiClientSettings[i].key_mgmt+'\n';
-    outStr += "}/n/n";
+    outStr += "}\n\n";
   }
   
-  //Write out the KML data
+  //Write out the wpa_supplicant file.
   fs.writeFile('./wifi_AP/rpi3/wifi_client/wpa_supplicant.conf', outStr, function (err) {
     if(err) {
       console.log('Error in write_wpa_supplicant() while trying to write wpa_supplicant.conf file.');
       console.log(err);
     } else {
       console.log('write_wpa_supplicant() executed. wpa_supplicant.conf updated.');
+    }
+
+  });
+}
+
+//This function is called by wifiSettings(). It's purpose is to write out a new wpa_supplicant file.
+function write_hostapd() {
+  debugger;
+  
+  var outStr = ""; //Initialize
+  
+  outStr += "interface=wlan0\n";
+  outStr += "driver=nl80211\n";
+  outStr += "ssid="+serverSettings.wifiAPSettings.ssid+"\n";
+  outStr += "hw_mode=g\n";
+  outStr += "channel="+serverSettings.wifiAPSettings.channel+"\n";
+  outStr += "macaddr_acl=0\n";
+  outStr += "auth_algs=1\n";
+  outStr += "ignore_broadcast_ssid=0\n";
+  outStr += "wpa=2\n";
+  outStr += "wpa_passphrase="+serverSettings.wifiAPSettings.psk+"\n";
+  outStr += "wpa_key_mgmt=WPA-PSK\n";
+  outStr += "wpa_pairwise=TKIP\n";
+  outStr += "rsn_pairwise=CCMP\n";
+  
+  //Write out the hostapd.conf file.
+  fs.writeFile('./wifi_AP/rpi3/make_AP/hostapd.conf', outStr, function (err) {
+    if(err) {
+      console.log('Error in write_hostapd() while trying to write hostapd.conf file.');
+      console.log(err);
+    } else {
+      console.log('write_hostapd() executed. hostapd.conf updated.');
     }
 
   });

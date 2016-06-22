@@ -206,10 +206,28 @@ $(document).ready(function() {
       $('#clientSSID').val(serverSettings.wifiClientSettings[selectedIndex].ssid);
       $('#clientPSK').val(serverSettings.wifiClientSettings[selectedIndex].psk);
       $('#clientEncryption').val(serverSettings.wifiClientSettings[selectedIndex].key_mgmt);
-      
-      
     });
     
+    
+    //Throw up a yes/no dialog if the reboot flag is set.
+    if(serverSettings.rebootConfirmationNeeded == "true") {
+      
+      //Confirm if they want to continue using the new settings.
+      var r = confirm("Press 'Yes' to save the new WiFi settings.");
+      if(r == true) {
+        serverSettings.rebootConfirmationNeeded == "false";
+        
+        //persist the server settings to the sever.
+        $('#wifiBtn').trigger('click');
+        
+      } else {
+        debugger;
+        
+        //restore the saved settings and reboot.
+        
+      }
+      
+    }
     
     debugger;
   });
@@ -343,7 +361,7 @@ function updateClientSettings() {
       "connectionVerified": "false"
     };
     
-    servverSettings.wifiClientSettings.push(newEntry);
+    serverSettings.wifiClientSettings.push(newEntry);
   }
 }
 // END UTILITY FUNCTIONS

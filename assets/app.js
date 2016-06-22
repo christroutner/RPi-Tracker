@@ -336,6 +336,10 @@ function updateClientSettings() {
   
   var clientSSID = $('#clientSSID').val();
   
+  //Exit if the SSID text box is blank.
+  if(clientSSID == "")
+    return;
+  
   //Loop through all the entries in wifiClientSettings
   for(var i=0; i < serverSettings.wifiClientSettings.length; i++) {
     

@@ -179,7 +179,7 @@ $(document).ready(function() {
       var tmpItem = $('#savedClients').find('option').first().clone();
       
       //Fill out the value and text of the option element.
-      tmpItem.val(serverSettings.wifiClientSettings[i].ssid);
+      tmpItem.val(i);
       tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
       
       //Append the option to the datalist.

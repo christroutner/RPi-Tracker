@@ -176,7 +176,7 @@ $(document).ready(function() {
     for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
       
       //Clone the blank datalist.option element.
-      var tmpItem = $('#clientSSIDList').find('option').clone();
+      var tmpItem = $('#clientSSIDList').find('option').first().clone();
       
       //Fill out the value and text of the option element.
       tmpItem.val(serverSettings.wifiClientSettings[i].ssid);

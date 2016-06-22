@@ -300,11 +300,11 @@ function wifiCheckboxHandler(eventHandler) {
     otherCheckbox.prop('checked', false);
     
     //If wifiType is currently set to AP...
-    if(serverSettings.wifiType == 1) {
-      serverSettings.wifiType = 2;  //Assign wifiType to wifi client
+    if(serverSettings.wifiType == "1") {
+      serverSettings.wifiType = "2";  //Assign wifiType to wifi client
     //Otherwise if wifiType is set to 2 (wifi client)  
     } else {
-      serverSettings.wifiType = 1; //Assign wifiType to AP mode
+      serverSettings.wifiType = "1"; //Assign wifiType to AP mode
     }
     
     //Set the reboot flag

@@ -154,22 +154,30 @@ $(document).ready(function() {
     //Copy the JSON data to a global variable.
     serverSettings = data;
 
-    //1 = Access Point
+    //1 == Access Point
     if(data.wifiType == 1) {
       $('#optionsCheckbox1').prop("checked", true);
-    //2 = WiFi Client
+    //2 == WiFi Client
     } else if(data.wifiType == 2) {
       $('#optionsCheckbox2').prop("checked", true);
     }
+    
+    debugger;
   });
 
   
   //Create click handler for Wifi button. This is just used for testing right now.
   $('#wifiBtn').click(function() {
-    debugger;
+    //debugger;
 
     $.get('/wifiSettings', serverSettings, function(data) {
-      debugger;
+      //debugger;
+      if(data == true) {
+        console.log('server_settings.json updated with WiFi Settings.');
+      } else {
+        console.error('server_settings.json changes rejected by server!');
+      }
+      
     })
   });
 

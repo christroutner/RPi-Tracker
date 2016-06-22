@@ -26,7 +26,7 @@ var serverSettings = require('./assets/server_settings.json');
 //var wwwDir = '/inetpub/wwwroot/'  //Windows 2008 Server
 //var wwwDir = '/var/www/'          //Linux
 var wwwDir = './'                   //Node/Express
-
+var sudoPassword = "raspberry"; //The root password required when running 'sudo' commands.
 
 
 

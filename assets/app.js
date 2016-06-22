@@ -88,7 +88,7 @@ $(document).ready(function() {
 
   //Create click handler for Download button
   $('#downloadLogBtn').click(function() {
-    debugger;
+    //debugger;
 
     //Exit if button was clicked accidentally without first selecting a log file.
     if( $('#logFile').val() == "" ) {
@@ -127,7 +127,7 @@ $(document).ready(function() {
 
   //Create click handler for Delete button
   $('#deleteLogBtn').click(function() {
-    debugger;
+    //debugger;
 
     //Exit if button was clicked accidentally without first selecting a log file.
     if( $('#logFile').val() == "" ) {
@@ -149,7 +149,7 @@ $(document).ready(function() {
 
   //Initialize the WiFi settings tab based on the server_settings.json data.
   $.getJSON('/server_settings.json', '', function(data) {
-    debugger;
+    //debugger;
 
     //Copy the JSON data to a global variable.
     serverSettings = data;
@@ -189,7 +189,7 @@ $(document).ready(function() {
     
     //Fill in the WiFi Client settings when a saved AP is selected.
     $('#savedClients').on('change', function(eventData) {
-      debugger;
+      //debugger;
       
       //If the blank entry is selected, then return. Clear the form.
       if($('#savedClients').find(':selected').val() == "") {
@@ -229,13 +229,13 @@ $(document).ready(function() {
       
     }
     
-    debugger;
+    //debugger;
   });
 
   
   //Create click handler for 'Save Settings' Wifi button. 
   $('#wifiBtn').click(function() {
-    debugger;
+    //debugger;
 
     //Update the wifiAPSettings in the serverSettings.
     serverSettings.wifiAPSettings.ssid = $('#apSSID').val();
@@ -330,7 +330,7 @@ function wifiCheckboxHandler(eventHandler) {
 
 //This function is called by the #wifiBtn click handler. It's purpose is to update the server settings appropriately from the information on the WiFi tab.
 function updateClientSettings() {
-  debugger;
+  //debugger;
   
   var checkFlag = false;
   

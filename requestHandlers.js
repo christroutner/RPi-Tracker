@@ -140,14 +140,14 @@ function wifiSettings(request, response, next) {
       //AP
       if(serverSettings.wifiType == 1) {
         
-        exec('sudo -A '+sudoPassword+' ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
+        exec('sudo ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
           debugger;
         });
         
       //Client
       } else if(serverSettings.wifiType == 2) {
         
-        exec('sudo -A '+sudoPassword+' ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
+        exec('sudo ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
           debugger;
         });
         
@@ -196,7 +196,7 @@ function write_wpa_supplicant() {
 
 //This function is called by wifiSettings(). It's purpose is to write out a new wpa_supplicant file.
 function write_hostapd() {
-  debugger;
+  //debugger;
   
   var outStr = ""; //Initialize
   

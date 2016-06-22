@@ -154,12 +154,36 @@ $(document).ready(function() {
     //Copy the JSON data to a global variable.
     serverSettings = data;
 
+    //Set the checkboxes.
     //1 == Access Point
     if(data.wifiType == 1) {
       $('#optionsCheckbox1').prop("checked", true);
     //2 == WiFi Client
     } else if(data.wifiType == 2) {
       $('#optionsCheckbox2').prop("checked", true);
+    }
+    
+    //Set the AP settings
+    if(serverSettings.wifiAPSettings.ssid != "") {
+      $('#apSSID').val(serverSettings.wifiAPSettings.ssid);
+    }
+    if(serverSettings.wifiAPSettings.psk != "") {
+      $('#apPSK').val(serverSettings.wifiAPSettings.psk);
+    }
+    
+    
+    //Set the WiFi Client settings
+    for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
+      
+      //Clone the blank datalist.option element.
+      var tmpItem = $('#clientSSIDList').find('option').clone();
+      
+      //Fill out the value and text of the option element.
+      tmpItem.val(serverSettings.wifiClientSettings[i].ssid);
+      tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
+      
+      //Append the option to the datalist.
+      $('#clientSSIDList').append(tmpItem);
     }
     
     debugger;

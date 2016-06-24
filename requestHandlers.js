@@ -13,6 +13,7 @@ var rander = require('rander'); //Library used to generate UniqueIDs.
 var ya_csv = require('ya-csv'); //Ya-csv library used to output csv files.
 var exec = require('child_process').exec; //Used to execute command line instructions.
 var serverSettings = require('./assets/server_settings.json');
+var spawn = require('child_process')spawn; //Used to execut sudo level commands
 
 //GLOBAL VARIABLES
 //var CSVData = new Array(); //Object to hold CSV data
@@ -140,15 +141,33 @@ function wifiSettings(request, response, next) {
       //AP
       if(serverSettings.wifiType == "1") {
         console.log('Running makeAP...');
-        exec('sudo ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
-          debugger;
+        
+        //exec('sudo ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
+        //  debugger;
+        //});
+        
+        //Spawn the script.
+        var terminal = spawn('./wifi_AP/rpi3/make_AP/makeAP', [], { uid: 0 });
+        
+        //Display the script output on the command line.
+        terminal.stdout.on('data', function(data) {
+          console.log('stdout: ' + data);
         });
         
       //Client
       } else if(serverSettings.wifiType == "2") {
         console.log('Running restoreWifi...');
-        exec('sudo ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
-          debugger;
+        
+        //exec('sudo ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
+        //  debugger;
+        //});
+        
+        //Spawn the script.
+        var terminal = spawn('./wifi_AP/rpi3/wifi_client/restorWifi', [], { uid: 0 });
+        
+        //Display the script output on the command line.
+        terminal.stdout.on('data', function(data) {
+          console.log('stdout: ' + data);
         });
         
       }

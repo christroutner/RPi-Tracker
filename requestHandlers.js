@@ -13,7 +13,7 @@ var rander = require('rander'); //Library used to generate UniqueIDs.
 var ya_csv = require('ya-csv'); //Ya-csv library used to output csv files.
 var exec = require('child_process').exec; //Used to execute command line instructions.
 var serverSettings = require('./assets/server_settings.json');
-var spawn = require('child_process')spawn; //Used to execut sudo level commands
+var spawn = require('child_process').spawn; //Used to execut sudo level commands
 
 //GLOBAL VARIABLES
 //var CSVData = new Array(); //Object to hold CSV data

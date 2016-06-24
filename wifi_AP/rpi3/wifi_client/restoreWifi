@@ -9,8 +9,8 @@ echo "SCRIPT LOG: disabling hostapd and isc-dhcp-server from startup..."
 sudo service hostapd stop
 sudo service isc-dhcp-server stop
 sudo ifdown wlan0
-sudo update-rc.d hostapd disable 
-sudo update-rc.d isc-dhcp-server disable
+sudo update-rc.d hostapd disable > /dev/null
+sudo update-rc.d isc-dhcp-server disable > /dev/null
 #sudo apt-get purge -y hostapd isc-dhcp-server
 
 #Put the original hostapd file back
@@ -32,13 +32,13 @@ sudo rm /etc/iptables.ipv4.nat
 sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"
 sudo rm /etc/default/hostapd
 sudo cp dhcpd.conf /etc/dhcp/dhcpd.conf
-sudo cp isc-dhcp-server /etc/default/isc-dhcp-server
+#sudo cp isc-dhcp-server /etc/default/isc-dhcp-server
 sudo cp interfaces /etc/network/interfaces
 sudo rm /etc/hostapd/hostapd.conf
 sudo cp sysctl.conf /etc/sysctl.conf
 
 
 echo "SCRIPT LOG: Done! Rebooting to activate WiFi."
-#sudo reboot now
+sudo reboot now
 
 

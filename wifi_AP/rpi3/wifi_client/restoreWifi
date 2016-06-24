@@ -9,9 +9,9 @@ echo "SCRIPT LOG: disabling hostapd and isc-dhcp-server from startup..."
 sudo service hostapd stop
 sudo service isc-dhcp-server stop
 sudo ifdown wlan0
-#sudo update-rc.d hostapd disable 
-#sudo update-rc.d isc-dhcp-server disable
-sudo apt-get purge -y hostapd isc-dhcp-server
+sudo update-rc.d hostapd disable 
+sudo update-rc.d isc-dhcp-server disable
+#sudo apt-get purge -y hostapd isc-dhcp-server
 
 #Put the original hostapd file back
 #sudo mv /bin/hostapd /usr/sbin/hostapd

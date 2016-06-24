@@ -9,14 +9,15 @@ echo "SCRIPT LOG: disabling hostapd and isc-dhcp-server from startup..."
 sudo service hostapd stop
 sudo service isc-dhcp-server stop
 sudo ifdown wlan0
-sudo update-rc.d hostapd disable 
-sudo update-rc.d isc-dhcp-server disable
+#sudo update-rc.d hostapd disable 
+#sudo update-rc.d isc-dhcp-server disable
+sudo apt-get purge -y hostapd isc-dhcp-server
 
 #Put the original hostapd file back
 #sudo mv /bin/hostapd /usr/sbin/hostapd
 
 #Replace wpa_supplicant.conf file
-sudo mv wpa_supplicant.conf /etc/wpa_supplicant/
+sudo cp wpa_supplicant.conf /etc/wpa_supplicant/
 
 #Flush IP Tables
 echo "SCRIPT LOG: flushing IP tables..."

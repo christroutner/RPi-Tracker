@@ -3,7 +3,7 @@
 # Based on this adafruit tutorial: https://learn.adafruit.com/setting-up-a-raspberry-pi-as-a-wifi-access-point/install-software
 # Run this script with sudo or as su
 
-sudo mv ~/fi.epitest.hostap.WPASupplicant.service /usr/share/dbus-1/system-services/
+sudo mv /home/pi/fi.epitest.hostap.WPASupplicant.service /usr/share/dbus-1/system-services/
 
 echo "SCRIPT LOG: disabling hostapd and isc-dhcp-server from startup..."
 sudo service hostapd stop

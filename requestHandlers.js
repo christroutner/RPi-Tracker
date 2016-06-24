@@ -147,7 +147,7 @@ function wifiSettings(request, response, next) {
         //});
         
         //Spawn the script.
-        var terminal = spawn('./wifi_AP/rpi3/make_AP/makeAP', [], { uid: 0 });
+        var terminal = spawn('sudo ./wifi_AP/rpi3/make_AP/makeAP', [], { uid: 0 });
         
         //Display the script output on the command line.
         terminal.stdout.on('data', function(data) {
@@ -163,7 +163,7 @@ function wifiSettings(request, response, next) {
         //});
         
         //Spawn the script.
-        var terminal = spawn('./wifi_AP/rpi3/wifi_client/restorWifi', [], { uid: 0 });
+        var terminal = spawn('sudo ./wifi_AP/rpi3/wifi_client/restorWifi', [], { uid: 0 });
         
         //Display the script output on the command line.
         terminal.stdout.on('data', function(data) {

@@ -144,17 +144,23 @@ function wifiSettings(request, response, next) {
       if(serverSettings.wifiType == "1") {
         console.log('Running makeAP...');
         
-        //exec('sudo ./wifi_AP/rpi3/make_AP/makeAP', function(err, stdout, stderr) {
-        //  debugger;
-        //});
+        exec('cd ./wifi_AP/rpi3/make_AP/;sudo ./makeAP', function(err, stdout, stderr) {
+          debugger;
+          if (err instanceof Error) {
+            console.error(err);
+            throw err;
+          }
+          console.log('stdout ', stdout);
+          console.log('stderr ', stderr);
+        });
         
         //Spawn the script.
-        var terminal = spawn('cd ./wifi_AP/rpi3/make_AP/;sudo ./makeAP', [], { uid: 1000 });
+        //var terminal = spawn('cd ./wifi_AP/rpi3/make_AP/;sudo ./makeAP', [], { uid: 1000 });
         
         //Display the script output on the command line.
-        terminal.stdout.on('data', function(data) {
-          console.log('stdout: ' + data);
-        });
+        //terminal.stdout.on('data', function(data) {
+        //  console.log('stdout: ' + data);
+        //});
         
       //Client
       } else if(serverSettings.wifiType == "2") {

@@ -138,6 +138,8 @@ function wifiSettings(request, response, next) {
     if(serverSettings.rebootConfirmationNeeded == "true") {
       debugger;
       
+      //Dev-Note: uid=1000 is the uid for user 'pi' that has sudo permission.
+      
       //AP
       if(serverSettings.wifiType == "1") {
         console.log('Running makeAP...');
@@ -147,7 +149,7 @@ function wifiSettings(request, response, next) {
         //});
         
         //Spawn the script.
-        var terminal = spawn('sudo ./wifi_AP/rpi3/make_AP/makeAP', [], { uid: 0 });
+        var terminal = spawn('sudo ./wifi_AP/rpi3/make_AP/makeAP', [], { uid: 1000 });
         
         //Display the script output on the command line.
         terminal.stdout.on('data', function(data) {
@@ -163,7 +165,7 @@ function wifiSettings(request, response, next) {
         //});
         
         //Spawn the script.
-        var terminal = spawn('sudo ./wifi_AP/rpi3/wifi_client/restorWifi', [], { uid: 0 });
+        var terminal = spawn('sudo ./wifi_AP/rpi3/wifi_client/restorWifi', [], { uid: 1000 });
         
         //Display the script output on the command line.
         terminal.stdout.on('data', function(data) {

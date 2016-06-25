@@ -110,7 +110,8 @@ function queryTracking(request, response, next) {
     spawnOptions: { }
   }
   
-  var child = spawn('cd', ['./wifi_AP/rpi3/make_AP/'], {});
+  //var child = spawn('cd', ['./wifi_AP/rpi3/make_AP/'], {});
+  var child = spawn('ls', ['-al']);
   child.stdout.on('data', function (data) {
       console.log(data.toString());
   });
@@ -118,6 +119,7 @@ function queryTracking(request, response, next) {
     console.log('stderr: ' + data);
   });
   
+  /*
   child = sudo([ './makeAP' ], options);
   child.stdout.on('data', function (data) {
       console.log(data.toString());
@@ -125,6 +127,7 @@ function queryTracking(request, response, next) {
   child.stderr.on('data', function (data) {
     console.log('stderr: ' + data);
   });
+  */
 }
 
 /******************************************************************************

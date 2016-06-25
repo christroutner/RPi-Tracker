@@ -100,6 +100,8 @@ function queryTracking(request, response, next) {
       });
     }
   }
+  
+  debugger;
 }
 
 /******************************************************************************

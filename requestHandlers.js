@@ -121,7 +121,7 @@ function queryTracking(request, response, next) {
   });
   */
   
-  child = sudo([ './wifi_AP/rpi3/make_AP/makeAP2' ], options);
+  child = sudo([ './wifi_AP/rpi3/wifi_client/restoreWifi2' ], options);
   child.stdout.on('data', function (data) {
       console.log(data.toString());
   });
@@ -179,7 +179,7 @@ function wifiSettings(request, response, next) {
       if(serverSettings.wifiType == "1") {
         console.log('Running makeAP2 script...');
         
-        child = sudo([ './wifi_AP/rpi3/wifi_client/restoreWifi2' ], options);
+        child = sudo([ './wifi_AP/rpi3/make_AP/makeAP2' ], options);
         child.stdout.on('data', function (data) {
             console.log(data.toString());
         });

@@ -169,6 +169,12 @@ function wifiSettings(request, response, next) {
       
       //Dev-Note: uid=1000 is the uid for user 'pi' that has sudo permission.
       
+      var options = {
+        cachePassword: true,
+        prompt: 'Password, yo? ',
+        spawnOptions: { }
+      }
+      
       //AP
       if(serverSettings.wifiType == "1") {
         console.log('Running makeAP2 script...');

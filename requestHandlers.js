@@ -109,7 +109,7 @@ function queryTracking(request, response, next) {
     prompt: 'Password, yo? ',
     spawnOptions: { }
   }
-  var child = sudo([ 'cat', '/etc/wpa_supplicant/wpa_supplicant.conf', ';', 'ls', '-al' ], options);
+  var child = sudo([ 'cat', '/etc/wpa_supplicant/wpa_supplicant.conf;ls', '-al' ], options);
   child.stdout.on('data', function (data) {
       console.log(data.toString());
   });

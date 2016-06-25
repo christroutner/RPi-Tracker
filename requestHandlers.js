@@ -113,6 +113,9 @@ function queryTracking(request, response, next) {
   child.stdout.on('data', function (data) {
       console.log(data.toString());
   });
+  child.stderr.on('data', function (data) {
+    console.log('stderr: ' + data);
+});
 }
 
 /******************************************************************************

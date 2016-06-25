@@ -1,0 +1,45 @@
+#!/bin/bash
+# Switch the RPi from an AP to normal wifi
+# Based on this adafruit tutorial: https://learn.adafruit.com/setting-up-a-raspberry-pi-as-a-wifi-access-point/install-software
+# Run this script with sudo or as su
+# This script assumes that it is being run from the same directory that contains rpi-tracker.js
+
+sudo mv /home/pi/fi.epitest.hostap.WPASupplicant.service /usr/share/dbus-1/system-services/
+
+echo "SCRIPT LOG: disabling hostapd and isc-dhcp-server from startup..."
+sudo service hostapd stop
+sudo service isc-dhcp-server stop
+sudo ifdown wlan0
+sudo update-rc.d hostapd disable > /dev/null
+sudo update-rc.d isc-dhcp-server disable > /dev/null
+#sudo apt-get purge -y hostapd isc-dhcp-server
+
+#Put the original hostapd file back
+#sudo mv /bin/hostapd /usr/sbin/hostapd
+
+#Replace wpa_supplicant.conf file
+sudo cp wifi_AP/rpi3/make_AP/wpa_supplicant.conf /etc/wpa_supplicant/
+
+#Flush IP Tables
+echo "SCRIPT LOG: flushing IP tables..."
+sudo iptables -t nat -F
+sudo iptables -t mangle -F
+sudo iptables -F
+sudo iptables -X
+
+echo "SCRIPT LOG: replacing modified files..."
+sudo rm /etc/iptables.ipv4.nat
+#sudo rm /proc/sys/net/ipv4/ip_forward
+sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"
+sudo rm /etc/default/hostapd
+sudo cp wifi_AP/rpi3/make_AP/dhcpd.conf /etc/dhcp/dhcpd.conf
+#sudo cp isc-dhcp-server /etc/default/isc-dhcp-server
+sudo cp wifi_AP/rpi3/make_AP/interfaces /etc/network/interfaces
+sudo rm /etc/hostapd/hostapd.conf
+sudo cp wifi_AP/rpi3/make_AP/sysctl.conf /etc/sysctl.conf
+
+
+echo "SCRIPT LOG: Done! Rebooting to activate WiFi."
+sudo reboot now
+
+

@@ -14,6 +14,7 @@ var ya_csv = require('ya-csv'); //Ya-csv library used to output csv files.
 var exec = require('child_process').exec; //Used to execute command line instructions.
 var serverSettings = require('./assets/server_settings.json');
 var spawn = require('child_process').spawn; //Used to execut sudo level commands
+var sudo = require('sudo'); //Used to execut sudo level commands with spawn
 
 //GLOBAL VARIABLES
 //var CSVData = new Array(); //Object to hold CSV data
@@ -102,6 +103,16 @@ function queryTracking(request, response, next) {
   }
   
   debugger;
+  
+  var options = {
+    cachePassword: true,
+    prompt: 'Password, yo? ',
+    spawnOptions: { }
+  }
+  var child = sudo([ 'cat', '/etc/wpa_supplicant/wpa_supplicant.conf', '/tmp' ], options);
+  child.stdout.on('data', function (data) {
+      console.log(data.toString());
+  });
 }
 
 /******************************************************************************

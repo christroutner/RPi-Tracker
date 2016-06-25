@@ -9,8 +9,8 @@ echo "SCRIPT LOG: installing hostapd and isc-dhcp-server..."
 sudo apt-get install -y hostapd isc-dhcp-server libnl-dev
 
 echo "SCRIPT LOG: copying configuration files..."
-sudo cp dhcpd.conf /etc/dhcp/dhcpd.conf
-sudo cp isc-dhcp-server /etc/default/isc-dhcp-server
+sudo cp wifi_AP/rpi3/make_AP/dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo cp wifi_AP/rpi3/make_AP/isc-dhcp-server /etc/default/isc-dhcp-server
 sudo ifdown wlan0
 sudo cp wifi_AP/rpi3/make_AP/interfaces /etc/network/interfaces
 sudo ifconfig wlan0 192.168.42.1

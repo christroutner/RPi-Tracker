@@ -40,6 +40,6 @@ sudo cp wifi_AP/rpi3/wifi_client/sysctl.conf /etc/sysctl.conf
 
 
 echo "SCRIPT LOG: Done! Rebooting to activate WiFi."
-#sudo reboot now
+sudo reboot now
 
 

@@ -102,6 +102,7 @@ function queryTracking(request, response, next) {
     }
   }
   
+  /*
   debugger;
   
   var options = {
@@ -109,7 +110,7 @@ function queryTracking(request, response, next) {
     prompt: 'Password, yo? ',
     spawnOptions: { }
   }
-  
+  */
   /*
   //var child = spawn('cd', ['./wifi_AP/rpi3/make_AP/'], {});
   var child = spawn('ls', ['-al']);
@@ -120,7 +121,7 @@ function queryTracking(request, response, next) {
     console.log('stderr: ' + data);
   });
   */
-  
+  /*
   child = sudo([ './wifi_AP/rpi3/wifi_client/restoreWifi2' ], options);
   child.stdout.on('data', function (data) {
       console.log(data.toString());
@@ -128,7 +129,7 @@ function queryTracking(request, response, next) {
   child.stderr.on('data', function (data) {
     console.log('stderr: ' + data);
   });
-  
+  */
 }
 
 /******************************************************************************
@@ -137,6 +138,8 @@ wifiSettings() allows configuration of the WiFi interface.
 ******************************************************************************/
 function wifiSettings(request, response, next) {
   debugger;
+  
+  console.log('Request Handler wifiSettings() called.');
   
   //Just a general test to verify that the request doesn't contain garbage, but an expected data structure.
   if(request.query.wifiType < 3) {

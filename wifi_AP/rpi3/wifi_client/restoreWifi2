@@ -18,7 +18,7 @@ sudo update-rc.d isc-dhcp-server disable > /dev/null
 #sudo mv /bin/hostapd /usr/sbin/hostapd
 
 #Replace wpa_supplicant.conf file
-sudo cp wifi_AP/rpi3/make_AP/wpa_supplicant.conf /etc/wpa_supplicant/
+sudo cp wifi_AP/rpi3/wifi_client/wpa_supplicant.conf /etc/wpa_supplicant/
 
 #Flush IP Tables
 echo "SCRIPT LOG: flushing IP tables..."
@@ -32,14 +32,14 @@ sudo rm /etc/iptables.ipv4.nat
 #sudo rm /proc/sys/net/ipv4/ip_forward
 sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_forward"
 sudo rm /etc/default/hostapd
-sudo cp wifi_AP/rpi3/make_AP/dhcpd.conf /etc/dhcp/dhcpd.conf
+sudo cp wifi_AP/rpi3/wifi_client/dhcpd.conf /etc/dhcp/dhcpd.conf
 #sudo cp isc-dhcp-server /etc/default/isc-dhcp-server
-sudo cp wifi_AP/rpi3/make_AP/interfaces /etc/network/interfaces
+sudo cp wifi_AP/rpi3/wifi_client/interfaces /etc/network/interfaces
 sudo rm /etc/hostapd/hostapd.conf
-sudo cp wifi_AP/rpi3/make_AP/sysctl.conf /etc/sysctl.conf
+sudo cp wifi_AP/rpi3/wifi_client/sysctl.conf /etc/sysctl.conf
 
 
 echo "SCRIPT LOG: Done! Rebooting to activate WiFi."
-sudo reboot now
+#sudo reboot now
 
 

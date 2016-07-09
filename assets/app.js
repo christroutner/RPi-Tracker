@@ -213,7 +213,7 @@ $(document).ready(function() {
     if(serverSettings.rebootConfirmationNeeded == "true") {
       
       //Confirm if they want to continue using the new settings.
-      var r = confirm("Press 'Yes' to save the new WiFi settings.");
+      var r = confirm("Press 'OK' to save the new WiFi settings.");
       if(r == true) {
         serverSettings.rebootConfirmationNeeded = "false";
         

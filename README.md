@@ -7,8 +7,8 @@ This program is currently in pre-Alpha development. It's still very rough. So fa
 * Logging in GeoJSON and KML formats has been achieved. 
 * Logging happens in two formats: Line String and Point Time Stamp. The former produces a nice breadcumb trail in Google Maps, the latter incorporates a timestamp in each GPS coordinate.
 * A rough UI is currently being developed
-..* File Download is achieved. One file per day X 2 formats (GeoJSON, KML) X 2 GPS formats = 4 files per day
-..* WiFi control for switching between AP and Client modes achieved.
+ * File Download is achieved. One file per day X 2 formats (GeoJSON, KML) X 2 GPS formats = 4 files per day
+ * WiFi control for switching between AP and Client modes achieved.
 
 The ultimate goal of the software is for the device to be configurable from a cell phone or computer over WiFi. The RPi will be able to switch between an Access Point (acting like a wifi router) and a wireless client (like a computer or cell phone). It will serve up a web page that lists the available tracking logs that can be downloaded in the various formats.
 

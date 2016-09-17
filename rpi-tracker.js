@@ -18,6 +18,7 @@ var port = 3000;
  * Global Variables
  */
 app.locals.isTracking = false;
+var debugState = true; //Used to turn verbose debugging off or on.
 
 
 /*
@@ -346,6 +347,9 @@ var intervalHandle = setInterval(function() {
   //Increment the counter.
   timerCnt++;
   
+  if(debugState)
+    console.log('Interval. timerCnt='+tinerCnt);
+  
   //Average all the lat and longs in the coordinate buffer.
   var lat = 0;
   var long = 0;
@@ -403,7 +407,8 @@ var intervalHandle = setInterval(function() {
           console.log('Error while trying to write GeoJSON Point file output.');
           console.log(err);
         } else {
-          //console.log('GPS data file updated. Time Stamp: '+timeStamp);
+          if(debugState)
+            console.log('GPS data file updated. Time Stamp: '+timeStamp);
         }
 
       });
@@ -417,7 +422,8 @@ var intervalHandle = setInterval(function() {
           console.log('Error while trying to write KML Point file output.');
           console.log(err);
         } else {
-          //console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
+          if(debugState)
+            console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
         }
 
       });
@@ -432,7 +438,8 @@ var intervalHandle = setInterval(function() {
           console.log('Error while trying to write GeoJSON LineString file output.');
           console.log(err);
         } else {
-          //console.log('GPS data file updated. Time Stamp: '+timeStamp);
+          if(debugState)
+            console.log('GPS data file updated. Time Stamp: '+timeStamp);
         }
 
       });
@@ -446,7 +453,8 @@ var intervalHandle = setInterval(function() {
           console.log('Error while trying to write KML LineString file output.');
           console.log(err);
         } else {
-          //console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
+          if(debugState)
+            console.log('KML GPS data file updated. Time Stamp: '+timeStamp);
         }
 
       });

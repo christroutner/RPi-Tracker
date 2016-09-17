@@ -18,7 +18,7 @@ var port = 3000;
  * Global Variables
  */
 app.locals.isTracking = false;
-var debugState = true; //Used to turn verbose debugging off or on.
+var debugState = false; //Used to turn verbose debugging off or on.
 
 
 /*

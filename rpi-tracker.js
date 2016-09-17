@@ -348,7 +348,7 @@ var intervalHandle = setInterval(function() {
   timerCnt++;
   
   if(debugState)
-    console.log('Interval. timerCnt='+tinerCnt);
+    console.log('Interval. timerCnt='+timerCnt);
   
   //Average all the lat and longs in the coordinate buffer.
   var lat = 0;

@@ -481,7 +481,7 @@ var intervalHandle = setInterval(function() {
     */
     
     var form = new FormData();
-    form.append('file_upload', './assets/logfiles/'+fileNameGeoJSONPoint);
+    form.append('file_upload', fs.createReadStream('./assets/logfiles/'+fileNameGeoJSONPoint));
     form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/trackinglogfile/create', function(err, res) {
       debugger;
       //res.resume();

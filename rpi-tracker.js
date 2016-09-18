@@ -9,6 +9,8 @@ var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
 var tokml = require('tokml'); //Used for converting GeoJSON to KML.
+//var http = require('http'); //Used for GET and POST requests
+
 
 
 var app = express();
@@ -20,6 +22,9 @@ var port = 3000;
 app.locals.isTracking = false;
 var debugState = false; //Used to turn verbose debugging off or on.
 
+//Tracker server
+var trackerServerIp = '198.199.94.71';
+var trackerServerPort = '3000';
 
 /*
  * Open a JSON file for recording GPS data
@@ -460,6 +465,27 @@ var intervalHandle = setInterval(function() {
       });
       
     }
+    
+    //Attempt to send updated file to tracker server.
+    /*
+    var options = {
+      host: trackerServerIp,
+      port: trackerServerPort,
+      path: '/api/fileupload/create',
+      method: 'POST'
+    };
+    
+    http.request(options, function(res) {
+      debugger;
+    });
+    */
+    
+    var form = new FormData();
+    form.append('file_upload', './assets/logfiles/'+fileNameGeoJSONPoint);
+    form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/fileupload/create', function(err, res) {
+      debugger;
+      //res.resume();
+    });
     
     timerCnt = 0;
   }

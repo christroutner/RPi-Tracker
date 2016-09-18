@@ -482,12 +482,18 @@ var intervalHandle = setInterval(function() {
     
     var form = new FormData();
     form.append('file_upload', fs.createReadStream('./assets/logfiles/'+fileNameGeoJSONPoint));
-    form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/trackinglogfile/create', function(err, res) {
+    //form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/trackinglogfile/create', function(err, res) {
+    form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/fileupload/create', function(err, res) {
       debugger;
       //res.resume();
       
-      if(res.statusCode != 200) {
-        console.error('Problem uploading data to server. Status Code: '+res.statusCode+', Error message:');
+      try {
+        if(res.statusCode == 200) {
+          console.log('tracking log uploaded to server successfully!');
+        }
+        
+      } catch(error) {
+        console.error('Problem uploading data to server. Error message:');
         console.error(err.message);
       }
       

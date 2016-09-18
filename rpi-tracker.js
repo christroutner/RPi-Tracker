@@ -510,7 +510,7 @@ var intervalHandle = setInterval(function() {
       method: 'post',
       host: trackerServerIp,
       port: trackerServerPort,
-      path: '/api/fileupload/create',
+      path: '/api/trackinglogfile/create',
       headers: form.getHeaders()
     });
 

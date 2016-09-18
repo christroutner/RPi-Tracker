@@ -9,7 +9,7 @@ var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
 var tokml = require('tokml'); //Used for converting GeoJSON to KML.
-//var http = require('http'); //Used for GET and POST requests
+var http = require('http'); //Used for GET and POST requests
 var FormData = require('form-data');
 
 
@@ -480,8 +480,12 @@ var intervalHandle = setInterval(function() {
     });
     */
     
+    
+    // BEGIN - TEST CODE FOR SENDING LOGS TO SERVER
     var form = new FormData();
     form.append('file_upload', fs.createReadStream('./assets/logfiles/'+fileNameGeoJSONPoint));
+    
+    /*
     //form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/trackinglogfile/create', function(err, res) {
     form.submit('http://'+trackerServerIp+':'+trackerServerPort+'/api/fileupload/create', function(err, res) {
       debugger;
@@ -499,6 +503,28 @@ var intervalHandle = setInterval(function() {
       
       res.resume();
     });
+    */
+    
+    //Trying another method of submission
+    var request = http.request({
+      method: 'post',
+      host: trackerServerIp,
+      port: trackerServerPort,
+      path: '/api/fileupload/create',
+      headers: form.getHeaders()
+    });
+
+    form.pipe(request);
+
+    request.on('response', function(res) {
+      console.log(res.statusCode);
+    });
+    
+    
+    // END - TEST CODE FOR SENDING LOGS TO SERVER
+    
+    
+    
     
     timerCnt = 0;
   }

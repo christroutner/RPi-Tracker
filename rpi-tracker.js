@@ -329,12 +329,12 @@ listener.watch({class: 'WATCH', nmea: true});
  */ 
 
 //Production
-//var timeout = 30000;  //1000 = 1 second.
-//var fileSaveCnt = 10; //Number of intervals until the file is saved.
+var timeout = 30000;  //1000 = 1 second.
+var fileSaveCnt = 10; //Number of intervals until the file is saved.
 
 //Testing
-var timeout = 15000;  //1000 = 1 second.
-var fileSaveCnt = 1; //Number of intervals until the file is saved.
+//var timeout = 15000;  //1000 = 1 second.
+//var fileSaveCnt = 1; //Number of intervals until the file is saved.
 
 var timerCnt = 0; //Used to track the number of timer calls.
 

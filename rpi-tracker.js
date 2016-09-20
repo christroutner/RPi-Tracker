@@ -11,6 +11,7 @@ var fs = require('fs');
 var tokml = require('tokml'); //Used for converting GeoJSON to KML.
 var http = require('http'); //Used for GET and POST requests
 var FormData = require('form-data');
+var GPSInterface = require('./lib/gps-interface.js');
 
 
 var app = express();
@@ -25,6 +26,8 @@ var debugState = false; //Used to turn verbose debugging off or on.
 //Tracker server
 var trackerServerIp = '198.199.94.71';
 var trackerServerPort = '3000';
+
+connectToGPS();
 
 /*
  * Open a JSON file for recording GPS data
@@ -188,11 +191,7 @@ app.get('/', function(request, response, next) {
     response.render('index');
 });
 
-//Note: At the moment these request Handlers are left over from another project. They have nothing to do with the tracking device.
-//They are left here to create a template for when I'm ready to start working on the UI, which will be served up as a web page.
-//app.use('/start', requestHandlers.start);
-//app.use('/upload', requestHandlers.upload);
-//app.use('/add_new', requestHandlers.add_new);
+//Request Handler/Webserver functions
 app.use('/listLogFiles', requestHandlers.listLogFiles);
 app.use('/queryTracking', requestHandlers.queryTracking);
 app.use('/wifiSettings', requestHandlers.wifiSettings);

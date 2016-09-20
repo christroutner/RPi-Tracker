@@ -27,7 +27,8 @@ var debugState = false; //Used to turn verbose debugging off or on.
 var trackerServerIp = '198.199.94.71';
 var trackerServerPort = '3000';
 
-GPSInterface.connectToGPS();
+var gpsInterface = new GPSInterface();
+gpsInterface.connectToGPS();
 
 /*
  * Open a JSON file for recording GPS data

@@ -226,7 +226,7 @@ listener.connect(function() {
 app.locals.listener = listener;
 
 
-var coordinateBuffer = []; //Used to collect coordinate and time data between timer events.
+
 var timeStamp = new Date(); //Stores the most recent timestamp from the GPS.
 
 // parse is false, so only raw data gets emitted.
@@ -270,19 +270,19 @@ var intervalHandle = setInterval(function() {
   //Average all the lat and longs in the coordinate buffer.
   var lat = 0;
   var long = 0;
-  for( var i = 0; i < coordinateBuffer.length; i++ ) {
-    long = long+coordinateBuffer[i][0];
-    lat = lat+coordinateBuffer[i][1];
+  for( var i = 0; i < gpsInterface.coordinateBuffer.length; i++ ) {
+    long = long+gpsInterface.coordinateBuffer[i][0];
+    lat = lat+gpsInterface.coordinateBuffer[i][1];
   }
-  long = long/coordinateBuffer.length;
-  lat = lat/coordinateBuffer.length;
+  long = long/gpsInterface.coordinateBuffer.length;
+  lat = lat/gpsInterface.coordinateBuffer.length;
   
   //Exit if the buffer is full of NaN values.
   if(isNaN(long) || isNaN(lat))
     return;
   
   //Clear the coordinateBuffer
-  coordinateBuffer = [];
+  gpsInterface.coordinateBuffer = [];
   
   //Format the long and lat
   //The toFixed() function rounds the decimal places, but turns it into a string, hence the Number() wrapper.

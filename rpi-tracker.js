@@ -129,10 +129,10 @@ listener.watch({class: 'WATCH', nmea: true});
 //This interval function checks every 10 second to see if valid time stamps are coming from the GPS.
 //Once a valid time stamp arrives, it is used to generate the file names for the log files and opens or creates those log files.
 var getGPSTimeStamp = setInterval(function() {
-  debugger;
+  //debugger;
   
   if(global.gpsInterface.timeStamp != undefined) {
-    debugger;
+
     console.log('Time stamp retrieved from GPS. Opening log files.')
     
     var timeStamp = global.gpsInterface.timeStamp;
@@ -151,8 +151,12 @@ var getGPSTimeStamp = setInterval(function() {
     global.dataLog.readPointFile();
     //Second log file.
     global.dataLog.readLineStringFile();
-    debugger;
+
+    //Clear the interval once we've successfully retrieved the timestamp and opened the log files.
     clearInterval(getGPSTimeStamp);
+    
+    //Signal to global.dataLog.logData() that data can now be logged to the log files.
+    globalThis.logFileOpened = true;
   }
   
 }, 10000);

@@ -9,11 +9,12 @@ var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
 var http = require('http'); //Used for GET and POST requests
-var FormData = require('form-data');
+
 
 //Local libraries based on the different featuers of this software
 var GPSInterface = require('./lib/gps-interface.js');
 var DataLog = require('./lib/data-log.js');
+var ServerInterface = require('./lib/server-interface.js');
 
 
 var app = express();
@@ -31,6 +32,7 @@ var trackerServerPort = '3000';
 
 global.gpsInterface = new GPSInterface.Constructor();
 global.dataLog = new DataLog.Constructor();
+global.serverInterface = new ServerInterface.Constructor();
 //dataLog.helloWorld();
 
 
@@ -179,8 +181,14 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 /* END - Timer event to record GPS data to a file */ 
 
 
-/*
- * Start up the Express web server
- */
+ /* BEGIN - SERVER INTERFACE FOR LOGGING TO SERVER */
+//Skip this code if the serverInterface is not even set up.
+if(global.serverInterface != undefined) {
+  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
+}
+/* END - SERVER INTERFACE FOR LOGGING TO SERVER */
+
+
+/* Start up the Express web server */
 app.listen(process.env.PORT || port);
 console.log('Express started on port ' + port);

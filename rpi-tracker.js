@@ -133,6 +133,8 @@ var getGPSTimestamp = setInterval(function() {
   
   if(global.gpsInterface.timeStamp != undefined) {
     
+    console.log('Time stamp retrieved from GPS. Opening log files.')
+    
     var timeStamp = global.gpsInterface.timeStamp;
     
     //Generate a file name based on the current date.

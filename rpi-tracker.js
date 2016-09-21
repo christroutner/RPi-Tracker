@@ -56,7 +56,7 @@ var docDesc = "Tracking data captured with the Raspberry Pi on "+today.getFullYe
 
 //Read in the log files if they already exists. Otherwise create a new file.
 //First log file.
-dataLog.readPointFile();
+dataLog.readPointFile(fileNameGeoJSONPoint);
 
 
 

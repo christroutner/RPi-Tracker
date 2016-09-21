@@ -33,25 +33,7 @@ global.gpsInterface = new GPSInterface.Constructor();
 global.dataLog = new DataLog.Constructor();
 //dataLog.helloWorld();
 
-/*
- * Open a JSON file for recording GPS data
- */
 
-//Generate a file name based on the current date.
-//Dev Note: The RPi date/time can't be trusted. I should update this data with data from the GPS.
-var today = new Date();
-global.dataLog.fileNameGeoJSONPoint = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-PT'+'.json';
-global.dataLog.fileNameGeoJSONLineString = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-LS'+'.json';
-global.dataLog.fileNameKMLPoint = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-PT'+'.kml';
-global.dataLog.fileNameKMLLineString = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+'-LS'+'.kml';
-global.dataLog.docName = today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2)+" Tracking Data";
-global.dataLog.docDesc = "Tracking data captured with the Raspberry Pi on "+today.getFullYear()+'-'+('00'+(today.getMonth()+1)).slice(-2)+'-'+('00'+(today.getDate()+1)).slice(-2);
-
-//Read in the log files if they already exists. Otherwise create a new file.
-//First log file.
-global.dataLog.readPointFile();
-//Second log file.
-global.dataLog.readLineStringFile();
 
 
 /*
@@ -139,6 +121,40 @@ listener.on('raw', global.gpsInterface.readNMEASentences );
 
 listener.watch({class: 'WATCH', nmea: true});
 /* END GPS Connection */
+
+
+/*
+ * Open a JSON file for recording GPS data
+ */
+//This interval function checks every 10 second to see if valid time stamps are coming from the GPS.
+//Once a valid time stamp arrives, it is used to generate the file names for the log files and opens or creates those log files.
+var getGPSTimestamp = setInterval(function() {
+  debugger;
+  
+  if(global.gpsInterface.timeStamp != undefined) {
+    
+    var timeStamp = global.gpsInterface.timeStamp;
+    
+    //Generate a file name based on the current date.
+    //Dev Note: The RPi date/time can't be trusted. I should update this data with data from the GPS.
+    global.dataLog.fileNameGeoJSONPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate()+1)).slice(-2)+'-PT'+'.json';
+    global.dataLog.fileNameGeoJSONLineString = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate()+1)).slice(-2)+'-LS'+'.json';
+    global.dataLog.fileNameKMLPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate()+1)).slice(-2)+'-PT'+'.kml';
+    global.dataLog.fileNameKMLLineString = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate()+1)).slice(-2)+'-LS'+'.kml';
+    global.dataLog.docName = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate()+1)).slice(-2)+" Tracking Data";
+    global.dataLog.docDesc = "Tracking data captured with the Raspberry Pi on "+timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate()+1)).slice(-2);
+
+    //Read in the log files if they already exists. Otherwise create a new file.
+    //First log file. 
+    global.dataLog.readPointFile();
+    //Second log file.
+    global.dataLog.readLineStringFile();
+    
+    clearTimeout(getGPSTimeStamp)
+  }
+  
+}, 10000);
+
 
 
 

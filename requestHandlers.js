@@ -102,34 +102,6 @@ function queryTracking(request, response, next) {
     }
   }
   
-  /*
-  debugger;
-  
-  var options = {
-    cachePassword: true,
-    prompt: 'Password, yo? ',
-    spawnOptions: { }
-  }
-  */
-  /*
-  //var child = spawn('cd', ['./wifi_AP/rpi3/make_AP/'], {});
-  var child = spawn('ls', ['-al']);
-  child.stdout.on('data', function (data) {
-      console.log(data.toString());
-  });
-  child.stderr.on('data', function (data) {
-    console.log('stderr: ' + data);
-  });
-  */
-  /*
-  child = sudo([ './wifi_AP/rpi3/wifi_client/restoreWifi2' ], options);
-  child.stdout.on('data', function (data) {
-      console.log(data.toString());
-  });
-  child.stderr.on('data', function (data) {
-    console.log('stderr: ' + data);
-  });
-  */
 }
 
 /******************************************************************************

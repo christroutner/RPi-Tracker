@@ -41,9 +41,9 @@ global.jsonPointTimeStamp = new Object();
 global.jsonPointTimeStamp.fileRead = false;
 global.jsonPointTimeStamp.exists = false;
 
-var jsonLineString = new Object();
-jsonLineString.fileRead = false;
-jsonLineString.exists = false;
+global.jsonLineString = new Object();
+global.jsonLineString.fileRead = false;
+global.jsonLineString.exists = false;
 
 //Generate a file name based on the current date.
 var today = new Date();
@@ -57,59 +57,8 @@ var docDesc = "Tracking data captured with the Raspberry Pi on "+today.getFullYe
 //Read in the log files if they already exists. Otherwise create a new file.
 //First log file.
 dataLog.readPointFile(fileNameGeoJSONPoint);
-
-
-
-
 //Second log file.
-fs.readFile('./data/'+fileNameGeoJSONLineString, 'utf8', function(err, data) {
-  if (err) {
-    //debugger;
-    
-    //The file doesn't exist, so create the GeoJSON structure from scratch.
-    if( err.code == "ENOENT" ) {    
-      
-      jsonLineString.data = 
-        { 
-          "type": "FeatureCollection",
-          "features": 
-          [
-
-            //This format is used for recording LineString data. More appropriate for a breadcrumb trail.
-            { 
-              "type": "Feature",
-              "geometry": {
-                "type": "LineString",
-                "coordinates": []
-              },
-              "properties": {
-                //"timestamp": [],
-                "name": docName,
-                "description": docDesc
-              }
-            }
-         ]
-      };
-      
-      
-      //Set flags for file handling.
-      jsonLineString.fileRead = true;
-      jsonLineString.exists = false;
-      
-    //Handle unknown errors.
-    } else {
-      console.log('Error opening the JSON LineString file.');
-      throw err;
-    }
-    
-  } else {
-    //debugger;
-    //If the file already exists, the read it in.
-    jsonLineString.data = JSON.parse(data);
-    jsonLineString.fileRead = true;
-    jsonLineString.exists = true;
-  }
-});
+dataLog.readLineStringFile(fileNameGeoJSONLineString);
 
 
 /*

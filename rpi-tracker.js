@@ -11,7 +11,10 @@ var fs = require('fs');
 var tokml = require('tokml'); //Used for converting GeoJSON to KML.
 var http = require('http'); //Used for GET and POST requests
 var FormData = require('form-data');
+
+//Local libraries based on the different featuers of this software
 var GPSInterface = require('./lib/gps-interface.js');
+var DataLog = require('./lib/data-log.js');
 
 
 var app = express();
@@ -27,8 +30,9 @@ var debugState = false; //Used to turn verbose debugging off or on.
 var trackerServerIp = '198.199.94.71';
 var trackerServerPort = '3000';
 
-var gpsInterface = new GPSInterface.GPSInterface();
-//gpsInterface.connectToGPS();
+var gpsInterface = new GPSInterface.Constructor();
+var dataLog = new DataLog.Constructor();
+dataLog.helloWorld();
 
 /*
  * Open a JSON file for recording GPS data
@@ -201,9 +205,7 @@ app.use('/wifiSettings', requestHandlers.wifiSettings);
 
 
 
-/*
- * GPS Connection
- */
+/* BEGIN GPS Connection */
 var listener = new gpsd.Listener({
     port: 2947,
     hostname: 'localhost',
@@ -225,8 +227,6 @@ listener.connect(function() {
 //Save the listener to the Express app locals so I can access it in the request handlers.
 app.locals.listener = listener;
 
-
-
 var timeStamp = new Date(); //Stores the most recent timestamp from the GPS.
 
 // parse is false, so only raw data gets emitted.
@@ -235,6 +235,9 @@ var timeStamp = new Date(); //Stores the most recent timestamp from the GPS.
 listener.on('raw', gpsInterface.readNMEASentences );
 
 listener.watch({class: 'WATCH', nmea: true});
+/* END GPS Connection */
+
+
 
 /*
  * Timer event to record GPS data to a file

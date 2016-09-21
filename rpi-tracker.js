@@ -132,7 +132,7 @@ global.getGPSTimestamp = setInterval(function() {
   debugger;
   
   if(global.gpsInterface.timeStamp != undefined) {
-    
+    debugger;
     console.log('Time stamp retrieved from GPS. Opening log files.')
     
     var timeStamp = global.gpsInterface.timeStamp;
@@ -151,7 +151,7 @@ global.getGPSTimestamp = setInterval(function() {
     global.dataLog.readPointFile();
     //Second log file.
     global.dataLog.readLineStringFile();
-    
+    debugger;
     clearInterval(global.getGPSTimeStamp);
   }
   

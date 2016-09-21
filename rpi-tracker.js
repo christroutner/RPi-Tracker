@@ -28,7 +28,7 @@ var trackerServerIp = '198.199.94.71';
 var trackerServerPort = '3000';
 
 var gpsInterface = new GPSInterface.GPSInterface();
-gpsInterface.connectToGPS();
+//gpsInterface.connectToGPS();
 
 /*
  * Open a JSON file for recording GPS data

@@ -156,7 +156,7 @@ var getGPSTimeStamp = setInterval(function() {
     clearInterval(getGPSTimeStamp);
     
     //Signal to global.dataLog.logData() that data can now be logged to the log files.
-    globalThis.logFileOpened = true;
+    global.dataLog.logFileOpened = true;
   }
   
 }, 10000);

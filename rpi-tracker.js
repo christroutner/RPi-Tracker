@@ -37,9 +37,9 @@ dataLog.helloWorld();
 /*
  * Open a JSON file for recording GPS data
  */
-app.locals.jsonPointTimeStamp = new Object();
-app.locals.jsonPointTimeStamp.fileRead = false;
-app.locals.jsonPointTimeStamp.exists = false;
+global.jsonPointTimeStamp = new Object();
+global.jsonPointTimeStamp.fileRead = false;
+global.jsonPointTimeStamp.exists = false;
 
 var jsonLineString = new Object();
 jsonLineString.fileRead = false;

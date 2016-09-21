@@ -152,7 +152,7 @@ global.getGPSTimestamp = setInterval(function() {
     //Second log file.
     global.dataLog.readLineStringFile();
     
-    clearTimeout(global.getGPSTimeStamp)
+    clearInterval(global.getGPSTimeStamp);
   }
   
 }, 10000);

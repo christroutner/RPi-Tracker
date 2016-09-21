@@ -24,7 +24,7 @@ var port = 3000;
  * Global Variables
  */
 app.locals.isTracking = false;
-var debugState = false; //Used to turn verbose debugging off or on.
+global.debugState = false; //Used to turn verbose debugging off or on.
 
 //Tracker server
 var trackerServerIp = '198.199.94.71';

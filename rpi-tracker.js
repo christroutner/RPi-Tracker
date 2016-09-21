@@ -8,7 +8,6 @@ var express = require('express');
 var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
-var tokml = require('tokml'); //Used for converting GeoJSON to KML.
 var http = require('http'); //Used for GET and POST requests
 var FormData = require('form-data');
 

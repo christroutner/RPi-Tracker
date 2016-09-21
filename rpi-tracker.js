@@ -58,7 +58,7 @@ var docDesc = "Tracking data captured with the Raspberry Pi on "+today.getFullYe
 //First log file.
 dataLog.readPointFile(fileNameGeoJSONPoint);
 //Second log file.
-dataLog.readLineStringFile(fileNameGeoJSONLineString);
+dataLog.readLineStringFile(fileNameGeoJSONLineString, docName, docDesc);
 
 
 /*

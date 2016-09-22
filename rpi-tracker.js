@@ -26,9 +26,7 @@ var port = 3000;
 app.locals.isTracking = false;
 global.debugState = false; //Used to turn verbose debugging off or on.
 
-//Tracker server
-var trackerServerIp = '198.199.94.71';
-var trackerServerPort = '3000';
+
 
 global.gpsInterface = new GPSInterface.Constructor();
 global.dataLog = new DataLog.Constructor();

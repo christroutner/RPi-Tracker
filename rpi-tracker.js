@@ -133,7 +133,7 @@ var getGPSTimeStamp = setInterval(function() {
   
   if(global.gpsInterface.timeStamp != undefined) {
 
-    console.log('Time stamp retrieved from GPS. Opening log files.')
+    console.log('Time stamp retrieved from GPS: '+global.gpsInterface.timestamp+'. Opening log files.')
     
     var timeStamp = global.gpsInterface.timeStamp;
     

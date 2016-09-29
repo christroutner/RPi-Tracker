@@ -133,9 +133,9 @@ var getGPSTimeStamp = setInterval(function() {
   
   if(global.gpsInterface.timeStamp != undefined) {
 
-    console.log('Time stamp retrieved from GPS: '+global.gpsInterface.timestamp+'. Opening log files.')
-    
     var timeStamp = global.gpsInterface.timeStamp;
+    
+    console.log('Time stamp retrieved from GPS: '+timeStamp+'. Opening log files.')
     
     //Generate a file name based on the current date.
     //Dev Note: The RPi date/time can't be trusted. I should update this data with data from the GPS.

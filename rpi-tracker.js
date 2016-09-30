@@ -166,12 +166,12 @@ var getGPSTimeStamp = setInterval(function() {
 
 /* BEGIN - Timer event to record GPS data to a file */ 
 //Production
-//global.dataLog.timeout = 30000;  //1000 = 1 second.
-//global.dataLog.fileSaveCnt = 10; //Number of intervals until the file is saved.
+global.dataLog.timeout = 30000;  //1000 = 1 second.
+global.dataLog.fileSaveCnt = 4; //Number of intervals until the file is saved.
 
 //Testing
-global.dataLog.timeout = 15000;  //1000 = 1 second.
-global.dataLog.fileSaveCnt = 1; //Number of intervals until the file is saved.
+//global.dataLog.timeout = 15000;  //1000 = 1 second.
+//global.dataLog.fileSaveCnt = 1; //Number of intervals until the file is saved.
 
 //Create an interval timer to periodically add GPS coordinates to the running log.
 //Whenever the interval timer event triggers, all the coordinates that have been collected in the buffer get averaged.

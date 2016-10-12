@@ -139,13 +139,13 @@ var getGPSTimeStamp = setInterval(function() {
     
     //Generate a file name based on the current date.
     //Dev Note: The RPi date/time can't be trusted. I should update this data with data from the GPS.
-    global.dataLog.fileNameGeoJSONPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate())).slice(-2)+'-PT'+'.json';
-    global.dataLog.fileNameGeoJSONLineString = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate())).slice(-2)+'-LS'+'.json';
-    global.dataLog.fileNameKMLPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate())).slice(-2)+'-PT'+'.kml';
-    global.dataLog.fileNameKMLLineString = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate())).slice(-2)+'-LS'+'.kml';
-    global.dataLog.docName = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate())).slice(-2)+" Tracking Data";
-    global.dataLog.docDesc = "Tracking data captured with the Raspberry Pi on "+timeStamp.getFullYear()+'-'+('00'+(timeStamp.getMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getDate())).slice(-2);
-
+    global.dataLog.fileNameGeoJSONPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2)+'-PT'+'.json';
+    global.dataLog.fileNameGeoJSONLineString = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2)+'-LS'+'.json';
+    global.dataLog.fileNameKMLPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2)+'-PT'+'.kml';
+    global.dataLog.fileNameKMLLineString = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2)+'-LS'+'.kml';
+    global.dataLog.docName = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2)+" Tracking Data";
+    global.dataLog.docDesc = "Tracking data captured with the Raspberry Pi on "+timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2);
+    
     //Read in the log files if they already exists. Otherwise create a new file.
     //First log file. 
     global.dataLog.readPointFile();

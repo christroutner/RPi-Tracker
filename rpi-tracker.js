@@ -9,6 +9,7 @@ var requestHandlers = require("./requestHandlers.js");
 var gpsd = require('./lib/gpsd');
 var fs = require('fs');
 var http = require('http'); //Used for GET and POST requests
+var Promise = require('node-promise');
 
 
 //Local libraries based on the different featuers of this software

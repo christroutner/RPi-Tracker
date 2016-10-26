@@ -1,7 +1,7 @@
 //This is test code for learning to work with promises in node.js
 
 var fs = require('fs');
-var Promise = require('promise');
+var Promise = require('node-promise');
 
 var promise = readTestFile();
 

@@ -1,4 +1,6 @@
 //This is test code for learning to work with promises in node.js
+//Based on this tutorial:
+//http://stevehanov.ca/blog/index.php?id=127
 
 var fs = require('fs');
 var Promise = require('node-promise');

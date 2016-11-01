@@ -391,16 +391,16 @@ function waitingModal() {
 
   updateModal();
   openModal();
-},
+}
   
 function openModal: function() {
   $('#mainModal').modal('show');
-},
+}
 
 function closeModal: function() {
   $('#mainModal').modal('hide');
-},
-
+}
+  
 //This function updates the modal title, body, and footer based on the title, body, and button data in modalData.
 function updateModal: function() {
   
@@ -409,5 +409,5 @@ function updateModal: function() {
   mainModal.find('#mainModalTitle').text(modalData.title);
   mainModal.find('#mainModalBody').html(modalData.body);
   mainModal.find('#mainModalFooter').html(modalData.btn1+modalData.btn2);
-},
+}
 // END MODAL FUNCTIONS

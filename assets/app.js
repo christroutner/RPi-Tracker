@@ -266,14 +266,25 @@ $(document).ready(function() {
       //Throw up a spinny gif modal for 30 seconds
       waitingModal();
       
-      //Create a timer to update the modal after some time has passed.
-      var intervalHandle = setInterval(function() {
-        modalData.title = "Done!";
-        modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
-          "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
-          "interface at this url: <b>192.168.42.1:3000</b></p>";
-        updateModal();
-      }, 30000);
+      //Access Point
+      if(serverSettings.wifiType == "1") {
+        //Create a timer to update the modal after some time has passed.
+        var intervalHandle = setInterval(function() {
+          modalData.title = "Done!";
+          modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
+            "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
+            "interface at this url: <b>192.168.42.1:3000</b></p>";
+          updateModal();
+        }, 30000);
+      } else {
+        //Create a timer to update the modal after some time has passed.
+        var intervalHandle = setInterval(function() {
+          modalData.title = "Done!";
+          modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect to the RPi " +
+            "on the selected WiFi hotspot. You will need to retreive the RPi's IP address from the wireless router.";
+          updateModal();
+        }, 60000);
+      }
     }
   });
 
@@ -392,7 +403,7 @@ function waitingModal() {
   
   //debugger;
   modalData.title = 'Rebooting...';
-  modalData.body = '<img class="img-responsive center-block" src="img/waiting.gif" id="waitingGif" />';
+  modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
   modalData.btn1 = '';
   modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
 

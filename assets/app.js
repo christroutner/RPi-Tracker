@@ -393,16 +393,16 @@ function waitingModal() {
   openModal();
 }
   
-function openModal: function() {
+function openModal() {
   $('#mainModal').modal('show');
 }
 
-function closeModal: function() {
+function closeModal() {
   $('#mainModal').modal('hide');
 }
   
 //This function updates the modal title, body, and footer based on the title, body, and button data in modalData.
-function updateModal: function() {
+function updateModal() {
   
   var mainModal = $('#mainModal');
   

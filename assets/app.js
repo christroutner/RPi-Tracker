@@ -266,7 +266,12 @@ $(document).ready(function() {
       //Throw up a spinny gif modal for 30 seconds
       waitingModal();
       
-      //Create a timer to reload the page
+      //Create a timer to update the modal after some time has passed.
+      var intervalHandle = setInterval(function() {
+        modalData.title = "Done!";
+        modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
+          "with Wifi name <b>RPi_AP</b> and access this user interface at this url: <b>192.168.42.1:3000</b></p>";
+      }, 30000);
     }
   });
 

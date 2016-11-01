@@ -270,7 +270,8 @@ $(document).ready(function() {
       var intervalHandle = setInterval(function() {
         modalData.title = "Done!";
         modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
-          "with Wifi name <b>RPi_AP</b> and access this user interface at this url: <b>192.168.42.1:3000</b></p>";
+          "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
+          "interface at this url: <b>192.168.42.1:3000</b></p>";
       }, 30000);
     }
   });

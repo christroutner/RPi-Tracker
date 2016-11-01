@@ -13,9 +13,11 @@ var Promise = require('node-promise');
 
 
 //Local libraries based on the different featuers of this software
+var serverSettings = require('./assets/server_settings.json');
 var GPSInterface = require('./lib/gps-interface.js');
 var DataLog = require('./lib/data-log.js');
 var ServerInterface = require('./lib/server-interface.js');
+var WifiInterface = require('./lib/wifi.js');
 
 
 var app = express();
@@ -25,6 +27,9 @@ var port = 3000;
  * Global Variables
  */
 app.locals.isTracking = false;
+
+//Dev Note: I should make debugState a local varible in each library, so that I can turn debugging on
+//for specific featuers like WiFi, GPS, data logging, server interface, etc.
 global.debugState = false; //Used to turn verbose debugging off or on.
 
 
@@ -32,6 +37,7 @@ global.debugState = false; //Used to turn verbose debugging off or on.
 global.gpsInterface = new GPSInterface.Constructor();
 global.dataLog = new DataLog.Constructor();
 global.serverInterface = new ServerInterface.Constructor();
+global.wifiInterface = new WifiInterface.Constructor();
 //dataLog.helloWorld();
 
 
@@ -86,7 +92,7 @@ app.get('/', function(request, response, next) {
 //Request Handler/Webserver functions
 app.use('/listLogFiles', requestHandlers.listLogFiles);
 app.use('/queryTracking', requestHandlers.queryTracking);
-app.use('/wifiSettings', requestHandlers.wifiSettings);
+app.use('/wifiSettings', global.wifiInterface.wifiSettings);
 
 
 
@@ -188,6 +194,32 @@ if(global.serverInterface != undefined) {
 /* END - SERVER INTERFACE FOR LOGGING TO SERVER */
 
 
+//Determine if previous settings need to be restored if the device has been rebooted several times with rebootConfirmationNeeded set to true.
+debugger;
+try {
+  if(serverSettings.rebootCnt > 2) {
+    //Make a call to the WiFi library to restore the previous settings.
+  } else {
+    //Increment the reboot counter.
+    serverSettings.rebootCnt++;
+    
+    //This code paragraph should really be its own subfunction with the WiFi library.
+    //Write out the server_settings.json file.
+    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
+      if(err) {
+        console.log('Error in wifiSettings() while trying to write server_settings.json file.');
+        console.log(err);
+      } else {
+        console.log('wifiSettings() executed. server_settings.json updated.');
+      }
+    });
+  }
+} catch(err) {
+  console.error('Error trying to access serverSettings.rebootCnt.');
+  console.error('Error message: '+err.message);
+}
+
 /* Start up the Express web server */
 app.listen(process.env.PORT || port);
 console.log('Express started on port ' + port);
+

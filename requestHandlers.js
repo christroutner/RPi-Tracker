@@ -27,8 +27,8 @@ var sudo = require('sudo'); //Used to execut sudo level commands with spawn
 // CUSTOMIZATION VARIABLES
 //var wwwDir = '/inetpub/wwwroot/'  //Windows 2008 Server
 //var wwwDir = '/var/www/'          //Linux
-var wwwDir = './'                   //Node/Express
-var sudoPassword = "raspberry"; //The root password required when running 'sudo' commands.
+//var wwwDir = './'                   //Node/Express
+//var sudoPassword = "raspberry"; //The root password required when running 'sudo' commands.
 
 
 
@@ -104,164 +104,9 @@ function queryTracking(request, response, next) {
   
 }
 
-/******************************************************************************
-Summary:
-wifiSettings() allows configuration of the WiFi interface.
-******************************************************************************/
-function wifiSettings(request, response, next) {
-  debugger;
-  
-  console.log('Request Handler wifiSettings() called.');
-  
-  //Just a general test to verify that the request doesn't contain garbage, but an expected data structure.
-  if(request.query.wifiType < 3) {
-    
-    //Save the passed in server settings to the global variable serverSettings.
-    serverSettings = request.query;
-    
-    //Write out the server_settings.json file.
-    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
-      if(err) {
-        console.log('Error in wifiSettings() while trying to write server_settings.json file.');
-        console.log(err);
-      } else {
-        console.log('wifiSettings() executed. server_settings.json updated.');
-      }
 
-    });
-    
-    //Write out new wpa_supplicant.conf file
-    write_wpa_supplicant();
-    
-    //Write out new hostapd.conf file
-    write_hostapd();
-    
-    response.send(true);
-    
-    //If the reboot flag is set, then prepare to reboot the Pi
-    if(serverSettings.rebootConfirmationNeeded == "true") {
-      debugger;
-      
-      //Dev-Note: uid=1000 is the uid for user 'pi' that has sudo permission.
-      
-      var options = {
-        cachePassword: true,
-        prompt: 'Password, yo? ',
-        spawnOptions: { }
-      }
-      
-      //AP
-      if(serverSettings.wifiType == "1") {
-        console.log('Running makeAP2 script...');
-        
-        child = sudo([ './makeAP2' ], options);
-        child.stdout.on('data', function (data) {
-            console.log(data.toString());
-        });
-        child.stderr.on('data', function (data) {
-          console.log('stderr: ' + data);
-        });
-        
-      //Client
-      } else if(serverSettings.wifiType == "2") {
-        console.log('Running restoreWifi...');
-        
-        //exec('sudo ./wifi_AP/rpi3/wifi_client/restoreWifi', function(err, stdout, stderr) {
-        //  debugger;
-        //});
-        
-        //Spawn the script.
-        //var terminal = spawn('sudo ./restoreWifi2', [], { uid: 1000 });
-        
-        //Display the script output on the command line.
-        //terminal.stdout.on('data', function(data) {
-        //  console.log('stdout: ' + data);
-        //});
-        
-        child = sudo([ './restoreWifi2' ], options);
-        child.stdout.on('data', function (data) {
-            console.log(data.toString());
-        });
-        child.stderr.on('data', function (data) {
-          console.log('stderr: ' + data);
-        });
-        
-      }
-    }
-  
-  //This handles garbage queries. Return false.
-  } else {
-    response.send(false)
-  }
-  
-  //response.send(true);
-  
-}
-
-//This function is called by wifiSettings(). It's purpose is to write out a new wpa_supplicant file.
-function write_wpa_supplicant() {
-  //debugger;
-  
-  var outStr = "";
-  
-  //Write out file header
-  outStr += "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n";
-  outStr += "update_config=1\n";
-  outStr += "country=GB\n\n";
-  
-  for(var i=0; i < serverSettings.wifiClientSettings.length; i++) {
-    outStr += "network={\n";
-    outStr += '\tssid="'+serverSettings.wifiClientSettings[i].ssid+'"\n';
-    outStr += '\tpsk="'+serverSettings.wifiClientSettings[i].psk+'"\n';
-    outStr += '\tkey_mgmt='+serverSettings.wifiClientSettings[i].key_mgmt+'\n';
-    outStr += "}\n\n";
-  }
-  
-  //Write out the wpa_supplicant file.
-  fs.writeFile('./wifi_AP/rpi3/wifi_client/wpa_supplicant.conf', outStr, function (err) {
-    if(err) {
-      console.log('Error in write_wpa_supplicant() while trying to write wpa_supplicant.conf file.');
-      console.log(err);
-    } else {
-      console.log('write_wpa_supplicant() executed. wpa_supplicant.conf updated.');
-    }
-
-  });
-}
-
-//This function is called by wifiSettings(). It's purpose is to write out a new wpa_supplicant file.
-function write_hostapd() {
-  //debugger;
-  
-  var outStr = ""; //Initialize
-  
-  outStr += "interface=wlan0\n";
-  outStr += "driver=nl80211\n";
-  outStr += "ssid="+serverSettings.wifiAPSettings.ssid+"\n";
-  outStr += "hw_mode=g\n";
-  outStr += "channel="+serverSettings.wifiAPSettings.channel+"\n";
-  outStr += "macaddr_acl=0\n";
-  outStr += "auth_algs=1\n";
-  outStr += "ignore_broadcast_ssid=0\n";
-  outStr += "wpa=2\n";
-  outStr += "wpa_passphrase="+serverSettings.wifiAPSettings.psk+"\n";
-  outStr += "wpa_key_mgmt=WPA-PSK\n";
-  outStr += "wpa_pairwise=TKIP\n";
-  outStr += "rsn_pairwise=CCMP\n";
-  
-  //Write out the hostapd.conf file.
-  fs.writeFile('./wifi_AP/rpi3/make_AP/hostapd.conf', outStr, function (err) {
-    if(err) {
-      console.log('Error in write_hostapd() while trying to write hostapd.conf file.');
-      console.log(err);
-    } else {
-      console.log('write_hostapd() executed. hostapd.conf updated.');
-    }
-
-  });
-}
 
 
 exports.listLogFiles = listLogFiles;
 exports.queryTracking = queryTracking;
-exports.wifiSettings = wifiSettings;
+//exports.wifiSettings = wifiSettings;

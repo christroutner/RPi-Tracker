@@ -33,6 +33,7 @@
   
   "rebootConfirmationNeeded": "false",
   "wifiType": "2",
+  "rebootCnt": 0,
   
   "userId": "57e1a18460390704dc1a10d9",
   "trackerServerIp": "107.170.204.153",

@@ -1,5 +1,6 @@
 var isTracking = true;  //Tracks the state of the device. Tracking = true. Not tracking = false.
 var serverSettings = new Object(); //Used to hold the data in server_settings.json.
+var modalData = new Object(); //Used to store setting for configuring the modal.
 
 $(document).ready(function() {
   //debugger;
@@ -261,6 +262,11 @@ $(document).ready(function() {
       
       alert('The Raspberry Pi in now rebooting and implementing the new settings. Please wait a few minutes, then navigate back to this page'
            +' and confirm these settings or the old settings will be restored.');
+      
+      //Throw up a spinny gif modal for 30 seconds
+      waitingModal();
+      
+      //Create a timer to reload the page
     }
   });
 
@@ -369,3 +375,39 @@ function updateClientSettings() {
   }
 }
 // END UTILITY FUNCTIONS
+
+
+// START MODAL FUNCTIONS
+//Modal control functions
+function waitingModal() {
+  
+  var mainModal = $('#mainModal');
+  
+  //debugger;
+  modalData.title = 'Rebooting...';
+  modalData.body = '<img class="img-responsive center-block" src="img/waiting.gif" id="waitingGif" />';
+  modalData.btn1 = '';
+  modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+
+  updateModal();
+  openModal();
+},
+  
+function openModal: function() {
+  $('#mainModal').modal('show');
+},
+
+function closeModal: function() {
+  $('#mainModal').modal('hide');
+},
+
+//This function updates the modal title, body, and footer based on the title, body, and button data in modalData.
+function updateModal: function() {
+  
+  var mainModal = $('#mainModal');
+  
+  mainModal.find('#mainModalTitle').text(modalData.title);
+  mainModal.find('#mainModalBody').html(modalData.body);
+  mainModal.find('#mainModalFooter').html(modalData.btn1+modalData.btn2);
+},
+// END MODAL FUNCTIONS

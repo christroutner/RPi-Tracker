@@ -195,7 +195,10 @@ if(global.serverInterface != undefined) {
 
 
 //Determine if previous settings need to be restored if the device has been rebooted several times with rebootConfirmationNeeded set to true.
-global.wifiInterface.restoreCheck();
+if(serverSettings.rebootConfirmationNeeded == "true") {
+  global.wifiInterface.restoreCheck();
+}
+
 
 /* Start up the Express web server */
 app.listen(process.env.PORT || port);

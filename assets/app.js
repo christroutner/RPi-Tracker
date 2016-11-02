@@ -217,6 +217,7 @@ $(document).ready(function() {
       var r = confirm("Press 'OK' to save the new WiFi settings.");
       if(r == true) {
         serverSettings.rebootConfirmationNeeded = "false";
+        serverSettings.rebootCnt = 0;
         
         //persist the server settings to the sever.
         $('#wifiBtn').trigger('click');

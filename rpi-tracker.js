@@ -21,7 +21,7 @@ var WifiInterface = require('./lib/wifi.js');
 
 
 var app = express();
-var port = 3000;
+var port = 80;
 
 /*
  * Global Variables

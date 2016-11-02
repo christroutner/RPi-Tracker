@@ -239,9 +239,12 @@ $(document).ready(function() {
   function restoreDefaultWiFi() {
     
     //Update the wifiAPSettings in the serverSettings.
+    serverSettings.wifiType = 1;
     serverSettings.wifiAPSettings.ssid = "Pi_AP";
     serverSettings.wifiAPSettings.psk = "raspberry";
     serverSettings.wifiAPSettings.channel = 6;
+    serverSettings.rebootConfirmationNeeded = "false";
+    serverSettings.rebootCnt = 0;
 
     //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/wifiSettings', serverSettings, function(data) {

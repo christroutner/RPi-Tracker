@@ -1,0 +1,12 @@
+{
+  "name": "RPi-Tracker",
+  "description": "Turn a Raspberry Pi into a tracking device with a BU-353 USB GPS.",
+  "version": 0.0.1,
+  "dependencies": {
+    "sudo": "1.x",
+    "node-promise": "0.x",
+    "tokml": "0.x",
+    "form-data": "2.x",
+    "request": "2.x"
+  }
+}

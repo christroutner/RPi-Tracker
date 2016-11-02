@@ -233,6 +233,40 @@ $(document).ready(function() {
     //debugger;
   });
 
+  //This function resets the RPi back to factory default settings of a WiFi AP.
+  function restoreDefaultWiFi() {
+    
+    //Update the wifiAPSettings in the serverSettings.
+    serverSettings.wifiAPSettings.ssid = "Pi_AP";
+    serverSettings.wifiAPSettings.psk = "raspberry";
+    serverSettings.wifiAPSettings.channel = 6;
+
+    //Send the updated serverSettings to the server to update the server_settings.json file.
+    $.get('/wifiSettings', serverSettings, function(data) {
+      //debugger;
+      if(data == true) {
+        console.log('server_settings.json updated with WiFi Settings.');
+      } else {
+        console.error('server_settings.json changes rejected by server!');
+      }      
+    });
+    
+    alert('The Raspberry Pi is now rebooting and restoring factory settings. Please wait approximately 30 seconds and then you should be able '+
+         'to connect to WiFi access point "Pi_AP" with password "raspberry".');
+
+    //Throw up a spinny gif modal for 30 seconds
+    waitingModal();
+
+    //Create a timer to update the modal after some time has passed.
+    var intervalHandle = setInterval(function() {
+      modalData.title = "Done!";
+      modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
+        "with Wifi access point named <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
+        "interface at this url: <b>192.168.42.1:3000</b></p>";
+      updateModal();
+    }, 30000);
+
+  }
   
   //Create click handler for 'Save Settings' Wifi button. 
   $('#wifiBtn').click(function() {
@@ -254,7 +288,7 @@ $(document).ready(function() {
       } else {
         console.error('server_settings.json changes rejected by server!');
       }      
-    })
+    });
     
     //Throw up the modal if a reboot is required.
     if(serverSettings.rebootConfirmationNeeded == true) {

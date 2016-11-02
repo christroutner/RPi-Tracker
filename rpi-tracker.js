@@ -195,29 +195,7 @@ if(global.serverInterface != undefined) {
 
 
 //Determine if previous settings need to be restored if the device has been rebooted several times with rebootConfirmationNeeded set to true.
-debugger;
-try {
-  if(serverSettings.rebootCnt > 2) {
-    //Make a call to the WiFi library to restore the previous settings.
-  } else {
-    //Increment the reboot counter.
-    serverSettings.rebootCnt++;
-    
-    //This code paragraph should really be its own subfunction with the WiFi library.
-    //Write out the server_settings.json file.
-    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
-      if(err) {
-        console.log('Error in wifiSettings() while trying to write server_settings.json file.');
-        console.log(err);
-      } else {
-        console.log('wifiSettings() executed. server_settings.json updated.');
-      }
-    });
-  }
-} catch(err) {
-  console.error('Error trying to access serverSettings.rebootCnt.');
-  console.error('Error message: '+err.message);
-}
+global.wifiInterface.restoreCheck();
 
 /* Start up the Express web server */
 app.listen(process.env.PORT || port);

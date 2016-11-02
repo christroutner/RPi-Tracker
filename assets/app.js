@@ -357,7 +357,7 @@ $(document).ready(function() {
   
   // END SETTINGS TAB CONTROL
 
-
+}
 
 // START UTILITY FUNCTIONS
 function wifiCheckboxHandler(eventHandler) {

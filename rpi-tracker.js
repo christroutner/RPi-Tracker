@@ -93,6 +93,7 @@ app.get('/', function(request, response, next) {
 app.use('/listLogFiles', requestHandlers.listLogFiles);
 app.use('/queryTracking', requestHandlers.queryTracking);
 app.use('/wifiSettings', global.wifiInterface.wifiSettings);
+app.use('/saveSettings', requestHandlers.saveSettings);
 
 
 

@@ -339,7 +339,21 @@ $(document).ready(function() {
 
 
   // START SETTINGS TAB CONTROL
-
+  //Create click handler for 'Save Settings' button in the user settings tab.
+  $('#saveSettings').click(function() {
+    
+    serverSettings.userId = $('#userId').val();
+    
+    //Send the updated serverSettings to the server to update the server_settings.json file.
+    $.get('/wifiSettings', serverSettings, function(data) {
+      //debugger;
+      if(data == true) {
+        console.log('server_settings.json updated with WiFi Settings.');
+      } else {
+        console.error('server_settings.json changes rejected by server!');
+      }      
+    });
+  }
   // END SETTINGS TAB CONTROL
 })
 

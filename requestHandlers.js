@@ -104,9 +104,30 @@ function queryTracking(request, response, next) {
   
 }
 
+//This API expects to be sent the serverSettings JSON object. It then saves that data to a JSON file.
+function saveSettings(request, response, next) {
+  debugger;
+  
+  //Just a general test to verify that the request doesn't contain garbage, but an expected data structure.
+  if(request.query.wifiType < 3) {
+  
+    //Save the passed in server settings to the global variable serverSettings.
+    serverSettings = request.query;
 
+    //Write out the server_settings.json file.
+    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
+      if(err) {
+        console.log('Error in saveSettings() while trying to write server_settings.json file.');
+        console.log(err);
+      } else {
+        console.log('saveSettings() executed. server_settings.json updated.');
+      }
+    });
+  }
+}
 
 
 exports.listLogFiles = listLogFiles;
 exports.queryTracking = queryTracking;
 //exports.wifiSettings = wifiSettings;
+exports.saveSettings = saveSettings;

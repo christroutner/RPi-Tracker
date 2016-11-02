@@ -243,7 +243,7 @@ $(document).ready(function() {
     serverSettings.wifiAPSettings.ssid = "Pi_AP";
     serverSettings.wifiAPSettings.psk = "raspberry";
     serverSettings.wifiAPSettings.channel = 6;
-    serverSettings.rebootConfirmationNeeded = "false"; 
+    serverSettings.rebootConfirmationNeeded = "true"; //Needs to be true to reset RPi WiFi
     serverSettings.rebootCnt = 0;
 
     //Send the updated serverSettings to the server to update the server_settings.json file.

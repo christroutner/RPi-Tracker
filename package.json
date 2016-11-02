@@ -9,7 +9,7 @@
   "licenses": [
     {
       "type": "Modified MIT",
-      "url": "https://github.com/christroutner/RPi-Tracker/LICENSE.md"
+      "url": "https://github.com/christroutner/RPi-Tracker/blob/master/LICENSE.md"
     }
   ],
   "dependencies": {

@@ -353,9 +353,10 @@ $(document).ready(function() {
         console.error('server_settings.json changes rejected by server!');
       }      
     });
-  }
+  });
+  
   // END SETTINGS TAB CONTROL
-})
+
 
 
 // START UTILITY FUNCTIONS

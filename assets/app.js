@@ -225,6 +225,7 @@ $(document).ready(function() {
         debugger;
         
         //restore the saved settings and reboot.
+        restoreDefaultWiFi();
         
       }
       

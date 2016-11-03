@@ -232,6 +232,10 @@ $(document).ready(function() {
       
     }
     
+    //Initialize the form on the Settings tab by filling it out with values from serverSettings.
+    $('#userId').val(serverSettings.userId);
+  
+    
     //debugger;
   });
 
@@ -339,9 +343,6 @@ $(document).ready(function() {
 
 
   // START SETTINGS TAB CONTROL
-  
-  //Initialize the form by filling it out with values from serverSettings.
-  $('#userId').val(serverSettings.userId);
   
   //Create click handler for 'Save Settings' button in the user settings tab.
   $('#saveSettings').click(function() {

@@ -30,7 +30,7 @@ app.locals.isTracking = false;
 
 //Dev Note: I should make debugState a local varible in each library, so that I can turn debugging on
 //for specific featuers like WiFi, GPS, data logging, server interface, etc.
-global.debugState = false; //Used to turn verbose debugging off or on.
+global.debugState = true; //Used to turn verbose debugging off or on.
 
 
 

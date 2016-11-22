@@ -271,7 +271,7 @@ $(document).ready(function() {
       modalData.title = "Done!";
       modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
         "with Wifi access point named <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
-        "interface at this url: <b>192.168.42.1:3000</b></p>";
+        "interface at this url: <b>192.168.42.1</b></p>";
       updateModal();
     }, 30000);
 

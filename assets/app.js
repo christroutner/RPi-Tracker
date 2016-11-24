@@ -364,7 +364,10 @@ $(document).ready(function() {
   
   
   // START DEBUG TAB CONTROL
-  $('#testLog').click(function() {
+  //$('#testLog').click(function() {
+  var debugIntervalHandle = setInterval(function() {
+     
+    
     //debugger;
     
     $.get('/getLog', '', function(data) {
@@ -385,7 +388,8 @@ $(document).ready(function() {
       
       
     });
-  });
+  }, 10000);
+  //});
   // END DEBUG TAB CONTROL
 
 });

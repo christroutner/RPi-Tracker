@@ -361,6 +361,17 @@ $(document).ready(function() {
   });
   
   // END SETTINGS TAB CONTROL
+  
+  
+  // START DEBUG TAB CONTROL
+  $('#testLog').click(function() {
+    debugger;
+    
+    $.get('/getLog', '', function(data) {
+      debugger;
+    });
+  });
+  // END DEBUG TAB CONTROL
 
 });
 

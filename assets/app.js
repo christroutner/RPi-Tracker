@@ -365,10 +365,10 @@ $(document).ready(function() {
   
   // START DEBUG TAB CONTROL
   $('#testLog').click(function() {
-    debugger;
+    //debugger;
     
     $.get('/getLog', '', function(data) {
-      debugger;
+      //debugger;
       
       if(!data) {
         console.error('Server returned false!');

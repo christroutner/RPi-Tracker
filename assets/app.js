@@ -383,7 +383,7 @@ $(document).ready(function() {
       var lines = data.split('\n');
       
       for(var i=lines.length-2; i > -1; i--) {
-        $('#consoleLog').append('<p>'+i+'. '+lines[i]+'</p>');
+        $('#consoleLog').append('<p>'+(i+1)+'. '+lines[i]+'</p>');
       }
       
       

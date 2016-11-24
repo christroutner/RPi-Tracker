@@ -369,6 +369,14 @@ $(document).ready(function() {
     
     $.get('/getLog', '', function(data) {
       debugger;
+      
+      if(!data) {
+        console.error('Server returned false!');
+        return;
+      }
+      
+      $('#consoleLog').find('p').remove();
+      $('#consoleLog').append('<p>'+data+'</p>');
     });
   });
   // END DEBUG TAB CONTROL

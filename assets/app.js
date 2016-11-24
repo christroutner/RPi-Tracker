@@ -376,7 +376,14 @@ $(document).ready(function() {
       }
       
       $('#consoleLog').find('p').remove();
-      $('#consoleLog').append('<p>'+data+'</p>');
+      
+      var lines = data.split('\n');
+      
+      for(var i=0; i < lines.length; i++) {
+        $('#consoleLog').append('<p>'+lines[i]+'</p>');
+      }
+      
+      
     });
   });
   // END DEBUG TAB CONTROL

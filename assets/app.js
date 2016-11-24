@@ -382,7 +382,7 @@ $(document).ready(function() {
       
       var lines = data.split('\n');
       
-      for(var i=lines.length-1; i > -1; i--) {
+      for(var i=lines.length-2; i > -1; i--) {
         $('#consoleLog').append('<p>'+i+'. '+lines[i]+'</p>');
       }
       

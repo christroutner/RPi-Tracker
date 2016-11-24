@@ -18,6 +18,7 @@ var GPSInterface = require('./lib/gps-interface.js');
 var DataLog = require('./lib/data-log.js');
 var ServerInterface = require('./lib/server-interface.js');
 var WifiInterface = require('./lib/wifi.js');
+var AppLogAPI = require('./lib/appLogAPI.js');
 
 
 var app = express();
@@ -38,6 +39,7 @@ global.gpsInterface = new GPSInterface.Constructor();
 global.dataLog = new DataLog.Constructor();
 global.serverInterface = new ServerInterface.Constructor();
 global.wifiInterface = new WifiInterface.Constructor();
+global.appLogAPI = new AppLogAPI.Constructor();
 //dataLog.helloWorld();
 
 
@@ -94,7 +96,7 @@ app.use('/listLogFiles', requestHandlers.listLogFiles);
 app.use('/queryTracking', requestHandlers.queryTracking);
 app.use('/wifiSettings', global.wifiInterface.wifiSettings);
 app.use('/saveSettings', requestHandlers.saveSettings);
-
+app.use('/getLog', global.appLogAPI.getLog);
 
 
 

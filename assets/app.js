@@ -370,7 +370,7 @@ $(document).ready(function() {
       //Throw up the waiting modal.
       modalData.title = 'Syncing With Map Tracks Server...';
       modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
-      modelData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee;"></div>';
+      modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee;"></div>';
       modalData.btn1 = '';
       modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
       updateModal();

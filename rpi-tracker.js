@@ -101,7 +101,7 @@ app.use('/saveSettings', requestHandlers.saveSettings);
 app.use('/getLog', global.appLogAPI.getLog);
 app.use('/syncLog', global.serverInterface.getSyncLog);
 app.use('/startSync', global.serverInterface.startSync);
-
+app.use('/stopSync', global.serverInterface.stopSync);
 
 
 

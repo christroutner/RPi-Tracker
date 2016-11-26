@@ -391,10 +391,26 @@ $(document).ready(function() {
         $('#syncLogOutput').append('<p>'+data[i]+'</p>');
       }
       
+      //Detect when the sync has completed.
+      detectDone(data);
+      
       //Automatically scroll to the bottom of the div.
       $("#syncLogOutput").scrollTop($("#syncLogOutput")[0].scrollHeight);
     });
   };
+  
+  //This function detects when the file sync is complete. It does this by monitoring the /syncLog output.
+  //This function is called by updateSyncLogOutput().
+  function detectDone(logArray) {
+    debugger;
+    
+    //Server's last log file: Wed Nov 16 2016 18:00:40 GMT+0000 (UTC)
+    //Client's time: Sat Nov 26 2016 22:52:01 GMT+0000 (UTC)
+    
+    //Find the server timestamp
+    var serverTimeIndex = logArray.indexOf("Server's last log file: ");
+    var clientTimeIndex = logArray.indexOf("Client's time: ");
+  }
   
   // END SETTINGS TAB CONTROL
   

@@ -99,6 +99,8 @@ app.use('/queryTracking', requestHandlers.queryTracking);
 app.use('/wifiSettings', global.wifiInterface.wifiSettings);
 app.use('/saveSettings', requestHandlers.saveSettings);
 app.use('/getLog', global.appLogAPI.getLog);
+app.use('/syncLog', global.serverInterface.getSyncLog);
+app.use('/startSync', global.serverInterface.startSync);
 
 
 
@@ -193,9 +195,9 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 
  /* BEGIN - SERVER INTERFACE FOR LOGGING TO SERVER */
 //Skip this code if the serverInterface is not even set up.
-if(global.serverInterface != undefined) {
-  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
-}
+//if(global.serverInterface != undefined) {
+//  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
+//}
 /* END - SERVER INTERFACE FOR LOGGING TO SERVER */
 
 

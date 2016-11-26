@@ -382,7 +382,15 @@ $(document).ready(function() {
   });
   
   function updateSyncLogOutput() {
-    console.log('updateSyncLogOutput() called.');
+    $.get('/syncLog', '', function(data) {
+      
+      //Clear the output div
+      $('#syncLogOutput').find('p').remove();
+      
+      for(var i=0; i < data.length; i++) {
+        $('#syncLogOutput').append('<p>'+data[i]+'</p>');
+      }
+    });
   };
   
   // END SETTINGS TAB CONTROL

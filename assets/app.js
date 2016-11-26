@@ -407,11 +407,22 @@ $(document).ready(function() {
     //Server's last log file: Wed Nov 16 2016 18:00:40 GMT+0000 (UTC)
     //Client's time: Sat Nov 26 2016 22:52:01 GMT+0000 (UTC)
     
-    //Find the server timestamp
-    var serverTimeIndex = logArray.indexOf("Server's last log file: ");
-    var clientTimeIndex = logArray.indexOf("Client's time: ");
+    var serverString = "Server's last log file: ";
+    var clientString = "Client's time: ";
     
-    if(serverTimeIndex != -1) {
+    var serverStringIndex = [];
+    var clientStringIndex = [];
+    
+    //Detect any occurance of the targeted server or client strings
+    for(var i=0; i < logArray.length; i++) {
+      if(logArray[i].indexOf(serverString) != -1)
+        serverStringIndex.push(i);
+      
+      if(logArray[i].indexOf(clientString) != -1)
+        clientStringIndex.push(i);
+    }
+    
+    if(serverStringIndex.length > 0) {
       debugger;
     }
   }

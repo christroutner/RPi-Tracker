@@ -376,7 +376,7 @@ $(document).ready(function() {
       updateModal();
       openModal();
       
-      var intervalHandleSyncLog = setInterval(updateSyncLogOutput(), 5000);
+      var intervalHandleSyncLog = setInterval(updateSyncLogOutput, 5000);
       
     });
   });
@@ -399,7 +399,7 @@ $(document).ready(function() {
       //debugger;
       
       if(!data) {
-        console.error('Server returned false!');
+        console.error('Server returned false when calling /getLog!');
         return;
       }
       

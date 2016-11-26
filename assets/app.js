@@ -390,6 +390,9 @@ $(document).ready(function() {
       for(var i=0; i < data.length; i++) {
         $('#syncLogOutput').append('<p>'+data[i]+'</p>');
       }
+      
+      //Automatically scroll to the bottom of the div.
+      $("#syncLogOutput").scrollTop($("#syncLogOutput")[0].scrollHeight);
     });
   };
   

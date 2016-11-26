@@ -423,7 +423,44 @@ $(document).ready(function() {
     }
     
     if(serverStringIndex.length > 0) {
-      debugger;
+      //debugger;
+      
+      //Get the last occurance of the server string.
+      var tempStr = logArray[serverStringIndex[serverStringIndex.length-1]];
+      
+      //Calculate the timestamp for the server.
+      var dateStr = tempStr.slice(24);
+      var serverDate = new Date(dateStr);
+      
+      //Do the same for the client string
+      if(clientStringIndex.length > 0) {
+        var tempStr = logArray[clientStringIndex[clientStringIndex.length-1]];
+        var dateStr = tempStr.slice(15);
+        var clientDate = new Date(dateStr);
+        
+        //Figure out if the sync has completed
+        if(serverDate.getUTCDate() == clientDate.getUTCDate()) {
+          if(serverDate.getUTCHours() == clientDate.getUTCDate()) {
+            
+            //Stop the synchronization
+            $.get('/stopSync', '', function(data) {
+              
+              if(data) {
+                //Hide the spinny waiting gif.
+                $('#waitingGif').hide();
+
+                //Replace the image with a complete message.
+                $('#waitingGif').parent().prepend('<h2>Sync Complete!</h2>');
+              } else {
+                console.error('Error while trying to stop server sync!');
+              }
+            });
+          }
+        }
+        
+      }
+      
+      
     }
   }
   

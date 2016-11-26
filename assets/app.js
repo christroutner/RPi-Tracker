@@ -360,6 +360,24 @@ $(document).ready(function() {
     });
   });
   
+  //Click function for the 'Sync Files' button.
+  $('#syncFiles').click(function() {
+    
+    //Start the synchonization.
+    $.get('/startSync', '', function(data) {
+      debugger;
+      
+      //Throw up the waiting modal.
+      modalData.title = 'Syncing With Map Tracks Server...';
+      modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+      modalData.btn1 = '';
+      modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+      updateModal();
+      openModal();
+      
+    });
+  });
+  
   // END SETTINGS TAB CONTROL
   
   

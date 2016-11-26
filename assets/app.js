@@ -376,7 +376,7 @@ $(document).ready(function() {
       updateModal();
       openModal();
       
-      globalThis.intervalHandleSyncLog = setInterval(updateSyncLogOutput(), 5000);
+      var intervalHandleSyncLog = setInterval(updateSyncLogOutput(), 5000);
       
     });
   });

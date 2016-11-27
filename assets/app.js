@@ -469,20 +469,7 @@ $(document).ready(function() {
     }
   };
   
-  function stopSync() {
-    debugger;
-    
-    //Stop the synchronization
-    $.get('/stopSync', '', function(data) {
-
-      if(data) {
-        //Stop the sync timer-interval.
-        clearInterval(syncIntervalHandle);
-      } else {
-        console.error('Error while trying to stop server sync!');
-      }
-    });
-  };
+  
   
   // END SETTINGS TAB CONTROL
   
@@ -641,4 +628,19 @@ function updateModal() {
   mainModal.find('#mainModalBody').html(modalData.body);
   mainModal.find('#mainModalFooter').html(modalData.btn1+modalData.btn2);
 }
+
+function stopSync() {
+  debugger;
+
+  //Stop the synchronization
+  $.get('/stopSync', '', function(data) {
+
+    if(data) {
+      //Stop the sync timer-interval.
+      clearInterval(syncIntervalHandle);
+    } else {
+      console.error('Error while trying to stop server sync!');
+    }
+  });
+};
 // END MODAL FUNCTIONS

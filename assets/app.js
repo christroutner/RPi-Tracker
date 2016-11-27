@@ -2,6 +2,8 @@ var isTracking = true;  //Tracks the state of the device. Tracking = true. Not t
 var serverSettings = new Object(); //Used to hold the data in server_settings.json.
 var modalData = new Object(); //Used to store setting for configuring the modal.
 
+var syncIntervalHandle; //Interveral Handle used for syncing client to server.
+
 $(document).ready(function() {
   //debugger;
 
@@ -376,7 +378,7 @@ $(document).ready(function() {
       updateModal();
       openModal();
       
-      var intervalHandleSyncLog = setInterval(updateSyncLogOutput, 5000);
+      var syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
       
     });
   });
@@ -450,7 +452,10 @@ $(document).ready(function() {
                 $('#waitingGif').hide();
 
                 //Replace the image with a complete message.
-                $('#waitingGif').parent().prepend('<h2>Sync Complete!</h2>');
+                $('#waitingGif').parent().prepend('<h2><center><b>Sync Complete!</b></center></h2>');
+                
+                //Stop the sync timer-interval.
+                clearInterval(syncIntervalHandle);
               } else {
                 console.error('Error while trying to stop server sync!');
               }

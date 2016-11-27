@@ -648,6 +648,8 @@ function stopSync() {
   $.get('/stopSync', '', function(data) {
 
     if(data) {
+      syncState = 0;
+      
       //Stop the sync timer-interval.
       clearInterval(syncIntervalHandle);
     } else {

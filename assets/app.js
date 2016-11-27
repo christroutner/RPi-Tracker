@@ -3,6 +3,7 @@ var serverSettings = new Object(); //Used to hold the data in server_settings.js
 var modalData = new Object(); //Used to store setting for configuring the modal.
 
 var syncIntervalHandle; //Interveral Handle used for syncing client to server.
+var syncState = 0; //0 = not syncing, 1 = syncing in progress, 2 = syncing complete.
 
 $(document).ready(function() {
   //debugger;
@@ -365,40 +366,49 @@ $(document).ready(function() {
   //Click function for the 'Sync Files' button.
   $('#syncFiles').click(function() {
     
-    //Start the synchonization.
-    $.get('/startSync', '', function(data) {
-      debugger;
+    if(syncState != 1) {
+      syncState = 1;
       
-      //Throw up the waiting modal.
-      modalData.title = 'Syncing With Map Tracks Server...';
-      modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
-      modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
-      modalData.btn1 = '';
-      modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
-      updateModal();
-      openModal();
-      
-      syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
-      
-    });
+      //Start the synchonization.
+      $.get('/startSync', '', function(data) {
+        //debugger;
+
+
+        //Throw up the waiting modal.
+        modalData.title = 'Syncing With Map Tracks Server...';
+        modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+        modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
+        modalData.btn1 = '';
+        modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
+        updateModal();
+        openModal();
+
+        syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
+
+      });
+    }
+    
   });
   
   function updateSyncLogOutput() {
-    $.get('/syncLog', '', function(data) {
-      
-      //Clear the output div
-      $('#syncLogOutput').find('p').remove();
-      
-      for(var i=0; i < data.length; i++) {
-        $('#syncLogOutput').append('<p>'+data[i]+'</p>');
-      }
-      
-      //Detect when the sync has completed.
-      detectDone(data);
-      
-      //Automatically scroll to the bottom of the div.
-      $("#syncLogOutput").scrollTop($("#syncLogOutput")[0].scrollHeight);
-    });
+    
+    if(syncState == 1) {
+      $.get('/syncLog', '', function(data) {
+
+        //Clear the output div
+        $('#syncLogOutput').find('p').remove();
+
+        for(var i=0; i < data.length; i++) {
+          $('#syncLogOutput').append('<p>'+data[i]+'</p>');
+        }
+
+        //Detect when the sync has completed.
+        detectDone(data);
+
+        //Automatically scroll to the bottom of the div.
+        $("#syncLogOutput").scrollTop($("#syncLogOutput")[0].scrollHeight);
+      });
+    }
   };
   
   //This function detects when the file sync is complete. It does this by monitoring the /syncLog output.
@@ -443,6 +453,8 @@ $(document).ready(function() {
         //Figure out if the sync has completed
         if(serverDate.getUTCDate() == clientDate.getUTCDate()) {
           if(serverDate.getUTCHours() == clientDate.getUTCHours()) {
+            
+            syncState = 3;
             
             //Stop the synchronization
             $.get('/stopSync', '', function(data) {
@@ -630,7 +642,7 @@ function updateModal() {
 }
 
 function stopSync() {
-  debugger;
+  //debugger;
 
   //Stop the synchronization
   $.get('/stopSync', '', function(data) {

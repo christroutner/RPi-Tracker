@@ -378,7 +378,7 @@ $(document).ready(function() {
       updateModal();
       openModal();
       
-      var syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
+      syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
       
     });
   });

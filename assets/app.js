@@ -440,7 +440,7 @@ $(document).ready(function() {
         
         //Figure out if the sync has completed
         if(serverDate.getUTCDate() == clientDate.getUTCDate()) {
-          if(serverDate.getUTCHours() == clientDate.getUTCDate()) {
+          if(serverDate.getUTCHours() == clientDate.getUTCHours()) {
             
             //Stop the synchronization
             $.get('/stopSync', '', function(data) {

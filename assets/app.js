@@ -5,6 +5,8 @@ var modalData = new Object(); //Used to store setting for configuring the modal.
 var syncIntervalHandle; //Interveral Handle used for syncing client to server.
 var syncState = 0; //0 = not syncing, 1 = syncing in progress, 2 = syncing complete.
 
+var debugIntervalHandle //Interval Handle used for getting debug log from client.
+
 $(document).ready(function() {
   //debugger;
 
@@ -314,6 +316,10 @@ $(document).ready(function() {
       
       //Access Point
       if(serverSettings.wifiType == "1") {
+        
+        //Stop the timer-interval that tries to retrieve the debug log.
+        clearInterval(debugIntervalHandle);
+        
         //Create a timer to update the modal after some time has passed.
         var intervalHandle = setInterval(function() {
           modalData.title = "Done!";
@@ -488,7 +494,7 @@ $(document).ready(function() {
   
   // START DEBUG TAB CONTROL
   //$('#testLog').click(function() {
-  var debugIntervalHandle = setInterval(function() {
+  debugIntervalHandle = setInterval(function() {
      
     
     //debugger;

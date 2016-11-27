@@ -374,7 +374,7 @@ $(document).ready(function() {
       modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
       modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
       modalData.btn1 = '';
-      modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+      modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
       updateModal();
       openModal();
       
@@ -467,7 +467,22 @@ $(document).ready(function() {
       
       
     }
-  }
+  };
+  
+  function stopSync() {
+    debugger;
+    
+    //Stop the synchronization
+    $.get('/stopSync', '', function(data) {
+
+      if(data) {
+        //Stop the sync timer-interval.
+        clearInterval(syncIntervalHandle);
+      } else {
+        console.error('Error while trying to stop server sync!');
+      }
+    });
+  };
   
   // END SETTINGS TAB CONTROL
   

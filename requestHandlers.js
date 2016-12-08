@@ -137,7 +137,11 @@ function updateSoftware(request, response, next) {
       console.log(err.message);
       response.send(false);
     }
+    
+    console.log(stdout);
 
+    response.send(true); //Send acknowledgement that git pull was successfully executed.
+    
     var options = {
       cachePassword: true,
       prompt: 'Password, yo? ',
@@ -146,16 +150,12 @@ function updateSoftware(request, response, next) {
     
     child = sudo([ '/sbin/reboot', 'now' ], options);
     child.stdout.on('data', function (data) {
-      console.log(data.toString());
-      
-      response.send(true);
+      console.log(data.toString());      
     });
     child.stderr.on('data', function (data) {
       console.log('updateSoftware() had issues while executing "reboot now". Error: '+data);
       response.send(false);
     });
-    
-    
 
   });
 }

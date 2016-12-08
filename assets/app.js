@@ -491,6 +491,9 @@ $(document).ready(function() {
   //It makes an API call that initializes a 'git pull' from the RPi-Tracker GitHub repo and then a reboot.
   $('#updateSoftwareBtn').click(function(event) {
     debugger;
+    $.get('/softwareUpdate', '', function(data) {
+      debugger;
+    });
   });
   
   

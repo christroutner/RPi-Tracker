@@ -126,8 +126,43 @@ function saveSettings(request, response, next) {
   }
 }
 
+//This API executes the command line 'git pull' instruction and then reboots the device.
+function updateSoftware(request, response, next) {
+  //Execute 'git pull'
+  exec('git pull', function(err, stdout, stderr) {
+    debugger;
+
+    if (err) {
+      console.log('updateSoftware() had issues while executing "git pull". Child process exited with error code ' + err.code);
+      console.log(err.message);
+      response.send(false);
+    }
+
+    var options = {
+      cachePassword: true,
+      prompt: 'Password, yo? ',
+      spawnOptions: { }
+    }
+    
+    child = sudo([ 'reboot now' ], options);
+    child.stdout.on('data', function (data) {
+      console.log(data.toString());
+      
+      response.send(true);
+    });
+    child.stderr.on('data', function (data) {
+      console.log('updateSoftware() had issues while executing "reboot now". Error: '+data);
+      response.send(false);
+    });
+    
+    
+
+  });
+}
+
 
 exports.listLogFiles = listLogFiles;
 exports.queryTracking = queryTracking;
 //exports.wifiSettings = wifiSettings;
 exports.saveSettings = saveSettings;
+exports.updateSoftware = updateSoftware;

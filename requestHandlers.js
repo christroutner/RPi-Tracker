@@ -144,7 +144,7 @@ function updateSoftware(request, response, next) {
       spawnOptions: { }
     }
     
-    child = sudo([ '/sbin/reboot now' ], options);
+    child = sudo([ '/sbin/reboot', 'now' ], options);
     child.stdout.on('data', function (data) {
       console.log(data.toString());
       

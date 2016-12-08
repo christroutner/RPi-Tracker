@@ -102,7 +102,7 @@ app.use('/getLog', global.appLogAPI.getLog);
 app.use('/syncLog', global.serverInterface.getSyncLog);
 app.use('/startSync', global.serverInterface.startSync);
 app.use('/stopSync', global.serverInterface.stopSync);
-app.use('/softwareUpdate', requestHandlers.softwareUpdate);
+app.use('/updateSoftware', requestHandlers.updateSoftware);
 
 
 /* BEGIN GPS Connection */

@@ -60,6 +60,7 @@
 
         <!-- START SETTINGS TAB -->
         <div class="tab-pane" id="tab2">
+          
           <form class="form-horizontal">
             <h2>Map Tracks Server Settings</h2>
             <div class="form-group">
@@ -74,14 +75,33 @@
                 <button class="btn btn-primary" type="button" id="syncFiles">Sync Files</button>
               </div>
             </div>
-            
-            <hr style="border-top: 5px solid #000;">
+          </form>
+
+          <hr style="border-top: 3px solid #000;">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <h3>Update RPi-Tracker Software</h3>
+              <p>
+                Clicking the button below will download the latest RPi-Tracker code from 
+                <a href="https://github.com/christroutner/RPi-Tracker" target="_blank">the GitHub repository</a>.
+              </p>
+            </div>
+            <div class="col-sm-offset-5 col-sm-2 text-center center-block">
+              <button class="btn btn-success" type="button">Update RPi-Tracker Software</button>
+            </div>
+          </div>
+          
+          <hr style="border-top: 5px solid #000;">
+          
+          <form class="form-horizontal">
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-default" id="saveSettings">Save Settings</button>
               </div>
             </div>
-          </form>        
+          </form>
+          
         </div>
         <!-- END SETTINGS TAB -->
 

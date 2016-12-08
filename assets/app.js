@@ -494,6 +494,9 @@ $(document).ready(function() {
     
     $.get('/updateSoftware', '', function(data) {
       debugger;
+      
+      alert('This device has downloaded the latest updates from GitHub. It will now reboot and any new software updates should take affect.');
+      
     });
   });
   

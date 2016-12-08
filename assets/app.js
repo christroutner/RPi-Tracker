@@ -487,6 +487,11 @@ $(document).ready(function() {
     }
   };
   
+  //This function is called when the user clicks the 'Update RPi-Tracker Software' button.
+  //It makes an API call that initializes a 'git pull' from the RPi-Tracker GitHub repo and then a reboot.
+  function updateSoftware() {
+    debugger;
+  }
   
   
   // END SETTINGS TAB CONTROL

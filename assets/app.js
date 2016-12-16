@@ -509,11 +509,9 @@ $(document).ready(function() {
   
   // START DEBUG TAB CONTROL
   //$('#testLog').click(function() {
-  debugIntervalHandle = setInterval(function() {
-     
-    
-    //debugger;
-    
+  
+  
+  function getDebugLog() {
     $.get('/getLog', '', function(data) {
       //debugger;
       
@@ -530,9 +528,10 @@ $(document).ready(function() {
         $('#consoleLog').append('<p>'+(i+1)+'. '+lines[i]+'</p>');
       }
       
-      
     });
-  }, 10000);
+  };
+  getDebugLog();
+  debugIntervalHandle = setInterval(getDebugLog, 10000);
   //});
   // END DEBUG TAB CONTROL
 

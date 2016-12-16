@@ -13,7 +13,7 @@ var Promise = require('node-promise');
 
 
 //Local libraries based on the different featuers of this software
-var serverSettings = require('./assets/server_settings.json');
+var serverSettings = require('./assets/server_settings.json'); //This should be the first library loaded.
 var GPSInterface = require('./lib/gps-interface.js');
 var DataLog = require('./lib/data-log.js');
 var ServerInterface = require('./lib/server-interface.js');

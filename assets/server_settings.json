@@ -36,7 +36,10 @@
   "rebootCnt": 0,
   
   "userId": "581f3a5773f0411014b0f8fe",
-  "trackerServerIp": "107.170.252.36",
-  "trackerServerPort": "80"
+  "trackerServerIp": "crumbshare.com",
+  "trackerServerPort": "80",
+  
+  "gpsDataLogTimeout": 30000,
+  "gpsFileSaveTimeoutCnt": 4
   
 }

@@ -180,8 +180,8 @@ var getGPSTimeStamp = setInterval(function() {
 
 /* BEGIN - Timer event to record GPS data to a file */ 
 //Production
-global.dataLog.timeout = 30000;  //1000 = 1 second.
-global.dataLog.fileSaveCnt = 4; //Number of intervals until the file is saved.
+global.dataLog.timeout = serverSettings.gpsDataLogTimeout;  //1000 = 1 second. 
+global.dataLog.fileSaveCnt = serverSettings.gpsFileSaveTimeoutCnt; //Number of intervals until the file is saved.
 
 //Testing
 //global.dataLog.timeout = 15000;  //1000 = 1 second.

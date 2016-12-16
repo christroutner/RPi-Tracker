@@ -239,7 +239,8 @@ $(document).ready(function() {
     
     //Initialize the form on the Settings tab by filling it out with values from serverSettings.
     $('#userId').val(serverSettings.userId);
-  
+    $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
+    $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
     
     //debugger;
   });
@@ -357,6 +358,8 @@ $(document).ready(function() {
   $('#saveSettings').click(function() {
     
     serverSettings.userId = $('#userId').val();
+    serverSettings.gpsDataLogTimeout = $('#gpsDataLogTimeout').val();
+    serverSettings.gpsFileSaveTimeoutCnt = $('#gpsFileSaveTimeoutCnt').val();
     
     //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/saveSettings', serverSettings, function(data) {
@@ -490,10 +493,10 @@ $(document).ready(function() {
   //This function is called when the user clicks the 'Update RPi-Tracker Software' button.
   //It makes an API call that initializes a 'git pull' from the RPi-Tracker GitHub repo and then a reboot.
   $('#updateSoftwareBtn').click(function(event) {
-    debugger;
+    //debugger;
     
     $.get('/updateSoftware', '', function(data) {
-      debugger;
+      //debugger;
       
       alert('This device has downloaded the latest updates from GitHub. It will now reboot and any new software updates should take affect.');
       

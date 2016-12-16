@@ -409,7 +409,7 @@ $(document).ready(function() {
         $('#syncLogOutput').find('p').remove();
 
         for(var i=0; i < data.length; i++) {
-          $('#syncLogOutput').append('<p>'i+'. '+data[i]+'</p>');
+          $('#syncLogOutput').append('<p>'+i+'. '+data[i]+'</p>');
         }
 
         //Detect when the sync has completed.

@@ -392,6 +392,7 @@ $(document).ready(function() {
         updateModal();
         openModal();
 
+        updateSyncLogOutput();
         syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
 
       });
@@ -408,7 +409,7 @@ $(document).ready(function() {
         $('#syncLogOutput').find('p').remove();
 
         for(var i=0; i < data.length; i++) {
-          $('#syncLogOutput').append('<p>'+data[i]+'</p>');
+          $('#syncLogOutput').append('<p>'i+'. '+data[i]+'</p>');
         }
 
         //Detect when the sync has completed.

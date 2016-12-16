@@ -160,9 +160,30 @@ function updateSoftware(request, response, next) {
   });
 }
 
+//This API reboots the device.
+function rebootRPi(request, response, next) {
+
+  var options = {
+    cachePassword: true,
+    prompt: 'Password, yo? ',
+    spawnOptions: { }
+  }
+
+  child = sudo([ '/sbin/reboot', 'now' ], options);
+  child.stdout.on('data', function (data) {
+    console.log(data.toString());   
+    response.send(true);
+  });
+  child.stderr.on('data', function (data) {
+    console.log('rebootRPi() had issues while executing "reboot now". Error: '+data);
+    response.send(false);
+  });
+
+}
 
 exports.listLogFiles = listLogFiles;
 exports.queryTracking = queryTracking;
 //exports.wifiSettings = wifiSettings;
 exports.saveSettings = saveSettings;
 exports.updateSoftware = updateSoftware;
+exports.rebootRPi = rebootRPi;

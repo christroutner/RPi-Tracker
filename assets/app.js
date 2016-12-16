@@ -504,6 +504,17 @@ $(document).ready(function() {
     });
   });
   
+  $('#rebootBtn').click(function(event) {
+    //debugger;
+    
+    $.get('/rebootRPi', '', function(data) {
+      //debugger;
+      
+      alert('This device will now reboot and any new setting changes will take affect.');
+      
+    });
+  });
+  
   
   // END SETTINGS TAB CONTROL
   

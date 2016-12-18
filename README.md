@@ -19,16 +19,20 @@ Installation step-by-step directions are as follows:
   1. Ensure your Raspberry Pi is running the latest version of Raspbian by following [these instructions](https://www.raspberrypi.org/learning/noobs-install/).
   2. The rest of the installation instructions assume that you are using an RPi v3.
   3. Before continuing, it's always a good idea to update your system to the latest versions of software by running the following commands to update the devices operating system. This will probably take a while. It's also a good idea to make a copy of your SD card after you're done, so that you don't have to do it again.
-    1. `sudo apt-get update`
-    2. `sudo apt-get upgrade`
-
-
-2. Install git with the command `sudo apt-get install git`
-3. [Follow these instructions](http://weworkweplay.com/play/raspberry-pi-nodejs/) to install node on the Raspberry Pi.
-4. Clone this repository with this command `git clone https://github.com/christroutner/RPi-Tracker`
-5. Change into the `RPi-Tracker` directory.
-6. Install the dependencies with the command `npm install`
-7. Run the program with `node app.js`
+    * `sudo apt-get update`
+    * `sudo apt-get upgrade`
+2. Install the packages needed to run the GPS:
+  * `sudo apt-get install -y gpsd gpsd-clients python-gps`
+3. Install a more up-to-date version of node and npm on the Raspberry Pi.
+  * `sudo apt-get remove nodejs`
+  * `wget http://node-arm.herokuapp.com/node_latest_armhf.deb `
+  * `sudo dpkg -i node_latest_armhf.deb`
+4. Install git with the command `sudo apt-get install git`
+5. [Follow these instructions](http://weworkweplay.com/play/raspberry-pi-nodejs/) to install node on the Raspberry Pi.
+6. Clone this repository with this command `git clone https://github.com/christroutner/RPi-Tracker`
+7. Change into the `RPi-Tracker` directory.
+8. Install the dependencies with the command `npm install`
+9. Run the program with `node app.js`
 
 I'm missing some steps there. I'll come back and refine this section once I have a pseudo-stable version.
 

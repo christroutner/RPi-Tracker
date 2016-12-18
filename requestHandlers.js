@@ -104,9 +104,86 @@ function queryTracking(request, response, next) {
   
 }
 
+//This API expects to be sent the serverSettings JSON object. It then saves that data to a JSON file.
+function saveSettings(request, response, next) {
+  debugger;
+  
+  //Just a general test to verify that the request doesn't contain garbage, but an expected data structure.
+  if(request.query.wifiType < 3) {
+  
+    //Save the passed in server settings to the global variable serverSettings.
+    serverSettings = request.query;
 
+    //Write out the server_settings.json file.
+    fs.writeFile('./assets/server_settings.json', JSON.stringify(serverSettings, null, 4), function (err) {
+      if(err) {
+        console.log('Error in saveSettings() while trying to write server_settings.json file.');
+        console.log(err);
+      } else {
+        console.log('saveSettings() executed. server_settings.json updated.');
+      }
+    });
+  }
+}
 
+//This API executes the command line 'git pull' instruction and then reboots the device.
+function updateSoftware(request, response, next) {
+  //Execute 'git pull'
+  exec('git pull', function(err, stdout, stderr) {
+    debugger;
+
+    if (err) {
+      console.log('updateSoftware() had issues while executing "git pull". Child process exited with error code ' + err.code);
+      console.log(err.message);
+      response.send(false);
+    }
+    
+    console.log(stdout);
+
+    response.send(true); //Send acknowledgement that git pull was successfully executed.
+    
+    var options = {
+      cachePassword: true,
+      prompt: 'Password, yo? ',
+      spawnOptions: { }
+    }
+    
+    child = sudo([ '/sbin/reboot', 'now' ], options);
+    child.stdout.on('data', function (data) {
+      console.log(data.toString());      
+    });
+    child.stderr.on('data', function (data) {
+      console.log('updateSoftware() had issues while executing "reboot now". Error: '+data);
+      response.send(false);
+    });
+
+  });
+}
+
+//This API reboots the device.
+function rebootRPi(request, response, next) {
+
+  var options = {
+    cachePassword: true,
+    prompt: 'Password, yo? ',
+    spawnOptions: { }
+  }
+
+  child = sudo([ '/sbin/reboot', 'now' ], options);
+  child.stdout.on('data', function (data) {
+    console.log(data.toString());   
+    response.send(true);
+  });
+  child.stderr.on('data', function (data) {
+    console.log('rebootRPi() had issues while executing "reboot now". Error: '+data);
+    response.send(false);
+  });
+
+}
 
 exports.listLogFiles = listLogFiles;
 exports.queryTracking = queryTracking;
 //exports.wifiSettings = wifiSettings;
+exports.saveSettings = saveSettings;
+exports.updateSoftware = updateSoftware;
+exports.rebootRPi = rebootRPi;

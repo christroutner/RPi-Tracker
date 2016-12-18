@@ -2,6 +2,11 @@ var isTracking = true;  //Tracks the state of the device. Tracking = true. Not t
 var serverSettings = new Object(); //Used to hold the data in server_settings.json.
 var modalData = new Object(); //Used to store setting for configuring the modal.
 
+var syncIntervalHandle; //Interveral Handle used for syncing client to server.
+var syncState = 0; //0 = not syncing, 1 = syncing in progress, 2 = syncing complete.
+
+var debugIntervalHandle //Interval Handle used for getting debug log from client.
+
 $(document).ready(function() {
   //debugger;
 
@@ -232,6 +237,11 @@ $(document).ready(function() {
       
     }
     
+    //Initialize the form on the Settings tab by filling it out with values from serverSettings.
+    $('#userId').val(serverSettings.userId);
+    $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
+    $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
+    
     //debugger;
   });
 
@@ -267,7 +277,7 @@ $(document).ready(function() {
       modalData.title = "Done!";
       modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
         "with Wifi access point named <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
-        "interface at this url: <b>192.168.42.1:3000</b></p>";
+        "interface at this url: <b>192.168.42.1</b></p>";
       updateModal();
     }, 30000);
 
@@ -307,12 +317,16 @@ $(document).ready(function() {
       
       //Access Point
       if(serverSettings.wifiType == "1") {
+        
+        //Stop the timer-interval that tries to retrieve the debug log.
+        clearInterval(debugIntervalHandle);
+        
         //Create a timer to update the modal after some time has passed.
         var intervalHandle = setInterval(function() {
           modalData.title = "Done!";
           modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
             "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
-            "interface at this url: <b>192.168.42.1:3000</b></p>";
+            "interface at this url: <b>192.168.42.1</b></p>";
           updateModal();
         }, 30000);
       } else {
@@ -339,10 +353,201 @@ $(document).ready(function() {
 
 
   // START SETTINGS TAB CONTROL
+  
+  //Create click handler for 'Save Settings' button in the user settings tab.
+  $('#saveSettings').click(function() {
+    
+    serverSettings.userId = $('#userId').val();
+    serverSettings.gpsDataLogTimeout = $('#gpsDataLogTimeout').val();
+    serverSettings.gpsFileSaveTimeoutCnt = $('#gpsFileSaveTimeoutCnt').val();
+    
+    //Send the updated serverSettings to the server to update the server_settings.json file.
+    $.get('/saveSettings', serverSettings, function(data) {
+      //debugger;
+      if(data == true) {
+        console.log('server_settings.json updated with WiFi Settings.');
+      } else {
+        console.error('server_settings.json changes rejected by server!');
+      }      
+    });
+  });
+  
+  //Click function for the 'Sync Files' button.
+  $('#syncFiles').click(function() {
+    
+    if(syncState != 1) {
+      syncState = 1;
+      
+      //Start the synchonization.
+      $.get('/startSync', '', function(data) {
+        //debugger;
 
+
+        //Throw up the waiting modal.
+        modalData.title = 'Syncing With Map Tracks Server...';
+        modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+        modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
+        modalData.btn1 = '';
+        modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
+        updateModal();
+        openModal();
+
+        updateSyncLogOutput();
+        syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
+
+      });
+    }
+    
+  });
+  
+  function updateSyncLogOutput() {
+    
+    if(syncState == 1) {
+      $.get('/syncLog', '', function(data) {
+
+        //Clear the output div
+        $('#syncLogOutput').find('p').remove();
+
+        for(var i=0; i < data.length; i++) {
+          $('#syncLogOutput').append('<p>'+i+'. '+data[i]+'</p>');
+        }
+
+        //Detect when the sync has completed.
+        detectDone(data);
+
+        //Automatically scroll to the bottom of the div.
+        $("#syncLogOutput").scrollTop($("#syncLogOutput")[0].scrollHeight);
+      });
+    }
+  };
+  
+  //This function detects when the file sync is complete. It does this by monitoring the /syncLog output.
+  //This function is called by updateSyncLogOutput().
+  function detectDone(logArray) {
+    //debugger;
+    
+    //Server's last log file: Wed Nov 16 2016 18:00:40 GMT+0000 (UTC)
+    //Client's time: Sat Nov 26 2016 22:52:01 GMT+0000 (UTC)
+    
+    var serverString = "Server's last log file: ";
+    var clientString = "Client's time: ";
+    
+    var serverStringIndex = [];
+    var clientStringIndex = [];
+    
+    //Detect any occurance of the targeted server or client strings
+    for(var i=0; i < logArray.length; i++) {
+      if(logArray[i].indexOf(serverString) != -1)
+        serverStringIndex.push(i);
+      
+      if(logArray[i].indexOf(clientString) != -1)
+        clientStringIndex.push(i);
+    }
+    
+    if(serverStringIndex.length > 0) {
+      //debugger;
+      
+      //Get the last occurance of the server string.
+      var tempStr = logArray[serverStringIndex[serverStringIndex.length-1]];
+      
+      //Calculate the timestamp for the server.
+      var dateStr = tempStr.slice(24);
+      var serverDate = new Date(dateStr);
+      
+      //Do the same for the client string
+      if(clientStringIndex.length > 0) {
+        var tempStr = logArray[clientStringIndex[clientStringIndex.length-1]];
+        var dateStr = tempStr.slice(15);
+        var clientDate = new Date(dateStr);
+        
+        //Figure out if the sync has completed
+        if(serverDate.getUTCDate() == clientDate.getUTCDate()) {
+          if(serverDate.getUTCHours() == clientDate.getUTCHours()) {
+            
+            syncState = 3;
+            
+            //Stop the synchronization
+            $.get('/stopSync', '', function(data) {
+              
+              if(data) {
+                //Hide the spinny waiting gif.
+                $('#waitingGif').hide();
+
+                //Replace the image with a complete message.
+                $('#waitingGif').parent().prepend('<h2><center><b>Sync Complete!</b></center></h2>');
+                
+                //Stop the sync timer-interval.
+                clearInterval(syncIntervalHandle);
+              } else {
+                console.error('Error while trying to stop server sync!');
+              }
+            });
+          }
+        }
+        
+      }
+      
+      
+    }
+  };
+  
+  //This function is called when the user clicks the 'Update RPi-Tracker Software' button.
+  //It makes an API call that initializes a 'git pull' from the RPi-Tracker GitHub repo and then a reboot.
+  $('#updateSoftwareBtn').click(function(event) {
+    //debugger;
+    
+    $.get('/updateSoftware', '', function(data) {
+      //debugger;
+      
+      alert('This device has downloaded the latest updates from GitHub. It will now reboot and any new software updates should take affect.');
+      
+    });
+  });
+  
+  $('#rebootBtn').click(function(event) {
+    //debugger;
+    
+    $.get('/rebootRPi', '', function(data) {
+      //debugger;
+      
+    });
+    
+    alert('Device is not being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
+  });
+  
+  
   // END SETTINGS TAB CONTROL
-})
+  
+  
+  // START DEBUG TAB CONTROL
+  //$('#testLog').click(function() {
+  
+  
+  function getDebugLog() {
+    $.get('/getLog', '', function(data) {
+      //debugger;
+      
+      if(!data) {
+        console.error('Server returned false when calling /getLog!');
+        return;
+      }
+      
+      $('#consoleLog').find('p').remove();
+      
+      var lines = data.split('\n');
+      
+      for(var i=lines.length-2; i > -1; i--) {
+        $('#consoleLog').append('<p>'+(i+1)+'. '+lines[i]+'</p>');
+      }
+      
+    });
+  };
+  getDebugLog();
+  debugIntervalHandle = setInterval(getDebugLog, 10000);
+  //});
+  // END DEBUG TAB CONTROL
 
+});
 
 // START UTILITY FUNCTIONS
 function wifiCheckboxHandler(eventHandler) {
@@ -467,4 +672,21 @@ function updateModal() {
   mainModal.find('#mainModalBody').html(modalData.body);
   mainModal.find('#mainModalFooter').html(modalData.btn1+modalData.btn2);
 }
+
+function stopSync() {
+  //debugger;
+
+  //Stop the synchronization
+  $.get('/stopSync', '', function(data) {
+
+    if(data) {
+      syncState = 0;
+      
+      //Stop the sync timer-interval.
+      clearInterval(syncIntervalHandle);
+    } else {
+      console.error('Error while trying to stop server sync!');
+    }
+  });
+};
 // END MODAL FUNCTIONS

@@ -13,15 +13,16 @@ var Promise = require('node-promise');
 
 
 //Local libraries based on the different featuers of this software
-var serverSettings = require('./assets/server_settings.json');
+var serverSettings = require('./assets/server_settings.json'); //This should be the first library loaded.
 var GPSInterface = require('./lib/gps-interface.js');
 var DataLog = require('./lib/data-log.js');
 var ServerInterface = require('./lib/server-interface.js');
 var WifiInterface = require('./lib/wifi.js');
+var AppLogAPI = require('./lib/appLogAPI.js');
 
 
 var app = express();
-var port = 3000;
+var port = 80;
 
 /*
  * Global Variables
@@ -30,7 +31,7 @@ app.locals.isTracking = false;
 
 //Dev Note: I should make debugState a local varible in each library, so that I can turn debugging on
 //for specific featuers like WiFi, GPS, data logging, server interface, etc.
-global.debugState = false; //Used to turn verbose debugging off or on.
+global.debugState = true; //Used to turn verbose debugging off or on.
 
 
 
@@ -38,9 +39,12 @@ global.gpsInterface = new GPSInterface.Constructor();
 global.dataLog = new DataLog.Constructor();
 global.serverInterface = new ServerInterface.Constructor();
 global.wifiInterface = new WifiInterface.Constructor();
+global.appLogAPI = new AppLogAPI.Constructor();
 //dataLog.helloWorld();
 
-
+//Clear the PM2 log before starting anything else.
+if(!global.appLogAPI.clearLog())
+  console.log('Error trying to clear the PM2 log!');
 
 
 /*
@@ -93,9 +97,13 @@ app.get('/', function(request, response, next) {
 app.use('/listLogFiles', requestHandlers.listLogFiles);
 app.use('/queryTracking', requestHandlers.queryTracking);
 app.use('/wifiSettings', global.wifiInterface.wifiSettings);
-
-
-
+app.use('/saveSettings', requestHandlers.saveSettings);
+app.use('/getLog', global.appLogAPI.getLog);
+app.use('/syncLog', global.serverInterface.getSyncLog);
+app.use('/startSync', global.serverInterface.startSync);
+app.use('/stopSync', global.serverInterface.stopSync);
+app.use('/updateSoftware', requestHandlers.updateSoftware);
+app.use('/rebootRPi', requestHandlers.rebootRPi);
 
 
 /* BEGIN GPS Connection */
@@ -173,8 +181,8 @@ var getGPSTimeStamp = setInterval(function() {
 
 /* BEGIN - Timer event to record GPS data to a file */ 
 //Production
-global.dataLog.timeout = 30000;  //1000 = 1 second.
-global.dataLog.fileSaveCnt = 4; //Number of intervals until the file is saved.
+global.dataLog.timeout = serverSettings.gpsDataLogTimeout;  //1000 = 1 second. 
+global.dataLog.fileSaveCnt = serverSettings.gpsFileSaveTimeoutCnt; //Number of intervals until the file is saved.
 
 //Testing
 //global.dataLog.timeout = 15000;  //1000 = 1 second.
@@ -188,9 +196,9 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 
  /* BEGIN - SERVER INTERFACE FOR LOGGING TO SERVER */
 //Skip this code if the serverInterface is not even set up.
-if(global.serverInterface != undefined) {
-  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
-}
+//if(global.serverInterface != undefined) {
+//  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
+//}
 /* END - SERVER INTERFACE FOR LOGGING TO SERVER */
 
 

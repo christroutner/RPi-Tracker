@@ -13,9 +13,16 @@ This program is currently in pre-Alpha development. It's still very rough. So fa
 The ultimate goal of the software is for the device to be configurable from a cell phone or computer over WiFi. The RPi will be able to switch between an Access Point (acting like a wifi router) and a wireless client (like a computer or cell phone). It will serve up a web page that lists the available tracking logs that can be downloaded in the various formats.
 
 ## Installation
-Installation instructions are still being created, but consist of the following general steps:
+Installation step-by-step directions are as follows:
 
-1. Connect your RPi to the internet and bring up a command line.
+1. Install Raspbian and the latest updates
+  a. Ensure your Raspberry Pi is running the latest version of Raspbian by following these instructions.
+  b. The rest of the installation instructions assume that you are using an RPi v3.
+  c. Before continuing, it's always a good idea to update your system to the latest versions of software by running the following commands to update the devices operating system. This will probably take a while. It's also a good idea to make a copy of your SD card after you're done, so that you don't have to do it again.
+    i. sudo apt-get update
+    ii. sudo apt-get upgrade
+
+
 2. Install git with the command `sudo apt-get install git`
 3. [Follow these instructions](http://weworkweplay.com/play/raspberry-pi-nodejs/) to install node on the Raspberry Pi.
 4. Clone this repository with this command `git clone https://github.com/christroutner/RPi-Tracker`

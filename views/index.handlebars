@@ -7,6 +7,7 @@
         <li class="active"><a href="#tab1" data-toggle="tab">Log Files</a></li>
         <li><a href="#tab2" data-toggle="tab">Settings</a></li>
         <li><a href="#tab3" data-toggle="tab">WiFi</a></li>
+        <li><a href="#tab4" data-toggle="tab">Debug</a></li>
       </ul>
 
       <div class="tab-content" >
@@ -59,7 +60,77 @@
 
         <!-- START SETTINGS TAB -->
         <div class="tab-pane" id="tab2">
-          <p>This tab will allow the user to set general settings.</p>          
+          <h2>Device Settings</h2>
+
+          <h3>GPS Logging</h3>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="gpsDataLogTimeout" class="col-sm-2 control-label">GPS Data Logging Interval</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="gpsDataLogTimeout" placeholder="30000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="gpsFileSaveTimeoutCnt" class="col-sm-2 control-label">Logging Intervals Between File Saves</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="gpsFileSaveTimeoutCnt" placeholder="4">
+              </div> 
+            </div>
+              
+          </form>
+          
+          <hr style="border-top: 3px solid #000;">
+          
+          <h3>Map Tracks Server Settings</h3>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="userId" class="col-sm-2 control-label">User ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="userId" placeholder="">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-8">
+                <button class="btn btn-primary" type="button" id="syncFiles">Sync Files</button>
+              </div>
+            </div>
+          </form>
+
+          <hr style="border-top: 3px solid #000;">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="saveSettings">Save Settings</button>
+              </div>
+            </div>
+          </form>
+          
+          <hr style="border-top: 5px solid #000;">
+          
+          <div class="row">
+            <div class="col-sm-12">
+              <h3>Update RPi-Tracker Software</h3>
+              <p>
+                Clicking the button below will download the latest RPi-Tracker code from 
+                <a href="https://github.com/christroutner/RPi-Tracker" target="_blank">the GitHub repository</a>.
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-5 col-sm-2">
+              <button class="btn btn-success" type="button" id="updateSoftwareBtn">Update RPi-Tracker Software</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-5 col-sm-2">
+              <button class="btn btn-success" type="button" id="rebootBtn">Reboot Device</button>
+            </div>
+          </div>
+          
+          
         </div>
         <!-- END SETTINGS TAB -->
 
@@ -154,7 +225,7 @@
                     <p>
                       Making the Raspberry Pi a WiFi Client will allow it connect to the internet. Tell it how to 
                       connect to your local WiFi Hotspot by filling out the settings below. Selecting a previously
-                      saved Hotspot will allow you to edit the its information.
+                      saved Hotspot will allow you to edit its information.
                     </p>
                     
                     <form class="form-horizontal">
@@ -216,6 +287,26 @@
         </div>
         <!-- START WIFI CONFIGURATION TAB -->
         
+        <!-- START Debug TAB -->
+        <div class="tab-pane" id="tab4">
+          <div class="row">
+            <div class="col-md-12">
+              <p>This tab is refreshed every 10 seconds with the last 50 lines of the PM2 log. The newest entries will show up at the top.</p>
+              <div class="jumbotron" id="consoleLog">
+                <p>Data will show up here.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!--
+          <div class="row">
+            <div class="col-md-12">
+              <a class="btn btn-success center-block" href="#/" role="button" id="testLog">Test Log</a>
+            </div>
+          </div>
+          -->
+        </div>
+        <!-- END Debug TAB -->
         
       </div> <!-- /tab-content -->
     </div>

@@ -14,7 +14,7 @@ The ultimate goal of the software is for the device to be configurable from a ce
 
 ## Installation
 In order to create an RPi-Tracking device, you'll need one piece of hardware in addition to the Raspberry Pi. That
-piece is a BU-353 USB GPS as described on the [Project Page](http://rpiovn.com/page/rpi-tracking-device). 
+piece is a [BU-353 USB GPS](http://rpiovn.com/page/rpi-tracking-device).
 
 Installation step-by-step directions are as follows:
 

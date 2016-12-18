@@ -16,7 +16,7 @@ The ultimate goal of the software is for the device to be configurable from a ce
 Installation step-by-step directions are as follows:
 
 1. Install Raspbian and the latest updates
-  1. Ensure your Raspberry Pi is running the latest version of Raspbian by following [https://www.raspberrypi.org/learning/noobs-install/](these instructions).
+  1. Ensure your Raspberry Pi is running the latest version of Raspbian by following [these instructions](https://www.raspberrypi.org/learning/noobs-install/).
   2. The rest of the installation instructions assume that you are using an RPi v3.
   3. Before continuing, it's always a good idea to update your system to the latest versions of software by running the following commands to update the devices operating system. This will probably take a while. It's also a good idea to make a copy of your SD card after you're done, so that you don't have to do it again.
     1. `sudo apt-get update`

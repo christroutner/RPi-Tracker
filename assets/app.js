@@ -512,7 +512,7 @@ $(document).ready(function() {
       
     });
     
-    alert('Device is not being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
+    alert('Device is being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
   });
   
   

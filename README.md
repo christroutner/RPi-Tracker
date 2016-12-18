@@ -13,6 +13,9 @@ This program is currently in pre-Alpha development. It's still very rough. So fa
 The ultimate goal of the software is for the device to be configurable from a cell phone or computer over WiFi. The RPi will be able to switch between an Access Point (acting like a wifi router) and a wireless client (like a computer or cell phone). It will serve up a web page that lists the available tracking logs that can be downloaded in the various formats.
 
 ## Installation
+In order to create an RPi-Tracking device, you'll need one piece of hardware in addition to the Raspberry Pi. That
+piece is a BU-353 USB GPS as described on the [Project Page](http://rpiovn.com/page/rpi-tracking-device). 
+
 Installation step-by-step directions are as follows:
 
 1. Install Raspbian and the latest updates
@@ -54,7 +57,8 @@ Installation step-by-step directions are as follows:
   3. `sudo env PATH=$PATH:/usr/local/bin pm2 startup systemd -u pi --hp /home/pi`
   4. `pm2 save`
 
-11. Reboot the device and it should now run the RPi-Tracker software on boot up. Congratulations!
+11. Reboot the device and it should now run the RPi-Tracker software on boot up. Congratulations! Consider signing up for
+a [Crumb Share](http://crumbshare.com) account.
 
 
 # Licensing

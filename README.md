@@ -21,20 +21,41 @@ Installation step-by-step directions are as follows:
   3. Before continuing, it's always a good idea to update your system to the latest versions of software by running the following commands to update the devices operating system. This will probably take a while. It's also a good idea to make a copy of your SD card after you're done, so that you don't have to do it again.
     * `sudo apt-get update`
     * `sudo apt-get upgrade`
+    
 2. Install the packages needed to run the GPS:
   * `sudo apt-get install -y gpsd gpsd-clients python-gps`
+  
 3. Install a more up-to-date version of node and npm on the Raspberry Pi.
   * `sudo apt-get remove nodejs`
   * `wget http://node-arm.herokuapp.com/node_latest_armhf.deb `
   * `sudo dpkg -i node_latest_armhf.deb`
-4. Install git with the command `sudo apt-get install git`
-5. [Follow these instructions](http://weworkweplay.com/play/raspberry-pi-nodejs/) to install node on the Raspberry Pi.
-6. Clone this repository with this command `git clone https://github.com/christroutner/RPi-Tracker`
-7. Change into the `RPi-Tracker` directory.
-8. Install the dependencies with the command `npm install`
-9. Run the program with `node app.js`
+  
+4. Reboot the device.
 
-I'm missing some steps there. I'll come back and refine this section once I have a pseudo-stable version.
+5. Clone this repository
+  * `git clone https://github.com/christroutner/RPi-Tracker`
+  
+6. Change into the `RPi-Tracker` directory.
+
+7. Install the dependencies with this command:
+  * `npm install`
+  
+8. Tell the system to allow node to run on port 80 with this command:
+  * `sudo setcap 'cap_net_bind_service=+ep' /usr/local/bin/node`
+  
+9. Edit the gpsd config file by running this command:
+  * `sudo nano /etc/default/gpsd`
+  * Change the line `DEVICES=""` to `DEVICES="/dev/ttyUSB0"`
+  * Press CTL-X to exit and answer 'y' to save the file.
+
+10. Install the PM2 package, which will run the rpi-tracker application on bootup. Enter the `RPi-Tracker` directory and execute these commands:
+  1. `sudo npm install -g pm2`
+  2. `pm2 start rpi-tracker.js`
+  3. `sudo env PATH=$PATH:/usr/local/bin pm2 startup systemd -u pi --hp /home/pi`
+  4. `pm2 save`
+
+11. Reboot the device and it should now run the RPi-Tracker software on boot up. Congratulations!
+
 
 # Licensing
 Copyright (c) 2016 Chris Troutner and RPiOVN.com

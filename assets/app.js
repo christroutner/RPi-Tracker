@@ -510,9 +510,9 @@ $(document).ready(function() {
     $.get('/rebootRPi', '', function(data) {
       //debugger;
       
-      alert('This device will now reboot and any new setting changes will take affect.');
-      
     });
+    
+    alert('Device is not being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
   });
   
   

@@ -2,3 +2,5 @@ data/
 node_modules/
 nohup.out
 assets/logfiles/*.*
+assets/server_settings.json
+wifi_AP/rpi3/wifi_client/wpa_supplicant.conf

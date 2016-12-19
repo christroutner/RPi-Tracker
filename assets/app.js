@@ -387,8 +387,6 @@ $(document).ready(function() {
     .fail(function( jqxhr, textStatus, error ) {
       debugger;
 
-      var err = textStatus + ", " + error;
-      
       //This state indicates that the RPi has been disconnected.
       if((textStatus == "error") && (error == "")) {
         var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
@@ -413,22 +411,42 @@ $(document).ready(function() {
     if(syncState != 1) {
       syncState = 1;
       
+      //Throw up the waiting modal.
+      modalData.title = 'Syncing With Map Tracks Server...';
+      modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+      modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
+      modalData.btn1 = '';
+      modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
+      updateModal();
+      openModal();
+      
       //Start the synchonization.
       $.get('/startSync', '', function(data) {
         //debugger;
 
-
-        //Throw up the waiting modal.
-        modalData.title = 'Syncing With Map Tracks Server...';
-        modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
-        modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
-        modalData.btn1 = '';
-        modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
-        updateModal();
-        openModal();
-
         updateSyncLogOutput();
         syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
+
+      })
+      .fail(function( jqxhr, textStatus, error ) {
+        debugger;
+
+        syncState = 0;
+        
+        //This state indicates that the RPi has been disconnected.
+        if((textStatus == "error") && (error == "")) {
+          var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+
+        //All other reasons for the failure:
+        } else {
+          var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+            "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+        }
+
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend('<h2><center><b>Could not sync with server!</b></center></h2><br><p>'+msg+'</p>');
 
       });
     }

@@ -369,6 +369,14 @@ $(document).ready(function() {
       } else {
         console.error('server_settings.json changes rejected by server!');
       }      
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+      debugger;
+
+      var err = textStatus + ", " + error;
+      var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+          "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+      
     });
   });
   

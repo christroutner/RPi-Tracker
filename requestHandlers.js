@@ -119,8 +119,10 @@ function saveSettings(request, response, next) {
       if(err) {
         console.log('Error in saveSettings() while trying to write server_settings.json file.');
         console.log(err);
+        response.send(false); //Send failure
       } else {
         console.log('saveSettings() executed. server_settings.json updated.');
+        response.send(true); //Send acknowledgement that setting were saved successfully.
       }
     });
   }

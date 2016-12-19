@@ -613,8 +613,6 @@ $(document).ready(function() {
     
     alert('Device is being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
   });
-  
-  
   // END SETTINGS TAB CONTROL
   
   

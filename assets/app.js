@@ -565,13 +565,23 @@ $(document).ready(function() {
     $.get('/updateSoftware', '', function(data) {
       //debugger;
       
-      var msg = '<h2><center><b>Firmware update successfully!</b></center></h2>'+
-          '<p>This device has downloaded the latest updates from GitHub. It is now rebooting and any new software updates should take affect.</p>'
-      //Hide the spinny waiting gif.
-      $('#waitingGif').hide();
-      //Replace the image with a complete message.
-      $('#waitingGif').parent().prepend(msg);
+      //API returned 'true' to indicate success.
+      if(data) {
+        var msg = '<h2><center><b>Firmware update successfully!</b></center></h2>'+
+            '<p>This device has downloaded the latest updates from GitHub. It is now rebooting and any new software updates should take affect.</p>'
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend(msg);
       
+      //API returned 'false' to indicate an issue with 'git pull'
+      } else {
+        var msg = "Could not update firmware because there was an issue pulling the latest code off the GitHub repository";
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend('<h2><center><b>Could not update firmware!</b></center></h2><br><p>'+msg+'</p>');
+      }
     })
     .fail(function( jqxhr, textStatus, error ) {
       debugger;
@@ -582,7 +592,7 @@ $(document).ready(function() {
         
       //All other reasons for the failure:
       } else {
-        var msg = "Could not update firmware because there was an issue pulling the latest code off the GitHub repository";
+        var msg = "Could not update firmware because of an unknown error.";
       }
       
       //Hide the spinny waiting gif.

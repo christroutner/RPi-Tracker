@@ -154,97 +154,100 @@ $(document).ready(function() {
   // START WIFI CONTROL CODE
 
   //Initialize the WiFi settings tab based on the server_settings.json data.
-  $.getJSON('/server_settings.json', '', function(data) {
-    //debugger;
-
-    //Copy the JSON data to a global variable.
-    serverSettings = data;
-
-    //Set the checkboxes.
-    //1 == Access Point
-    if(data.wifiType == 1) {
-      $('#optionsCheckbox1').prop("checked", true);
-    //2 == WiFi Client
-    } else if(data.wifiType == 2) {
-      $('#optionsCheckbox2').prop("checked", true);
-    }
-    
-    //Set the AP settings
-    if(serverSettings.wifiAPSettings.ssid != "") {
-      $('#apSSID').val(serverSettings.wifiAPSettings.ssid);
-    }
-    if(serverSettings.wifiAPSettings.psk != "") {
-      $('#apPSK').val(serverSettings.wifiAPSettings.psk);
-    }
-    
-    
-    //Set the WiFi Client settings
-    for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
-      
-      //Clone the blank datalist.option element.
-      var tmpItem = $('#savedClients').find('option').first().clone();
-      
-      //Fill out the value and text of the option element.
-      tmpItem.val(i);
-      tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
-      
-      //Append the option to the datalist.
-      $('#savedClients').append(tmpItem);
-      
-    }
-    
-    //Fill in the WiFi Client settings when a saved AP is selected.
-    $('#savedClients').on('change', function(eventData) {
+  function getServerSettings() {
+    $.getJSON('/server_settings.json', '', function(data) {
       //debugger;
-      
-      //If the blank entry is selected, then return. Clear the form.
-      if($('#savedClients').find(':selected').val() == "") {
-        $('#clientSSID').val('');
-        $('#clientPSK').val('');
-        $('#clientEncryption').val('WPA-PSK');
-        return;
-      }
-      
-      //Get the value of the selected item.
-      var selectedIndex = $('#savedClients').find(':selected').val();
-      
-      //Fill out the client form.
-      $('#clientSSID').val(serverSettings.wifiClientSettings[selectedIndex].ssid);
-      $('#clientPSK').val(serverSettings.wifiClientSettings[selectedIndex].psk);
-      $('#clientEncryption').val(serverSettings.wifiClientSettings[selectedIndex].key_mgmt);
-    });
-    
-    
-    //Throw up a yes/no dialog if the reboot flag is set.
-    if(serverSettings.rebootConfirmationNeeded == "true") {
-      
-      //Confirm if they want to continue using the new settings.
-      var r = confirm("Press 'OK' to save the new WiFi settings.");
-      if(r == true) {
-        serverSettings.rebootConfirmationNeeded = "false";
-        serverSettings.rebootCnt = 0;
-        
-        //persist the server settings to the sever.
-        $('#wifiBtn').trigger('click');
-        
-      } else {
-        debugger;
-        
-        //restore the saved settings and reboot.
-        restoreDefaultWiFi();
-        
-      }
-      
-    }
-    
-    //Initialize the form on the Settings tab by filling it out with values from serverSettings.
-    $('#userId').val(serverSettings.userId);
-    $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
-    $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
-    
-    //debugger;
-  });
 
+      //Copy the JSON data to a global variable.
+      serverSettings = data;
+
+      //Set the checkboxes.
+      //1 == Access Point
+      if(data.wifiType == 1) {
+        $('#optionsCheckbox1').prop("checked", true);
+      //2 == WiFi Client
+      } else if(data.wifiType == 2) {
+        $('#optionsCheckbox2').prop("checked", true);
+      }
+
+      //Set the AP settings
+      if(serverSettings.wifiAPSettings.ssid != "") {
+        $('#apSSID').val(serverSettings.wifiAPSettings.ssid);
+      }
+      if(serverSettings.wifiAPSettings.psk != "") {
+        $('#apPSK').val(serverSettings.wifiAPSettings.psk);
+      }
+
+
+      //Set the WiFi Client settings
+      for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
+
+        //Clone the blank datalist.option element.
+        var tmpItem = $('#savedClients').find('option').first().clone();
+
+        //Fill out the value and text of the option element.
+        tmpItem.val(i);
+        tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
+
+        //Append the option to the datalist.
+        $('#savedClients').append(tmpItem);
+
+      }
+
+      //Fill in the WiFi Client settings when a saved AP is selected.
+      $('#savedClients').on('change', function(eventData) {
+        //debugger;
+
+        //If the blank entry is selected, then return. Clear the form.
+        if($('#savedClients').find(':selected').val() == "") {
+          $('#clientSSID').val('');
+          $('#clientPSK').val('');
+          $('#clientEncryption').val('WPA-PSK');
+          return;
+        }
+
+        //Get the value of the selected item.
+        var selectedIndex = $('#savedClients').find(':selected').val();
+
+        //Fill out the client form.
+        $('#clientSSID').val(serverSettings.wifiClientSettings[selectedIndex].ssid);
+        $('#clientPSK').val(serverSettings.wifiClientSettings[selectedIndex].psk);
+        $('#clientEncryption').val(serverSettings.wifiClientSettings[selectedIndex].key_mgmt);
+      });
+
+
+      //Throw up a yes/no dialog if the reboot flag is set.
+      if(serverSettings.rebootConfirmationNeeded == "true") {
+
+        //Confirm if they want to continue using the new settings.
+        var r = confirm("Press 'OK' to save the new WiFi settings.");
+        if(r == true) {
+          serverSettings.rebootConfirmationNeeded = "false";
+          serverSettings.rebootCnt = 0;
+
+          //persist the server settings to the sever.
+          $('#wifiBtn').trigger('click');
+
+        } else {
+          debugger;
+
+          //restore the saved settings and reboot.
+          restoreDefaultWiFi();
+
+        }
+
+      }
+
+      //Initialize the form on the Settings tab by filling it out with values from serverSettings.
+      $('#userId').val(serverSettings.userId);
+      $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
+      $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
+
+      //debugger;
+    });
+  };
+  getServerSettings();
+  
   //This function resets the RPi back to factory default settings of a WiFi AP.
   function restoreDefaultWiFi() {
     
@@ -379,6 +382,8 @@ $(document).ready(function() {
         $('#waitingGif').hide();
         //Replace the image with a complete message.
         $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
+        
+        getServerSettings();
         
       } else {
         console.error('server_settings.json changes rejected by server!');

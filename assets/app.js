@@ -374,9 +374,15 @@ $(document).ready(function() {
       debugger;
 
       var err = textStatus + ", " + error;
-      var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
-          "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
       
+      if((textStatus == "error") && (error == "")) {
+        var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+      } else {
+        var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+          "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+      }
+      
+      alert(msg);
     });
   });
   

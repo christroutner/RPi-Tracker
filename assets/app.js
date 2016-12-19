@@ -298,50 +298,81 @@ $(document).ready(function() {
     //Add or update the wifiClientSettings
     updateClientSettings();
     
+    //Throw up the waiting modal.
+    modalData.title = 'Saving WiFi Settings...';
+    modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+    modalData.btn1 = '';
+    modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    updateModal();
+    openModal();
+    
     //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/wifiSettings', serverSettings, function(data) {
       //debugger;
       if(data == true) {
         console.log('server_settings.json updated with WiFi Settings.');
+        
+        //Throw up the modal if a reboot is required.
+        if(serverSettings.rebootConfirmationNeeded == true) {
+          console.log('About to reboot. serverSettings.rebootConfirmationNeeded = '+serverSettings.rebootConfirmationNeeded);
+
+          alert('The Raspberry Pi in now rebooting and implementing the new settings. Please wait a few minutes, then navigate back to this page'
+               +' and confirm these settings or the old settings will be restored.');
+
+          //Throw up a spinny gif modal for 30 seconds
+          waitingModal();
+
+          //Access Point
+          if(serverSettings.wifiType == "1") {
+
+            //Stop the timer-interval that tries to retrieve the debug log.
+            clearInterval(debugIntervalHandle);
+
+            //Create a timer to update the modal after some time has passed.
+            var intervalHandle = setInterval(function() {
+              modalData.title = "Done!";
+              modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
+                "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
+                "interface at this url: <b>192.168.42.1</b></p>";
+              updateModal();
+            }, 30000);
+          } else {
+            //Create a timer to update the modal after some time has passed.
+            var intervalHandle = setInterval(function() {
+              modalData.title = "Done!";
+              modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect to the RPi " +
+                "on the selected WiFi hotspot. You will need to retreive the RPi's IP address from the wireless router.";
+              updateModal();
+            }, 60000);
+          }
+        }
+        
       } else {
         console.error('server_settings.json changes rejected by server!');
-      }      
+      }   
+      
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+      debugger;
+
+      //This state indicates that the RPi has been disconnected.
+      if((textStatus == "error") && (error == "")) {
+        var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+        
+      //All other reasons for the failure:
+      } else {
+        var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+          "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+      }
+      
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend('<h2><center><b>Could not save settings!</b></center></h2><br><p>'+msg+'</p>');
+
     });
     
-    //Throw up the modal if a reboot is required.
-    if(serverSettings.rebootConfirmationNeeded == true) {
-      console.log('About to reboot. serverSettings.rebootConfirmationNeeded = '+serverSettings.rebootConfirmationNeeded);
-      
-      alert('The Raspberry Pi in now rebooting and implementing the new settings. Please wait a few minutes, then navigate back to this page'
-           +' and confirm these settings or the old settings will be restored.');
-      
-      //Throw up a spinny gif modal for 30 seconds
-      waitingModal();
-      
-      //Access Point
-      if(serverSettings.wifiType == "1") {
-        
-        //Stop the timer-interval that tries to retrieve the debug log.
-        clearInterval(debugIntervalHandle);
-        
-        //Create a timer to update the modal after some time has passed.
-        var intervalHandle = setInterval(function() {
-          modalData.title = "Done!";
-          modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
-            "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
-            "interface at this url: <b>192.168.42.1</b></p>";
-          updateModal();
-        }, 30000);
-      } else {
-        //Create a timer to update the modal after some time has passed.
-        var intervalHandle = setInterval(function() {
-          modalData.title = "Done!";
-          modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect to the RPi " +
-            "on the selected WiFi hotspot. You will need to retreive the RPi's IP address from the wireless router.";
-          updateModal();
-        }, 60000);
-      }
-    }
+    
   });
 
   

@@ -345,6 +345,16 @@ $(document).ready(function() {
               updateModal();
             }, 60000);
           }
+          
+        //Wifi settings updated, but reboot not needed.
+        } else {
+          //Hide the spinny waiting gif.
+          $('#waitingGif').hide();
+          //Replace the image with a complete message.
+          $('#waitingGif').parent().prepend('<h2><center><b>Settings saved!</b></center></h2><br>');
+          
+          //Update the page with any updated server settings.
+          getServerSettings();
         }
         
       } else {

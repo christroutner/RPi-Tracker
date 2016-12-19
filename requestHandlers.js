@@ -138,6 +138,7 @@ function updateSoftware(request, response, next) {
       console.log('updateSoftware() had issues while executing "git pull". Child process exited with error code ' + err.code);
       console.log(err.message);
       response.send(false);
+      return;
     }
     
     console.log(stdout);

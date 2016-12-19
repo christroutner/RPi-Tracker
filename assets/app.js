@@ -361,11 +361,25 @@ $(document).ready(function() {
     serverSettings.gpsDataLogTimeout = $('#gpsDataLogTimeout').val();
     serverSettings.gpsFileSaveTimeoutCnt = $('#gpsFileSaveTimeoutCnt').val();
     
+    //Throw up the waiting modal.
+    modalData.title = 'Saving Device Settings...';
+    modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+    modalData.btn1 = '';
+    modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    updateModal();
+    openModal();
+    
     //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/saveSettings', serverSettings, function(data) {
       //debugger;
       if(data == true) {
-        console.log('server_settings.json updated with WiFi Settings.');
+        console.log('server_settings.json updated.');
+        
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
+        
       } else {
         console.error('server_settings.json changes rejected by server!');
       }      
@@ -375,14 +389,21 @@ $(document).ready(function() {
 
       var err = textStatus + ", " + error;
       
+      //This state indicates that the RPi has been disconnected.
       if((textStatus == "error") && (error == "")) {
         var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+        
+      //All other reasons for the failure:
       } else {
         var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
           "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
       }
       
-      alert(msg);
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend('<h2><center><b>Could not save settings!</b></center></h2><br><p>'+msg+'</p>');
+
     });
   });
   

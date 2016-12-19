@@ -554,11 +554,42 @@ $(document).ready(function() {
   $('#updateSoftwareBtn').click(function(event) {
     //debugger;
     
+    //Throw up the waiting modal.
+    modalData.title = 'Updating Firmware...';
+    modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+    modalData.btn1 = '';
+    modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    updateModal();
+    openModal();
+    
     $.get('/updateSoftware', '', function(data) {
       //debugger;
       
-      alert('This device has downloaded the latest updates from GitHub. It will now reboot and any new software updates should take affect.');
+      var msg = '<h2><center><b>Firmware update successfully!</b></center></h2>'+
+          '<p>This device has downloaded the latest updates from GitHub. It is now rebooting and any new software updates should take affect.</p>'
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend(msg);
       
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+      debugger;
+
+      //This state indicates that the RPi has been disconnected.
+      if((textStatus == "error") && (error == "")) {
+        var msg = "Could not update firmware because the browser could not communicate with the Raspberry Pi.";
+        
+      //All other reasons for the failure:
+      } else {
+        var msg = "Could not update firmware because there was an issue pulling the latest code off the GitHub repository";
+      }
+      
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend('<h2><center><b>Could not update firmware!</b></center></h2><br><p>'+msg+'</p>');
+
     });
   });
   

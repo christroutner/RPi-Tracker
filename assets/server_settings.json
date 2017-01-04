@@ -34,10 +34,10 @@
             "none": ""
         }
     },
-    "rebootConfirmationNeeded": "true",
+    "rebootConfirmationNeeded": "false",
     "wifiType": "2",
-    "rebootCnt": 2,
-    "userId": "583f4b52989a6a1635bada5a",
+    "rebootCnt": "0",
+    "userId": "581f3a9c73f0411014b0f900",
     "trackerServerIp": "server.crumbshare.com",
     "trackerServerPort": "80",
     "gpsDataLogTimeout": "30000",

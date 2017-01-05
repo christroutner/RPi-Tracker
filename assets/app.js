@@ -685,6 +685,9 @@ $(document).ready(function() {
   //});
   // END DEBUG TAB CONTROL
 
+  //Hide the preloader after everything finished loading and document is ready.
+  $('#loader-wrapper').hide();
+  
 });
 
 // START UTILITY FUNCTIONS

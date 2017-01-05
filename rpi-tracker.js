@@ -206,6 +206,9 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 //Read the jumper and force default AP mode if the jumper is connected between GPIO pin 21 and ground.
 //This feature needs to be turned on in server_settings.json and configured by following the instructions in the gpio directory.
 if(serverSettings.internalPullupConfigured) {
+  
+  console.log('serverSettings.internalPullupConfigured = '+serverSettings.internalPullupConfigured);
+  
   var pin21 = new Gpio(21, 'in');
   pin21.read(function(err, value) {
     

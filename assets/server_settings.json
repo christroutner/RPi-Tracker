@@ -48,5 +48,5 @@
   "trackerServerPort": "80",
   "gpsDataLogTimeout": "30000",
   "gpsFileSaveTimeoutCnt": "4",
-  "internalPullupConfigured": true
+  "internalPullupConfigured": "true"
 }

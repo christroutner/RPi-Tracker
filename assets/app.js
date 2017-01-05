@@ -18,7 +18,8 @@ $(document).ready(function() {
 
     var fileList = data;
 
-    for( var i = 0; i < fileList.length; i++ ) {
+    //for( var i = 0; i < fileList.length; i++ ) {
+    for( var i = fileList.length-1; i > -1; i-- ) {
 
       //Clone the example option provided in the template.
       var tempOption = $('#logFile').find('option').first().clone();

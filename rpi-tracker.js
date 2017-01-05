@@ -214,6 +214,10 @@ if(serverSettings.internalPullupConfigured) {
     if(!value) {
       debugger;
       console.log('GPIO Pin 21 reading low, indicating jumper is on. Resetting device to factory-default AP mode...');
+      
+      //Reset the RPi into AP mode with the default settings.
+      globalThis.makeAP();
+      
     }
     
   });

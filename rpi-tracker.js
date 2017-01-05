@@ -44,8 +44,8 @@ global.appLogAPI = new AppLogAPI.Constructor();
 //dataLog.helloWorld();
 
 //Clear the PM2 log before starting anything else.
-//if(!global.appLogAPI.clearLog())
-//  console.log('Error trying to clear the PM2 log!');
+if(!global.appLogAPI.clearLog())
+  console.log('Error trying to clear the PM2 log!');
 
 
 /*
@@ -207,7 +207,7 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 //This feature needs to be turned on in server_settings.json and configured by following the instructions in the gpio directory.
 if(serverSettings.internalPullupConfigured == "true") {
   
-  console.log('serverSettings.internalPullupConfigured = '+serverSettings.internalPullupConfigured);
+  //console.log('serverSettings.internalPullupConfigured = '+serverSettings.internalPullupConfigured);
   
   var pin21 = new Gpio(21, 'in');
   pin21.read(function(err, value) {
@@ -219,12 +219,12 @@ if(serverSettings.internalPullupConfigured == "true") {
       
       //Skip if the device is already configured for AP mode
       if(serverSettings.wifiType != "1") {
-        console.log('serverSettings.wifiType = '+serverSettings.wifiType);
+        //console.log('serverSettings.wifiType = '+serverSettings.wifiType);
         
         console.log('GPIO Pin 21 reading low, indicating jumper is on. Resetting device to factory-default AP mode...');
 
         //Reset the RPi into AP mode with the default settings.
-        //global.wifiInterface.makeAP();
+        global.wifiInterface.makeAP();
       }
       
     }

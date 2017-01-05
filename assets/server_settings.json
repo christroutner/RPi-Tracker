@@ -17,6 +17,12 @@
             "psk": "FFFF0000F0",
             "key_mgmt": "WPA-PSK",
             "connectionVerified": "false"
+        },
+        {
+            "ssid": "mifi2",
+            "psk": "ffffffff",
+            "key_mgmt": "WPA-PSK",
+            "connectionVerified": "false"
         }
     ],
     "wifiAPSettings": {

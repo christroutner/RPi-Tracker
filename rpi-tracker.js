@@ -211,12 +211,17 @@ if(serverSettings.internalPullupConfigured) {
     
     if(err) throw err;
     
+    //If the pin is reading as a logic low or 0
     if(!value) {
-      debugger;
-      console.log('GPIO Pin 21 reading low, indicating jumper is on. Resetting device to factory-default AP mode...');
       
-      //Reset the RPi into AP mode with the default settings.
-      global.wifiInterface.makeAP();
+      //Skip if the device is already configured for AP mode
+      if(serverSettings.wifiType != "1") {
+
+        console.log('GPIO Pin 21 reading low, indicating jumper is on. Resetting device to factory-default AP mode...');
+
+        //Reset the RPi into AP mode with the default settings.
+        global.wifiInterface.makeAP();
+      }
       
     }
     

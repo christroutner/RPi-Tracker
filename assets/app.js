@@ -401,6 +401,10 @@ $(document).ready(function() {
   //Create click handler for 'Save Settings' button in the user settings tab.
   $('#saveSettings').click(function() {
     
+    var rebootFlag = false;
+    if(serverSettings.userId != $('#userId').val())
+      rebootFlag = true;
+    
     serverSettings.userId = $('#userId').val();
     serverSettings.gpsDataLogTimeout = $('#gpsDataLogTimeout').val();
     serverSettings.gpsFileSaveTimeoutCnt = $('#gpsFileSaveTimeoutCnt').val();
@@ -419,12 +423,26 @@ $(document).ready(function() {
       if(data == true) {
         console.log('server_settings.json updated.');
         
-        //Hide the spinny waiting gif.
-        $('#waitingGif').hide();
-        //Replace the image with a complete message.
-        $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
         
-        getServerSettings();
+        
+        //Reboot the device if needed
+        if(rebootFlag) {
+          //Hide the spinny waiting gif.
+          $('#waitingGif').hide();
+          //Replace the image with a complete message.
+          $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully. The device is now rebooting!</b></center></h2>');
+          
+          //Reboot the device.
+          $.get('/rebootRPi', '', function(data) {});
+          
+        } else {
+          //Hide the spinny waiting gif.
+          $('#waitingGif').hide();
+          //Replace the image with a complete message.
+          $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
+
+          getServerSettings();
+        }
         
       } else {
         console.error('server_settings.json changes rejected by server!');

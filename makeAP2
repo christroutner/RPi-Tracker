@@ -50,6 +50,6 @@ sudo update-rc.d isc-dhcp-server enable
 sudo mv /usr/share/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service /home/pi/
 
 echo "SCRIPT LOG: Rebooting device and RPi should now act as an access point named Pi_AP"
-#sudo reboot now
+sudo reboot now
 
 

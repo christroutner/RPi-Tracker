@@ -154,97 +154,100 @@ $(document).ready(function() {
   // START WIFI CONTROL CODE
 
   //Initialize the WiFi settings tab based on the server_settings.json data.
-  $.getJSON('/server_settings.json', '', function(data) {
-    //debugger;
-
-    //Copy the JSON data to a global variable.
-    serverSettings = data;
-
-    //Set the checkboxes.
-    //1 == Access Point
-    if(data.wifiType == 1) {
-      $('#optionsCheckbox1').prop("checked", true);
-    //2 == WiFi Client
-    } else if(data.wifiType == 2) {
-      $('#optionsCheckbox2').prop("checked", true);
-    }
-    
-    //Set the AP settings
-    if(serverSettings.wifiAPSettings.ssid != "") {
-      $('#apSSID').val(serverSettings.wifiAPSettings.ssid);
-    }
-    if(serverSettings.wifiAPSettings.psk != "") {
-      $('#apPSK').val(serverSettings.wifiAPSettings.psk);
-    }
-    
-    
-    //Set the WiFi Client settings
-    for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
-      
-      //Clone the blank datalist.option element.
-      var tmpItem = $('#savedClients').find('option').first().clone();
-      
-      //Fill out the value and text of the option element.
-      tmpItem.val(i);
-      tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
-      
-      //Append the option to the datalist.
-      $('#savedClients').append(tmpItem);
-      
-    }
-    
-    //Fill in the WiFi Client settings when a saved AP is selected.
-    $('#savedClients').on('change', function(eventData) {
+  function getServerSettings() {
+    $.getJSON('/server_settings.json', '', function(data) {
       //debugger;
-      
-      //If the blank entry is selected, then return. Clear the form.
-      if($('#savedClients').find(':selected').val() == "") {
-        $('#clientSSID').val('');
-        $('#clientPSK').val('');
-        $('#clientEncryption').val('WPA-PSK');
-        return;
-      }
-      
-      //Get the value of the selected item.
-      var selectedIndex = $('#savedClients').find(':selected').val();
-      
-      //Fill out the client form.
-      $('#clientSSID').val(serverSettings.wifiClientSettings[selectedIndex].ssid);
-      $('#clientPSK').val(serverSettings.wifiClientSettings[selectedIndex].psk);
-      $('#clientEncryption').val(serverSettings.wifiClientSettings[selectedIndex].key_mgmt);
-    });
-    
-    
-    //Throw up a yes/no dialog if the reboot flag is set.
-    if(serverSettings.rebootConfirmationNeeded == "true") {
-      
-      //Confirm if they want to continue using the new settings.
-      var r = confirm("Press 'OK' to save the new WiFi settings.");
-      if(r == true) {
-        serverSettings.rebootConfirmationNeeded = "false";
-        serverSettings.rebootCnt = 0;
-        
-        //persist the server settings to the sever.
-        $('#wifiBtn').trigger('click');
-        
-      } else {
-        debugger;
-        
-        //restore the saved settings and reboot.
-        restoreDefaultWiFi();
-        
-      }
-      
-    }
-    
-    //Initialize the form on the Settings tab by filling it out with values from serverSettings.
-    $('#userId').val(serverSettings.userId);
-    $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
-    $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
-    
-    //debugger;
-  });
 
+      //Copy the JSON data to a global variable.
+      serverSettings = data;
+
+      //Set the checkboxes.
+      //1 == Access Point
+      if(data.wifiType == 1) {
+        $('#optionsCheckbox1').prop("checked", true);
+      //2 == WiFi Client
+      } else if(data.wifiType == 2) {
+        $('#optionsCheckbox2').prop("checked", true);
+      }
+
+      //Set the AP settings
+      if(serverSettings.wifiAPSettings.ssid != "") {
+        $('#apSSID').val(serverSettings.wifiAPSettings.ssid);
+      }
+      if(serverSettings.wifiAPSettings.psk != "") {
+        $('#apPSK').val(serverSettings.wifiAPSettings.psk);
+      }
+
+
+      //Set the WiFi Client settings
+      for( var i=0; i < serverSettings.wifiClientSettings.length; i++) {
+
+        //Clone the blank datalist.option element.
+        var tmpItem = $('#savedClients').find('option').first().clone();
+
+        //Fill out the value and text of the option element.
+        tmpItem.val(i);
+        tmpItem.text(serverSettings.wifiClientSettings[i].ssid);
+
+        //Append the option to the datalist.
+        $('#savedClients').append(tmpItem);
+
+      }
+
+      //Fill in the WiFi Client settings when a saved AP is selected.
+      $('#savedClients').on('change', function(eventData) {
+        //debugger;
+
+        //If the blank entry is selected, then return. Clear the form.
+        if($('#savedClients').find(':selected').val() == "") {
+          $('#clientSSID').val('');
+          $('#clientPSK').val('');
+          $('#clientEncryption').val('WPA-PSK');
+          return;
+        }
+
+        //Get the value of the selected item.
+        var selectedIndex = $('#savedClients').find(':selected').val();
+
+        //Fill out the client form.
+        $('#clientSSID').val(serverSettings.wifiClientSettings[selectedIndex].ssid);
+        $('#clientPSK').val(serverSettings.wifiClientSettings[selectedIndex].psk);
+        $('#clientEncryption').val(serverSettings.wifiClientSettings[selectedIndex].key_mgmt);
+      });
+
+
+      //Throw up a yes/no dialog if the reboot flag is set.
+      if(serverSettings.rebootConfirmationNeeded == "true") {
+
+        //Confirm if they want to continue using the new settings.
+        var r = confirm("Press 'OK' to save the new WiFi settings.");
+        if(r == true) {
+          serverSettings.rebootConfirmationNeeded = "false";
+          serverSettings.rebootCnt = 0;
+
+          //persist the server settings to the sever.
+          $('#wifiBtn').trigger('click');
+
+        } else {
+          debugger;
+
+          //restore the saved settings and reboot.
+          restoreDefaultWiFi();
+
+        }
+
+      }
+
+      //Initialize the form on the Settings tab by filling it out with values from serverSettings.
+      $('#userId').val(serverSettings.userId);
+      $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
+      $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
+
+      //debugger;
+    });
+  };
+  getServerSettings();
+  
   //This function resets the RPi back to factory default settings of a WiFi AP.
   function restoreDefaultWiFi() {
     
@@ -295,50 +298,91 @@ $(document).ready(function() {
     //Add or update the wifiClientSettings
     updateClientSettings();
     
+    //Throw up the waiting modal.
+    modalData.title = 'Saving WiFi Settings...';
+    modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+    modalData.btn1 = '';
+    modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    updateModal();
+    openModal();
+    
     //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/wifiSettings', serverSettings, function(data) {
       //debugger;
       if(data == true) {
         console.log('server_settings.json updated with WiFi Settings.');
+        
+        //Throw up the modal if a reboot is required.
+        if(serverSettings.rebootConfirmationNeeded == true) {
+          console.log('About to reboot. serverSettings.rebootConfirmationNeeded = '+serverSettings.rebootConfirmationNeeded);
+
+          alert('The Raspberry Pi in now rebooting and implementing the new settings. Please wait a few minutes, then navigate back to this page'
+               +' and confirm these settings or the old settings will be restored.');
+
+          //Throw up a spinny gif modal for 30 seconds
+          waitingModal();
+
+          //Access Point
+          if(serverSettings.wifiType == "1") {
+
+            //Stop the timer-interval that tries to retrieve the debug log.
+            clearInterval(debugIntervalHandle);
+
+            //Create a timer to update the modal after some time has passed.
+            var intervalHandle = setInterval(function() {
+              modalData.title = "Done!";
+              modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
+                "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
+                "interface at this url: <b>192.168.42.1</b></p>";
+              updateModal();
+            }, 30000);
+          } else {
+            //Create a timer to update the modal after some time has passed.
+            var intervalHandle = setInterval(function() {
+              modalData.title = "Done!";
+              modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect to the RPi " +
+                "on the selected WiFi hotspot. You will need to retreive the RPi's IP address from the wireless router.";
+              updateModal();
+            }, 60000);
+          }
+          
+        //Wifi settings updated, but reboot not needed.
+        } else {
+          //Hide the spinny waiting gif.
+          $('#waitingGif').hide();
+          //Replace the image with a complete message.
+          $('#waitingGif').parent().prepend('<h2><center><b>Settings saved!</b></center></h2><br>');
+          
+          //Update the page with any updated server settings.
+          getServerSettings();
+        }
+        
       } else {
         console.error('server_settings.json changes rejected by server!');
-      }      
+      }   
+      
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+      debugger;
+
+      //This state indicates that the RPi has been disconnected.
+      if((textStatus == "error") && (error == "")) {
+        var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+        
+      //All other reasons for the failure:
+      } else {
+        var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+          "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+      }
+      
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend('<h2><center><b>Could not save settings!</b></center></h2><br><p>'+msg+'</p>');
+
     });
     
-    //Throw up the modal if a reboot is required.
-    if(serverSettings.rebootConfirmationNeeded == true) {
-      console.log('About to reboot. serverSettings.rebootConfirmationNeeded = '+serverSettings.rebootConfirmationNeeded);
-      
-      alert('The Raspberry Pi in now rebooting and implementing the new settings. Please wait a few minutes, then navigate back to this page'
-           +' and confirm these settings or the old settings will be restored.');
-      
-      //Throw up a spinny gif modal for 30 seconds
-      waitingModal();
-      
-      //Access Point
-      if(serverSettings.wifiType == "1") {
-        
-        //Stop the timer-interval that tries to retrieve the debug log.
-        clearInterval(debugIntervalHandle);
-        
-        //Create a timer to update the modal after some time has passed.
-        var intervalHandle = setInterval(function() {
-          modalData.title = "Done!";
-          modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect directly to the RPi " +
-            "with Wifi name <b>Pi_AP</b> and password <b>raspberry</b>. After connecting to the WiFi access point, access this user " +
-            "interface at this url: <b>192.168.42.1</b></p>";
-          updateModal();
-        }, 30000);
-      } else {
-        //Create a timer to update the modal after some time has passed.
-        var intervalHandle = setInterval(function() {
-          modalData.title = "Done!";
-          modalData.body = "<h2>Done!</h2><p>The device should have made changes to the WiFi. You can now connect to the RPi " +
-            "on the selected WiFi hotspot. You will need to retreive the RPi's IP address from the wireless router.";
-          updateModal();
-        }, 60000);
-      }
-    }
+    
   });
 
   
@@ -361,14 +405,49 @@ $(document).ready(function() {
     serverSettings.gpsDataLogTimeout = $('#gpsDataLogTimeout').val();
     serverSettings.gpsFileSaveTimeoutCnt = $('#gpsFileSaveTimeoutCnt').val();
     
+    //Throw up the waiting modal.
+    modalData.title = 'Saving Device Settings...';
+    modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+    modalData.btn1 = '';
+    modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    updateModal();
+    openModal();
+    
     //Send the updated serverSettings to the server to update the server_settings.json file.
     $.get('/saveSettings', serverSettings, function(data) {
       //debugger;
       if(data == true) {
-        console.log('server_settings.json updated with WiFi Settings.');
+        console.log('server_settings.json updated.');
+        
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
+        
+        getServerSettings();
+        
       } else {
         console.error('server_settings.json changes rejected by server!');
       }      
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+      debugger;
+
+      //This state indicates that the RPi has been disconnected.
+      if((textStatus == "error") && (error == "")) {
+        var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+        
+      //All other reasons for the failure:
+      } else {
+        var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+          "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+      }
+      
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend('<h2><center><b>Could not save settings!</b></center></h2><br><p>'+msg+'</p>');
+
     });
   });
   
@@ -378,22 +457,42 @@ $(document).ready(function() {
     if(syncState != 1) {
       syncState = 1;
       
+      //Throw up the waiting modal.
+      modalData.title = 'Syncing With Map Tracks Server...';
+      modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+      modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
+      modalData.btn1 = '';
+      modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
+      updateModal();
+      openModal();
+      
       //Start the synchonization.
       $.get('/startSync', '', function(data) {
         //debugger;
 
-
-        //Throw up the waiting modal.
-        modalData.title = 'Syncing With Map Tracks Server...';
-        modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
-        modalData.body += '<div id="syncLogOutput" style="height: 300px; overflow-y: scroll; background-color: #eee; border-style: solid; border-width: 1px;"></div>';
-        modalData.btn1 = '';
-        modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal" onclick="stopSync()">Close</button>';
-        updateModal();
-        openModal();
-
         updateSyncLogOutput();
         syncIntervalHandle = setInterval(updateSyncLogOutput, 5000);
+
+      })
+      .fail(function( jqxhr, textStatus, error ) {
+        debugger;
+
+        syncState = 0;
+        
+        //This state indicates that the RPi has been disconnected.
+        if((textStatus == "error") && (error == "")) {
+          var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+
+        //All other reasons for the failure:
+        } else {
+          var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+            "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+        }
+
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend('<h2><center><b>Could not sync with server!</b></center></h2><br><p>'+msg+'</p>');
 
       });
     }
@@ -496,11 +595,52 @@ $(document).ready(function() {
   $('#updateSoftwareBtn').click(function(event) {
     //debugger;
     
+    //Throw up the waiting modal.
+    modalData.title = 'Updating Firmware...';
+    modalData.body = '<img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />';
+    modalData.btn1 = '';
+    modalData.btn2 = '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    updateModal();
+    openModal();
+    
     $.get('/updateSoftware', '', function(data) {
       //debugger;
       
-      alert('This device has downloaded the latest updates from GitHub. It will now reboot and any new software updates should take affect.');
+      //API returned 'true' to indicate success.
+      if(data) {
+        var msg = '<h2><center><b>Firmware update successfully!</b></center></h2>'+
+            '<p>This device has downloaded the latest updates from GitHub. It is now rebooting and any new software updates should take affect.</p>'
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend(msg);
       
+      //API returned 'false' to indicate an issue with 'git pull'
+      } else {
+        var msg = "Could not update firmware because there was an issue pulling the latest code off the GitHub repository";
+        //Hide the spinny waiting gif.
+        $('#waitingGif').hide();
+        //Replace the image with a complete message.
+        $('#waitingGif').parent().prepend('<h2><center><b>Could not update firmware!</b></center></h2><br><p>'+msg+'</p>');
+      }
+    })
+    .fail(function( jqxhr, textStatus, error ) {
+      debugger;
+
+      //This state indicates that the RPi has been disconnected.
+      if((textStatus == "error") && (error == "")) {
+        var msg = "Could not update firmware because the browser could not communicate with the Raspberry Pi.";
+        
+      //All other reasons for the failure:
+      } else {
+        var msg = "Could not update firmware because of an unknown error.";
+      }
+      
+      //Hide the spinny waiting gif.
+      $('#waitingGif').hide();
+      //Replace the image with a complete message.
+      $('#waitingGif').parent().prepend('<h2><center><b>Could not update firmware!</b></center></h2><br><p>'+msg+'</p>');
+
     });
   });
   
@@ -514,8 +654,6 @@ $(document).ready(function() {
     
     alert('Device is being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
   });
-  
-  
   // END SETTINGS TAB CONTROL
   
   

@@ -10,6 +10,7 @@ var gpsd = require('./lib/gpsd');
 var fs = require('fs');
 var http = require('http'); //Used for GET and POST requests
 var Promise = require('node-promise');
+var Gpio = require('onoff').Gpio; //Used to read GPIO pins
 
 
 //Local libraries based on the different featuers of this software
@@ -200,6 +201,36 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 //  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
 //}
 /* END - SERVER INTERFACE FOR LOGGING TO SERVER */
+
+
+//Read the jumper and force default AP mode if the jumper is connected between GPIO pin 21 and ground.
+//This feature needs to be turned on in server_settings.json and configured by following the instructions in the gpio directory.
+if(serverSettings.internalPullupConfigured == "true") {
+  
+  //console.log('serverSettings.internalPullupConfigured = '+serverSettings.internalPullupConfigured);
+  
+  var pin21 = new Gpio(21, 'in');
+  pin21.read(function(err, value) {
+    
+    if(err) throw err;
+    
+    //If the pin is reading as a logic low or 0
+    if(!value) {
+      
+      //Skip if the device is already configured for AP mode
+      if(serverSettings.wifiType != "1") {
+        //console.log('serverSettings.wifiType = '+serverSettings.wifiType);
+        
+        console.log('GPIO Pin 21 reading low, indicating jumper is on. Resetting device to factory-default AP mode...');
+
+        //Reset the RPi into AP mode with the default settings.
+        global.wifiInterface.makeAP();
+      }
+      
+    }
+    
+  });
+}
 
 
 //Determine if previous settings need to be restored if the device has been rebooted several times with rebootConfirmationNeeded set to true.

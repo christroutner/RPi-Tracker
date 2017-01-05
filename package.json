@@ -17,6 +17,7 @@
     "node-promise": "0.x",
     "tokml": "0.x",
     "form-data": "2.x",
-    "request": "2.x"
+    "request": "2.x",
+    "onoff": "1.x"
   }
 }

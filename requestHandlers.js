@@ -119,8 +119,10 @@ function saveSettings(request, response, next) {
       if(err) {
         console.log('Error in saveSettings() while trying to write server_settings.json file.');
         console.log(err);
+        response.send(false); //Send failure
       } else {
         console.log('saveSettings() executed. server_settings.json updated.');
+        response.send(true); //Send acknowledgement that setting were saved successfully.
       }
     });
   }
@@ -136,6 +138,7 @@ function updateSoftware(request, response, next) {
       console.log('updateSoftware() had issues while executing "git pull". Child process exited with error code ' + err.code);
       console.log(err.message);
       response.send(false);
+      return;
     }
     
     console.log(stdout);

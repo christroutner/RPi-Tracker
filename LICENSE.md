@@ -10,4 +10,4 @@ Copyright (c) 2016 Chris Troutner and RPiOVN.com This software is covered by Att
   
     * Any products using code or derivitives of code from this repository must register by contacting [Chris Troutner](mailto:chris.troutner@gmail.com) or [RPiOVN.com](http://rpiovn.com). A simple written notice by email will suffice.
     
-    * And products using code or derivities of code from this repository which obtain more than $10,000 USD in annual gross sales agree to pay a royalty of 2% of those gross sales to the copyright holder. 
+    * Any products using code or derivities of code from this repository which obtain more than $10,000 USD in annual gross sales agree to pay a royalty of 2% of those gross sales to the copyright holder. 

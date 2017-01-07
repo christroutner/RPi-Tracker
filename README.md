@@ -63,7 +63,7 @@ a [Crumb Share](http://crumbshare.com) account.
 
 # Licensing
 
-Copyright (c) 2016 Chris Troutner and RPiOVN.com This software is covered by Attribution-NonCommercial-ShareAlike 4.0 International license: https://creativecommons.org/licenses/by-nc-sa/4.0/. In order to use this code in your own project you must meet the following conditions:
+Copyright (c) 2017 Chris Troutner and RPiOVN.com This software is covered by Attribution-NonCommercial-ShareAlike 4.0 International license: https://creativecommons.org/licenses/by-nc-sa/4.0/. In order to use this code in your own project you must meet the following conditions:
 
 * Attribution:
   * Attribution in the form of a link to RPiOVN.com is required in the header of any source code files that make use of source code or derivities of source code from this project.

@@ -18,7 +18,8 @@ $(document).ready(function() {
 
     var fileList = data;
 
-    for( var i = 0; i < fileList.length; i++ ) {
+    //for( var i = 0; i < fileList.length; i++ ) {
+    for( var i = fileList.length-1; i > -1; i-- ) {
 
       //Clone the example option provided in the template.
       var tempOption = $('#logFile').find('option').first().clone();
@@ -401,6 +402,10 @@ $(document).ready(function() {
   //Create click handler for 'Save Settings' button in the user settings tab.
   $('#saveSettings').click(function() {
     
+    var rebootFlag = false;
+    if(serverSettings.userId != $('#userId').val())
+      rebootFlag = true;
+    
     serverSettings.userId = $('#userId').val();
     serverSettings.gpsDataLogTimeout = $('#gpsDataLogTimeout').val();
     serverSettings.gpsFileSaveTimeoutCnt = $('#gpsFileSaveTimeoutCnt').val();
@@ -419,12 +424,26 @@ $(document).ready(function() {
       if(data == true) {
         console.log('server_settings.json updated.');
         
-        //Hide the spinny waiting gif.
-        $('#waitingGif').hide();
-        //Replace the image with a complete message.
-        $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
         
-        getServerSettings();
+        
+        //Reboot the device if needed
+        if(rebootFlag) {
+          //Hide the spinny waiting gif.
+          $('#waitingGif').hide();
+          //Replace the image with a complete message.
+          $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully. The device is now rebooting!</b></center></h2>');
+          
+          //Reboot the device.
+          $.get('/rebootRPi', '', function(data) {});
+          
+        } else {
+          //Hide the spinny waiting gif.
+          $('#waitingGif').hide();
+          //Replace the image with a complete message.
+          $('#waitingGif').parent().prepend('<h2><center><b>Settings saved successfully!</b></center></h2>');
+
+          getServerSettings();
+        }
         
       } else {
         console.error('server_settings.json changes rejected by server!');
@@ -685,6 +704,9 @@ $(document).ready(function() {
   //});
   // END DEBUG TAB CONTROL
 
+  //Hide the preloader after everything finished loading and document is ready.
+  $('#loader-wrapper').hide();
+  
 });
 
 // START UTILITY FUNCTIONS

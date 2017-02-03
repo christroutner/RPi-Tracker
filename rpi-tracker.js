@@ -123,7 +123,7 @@ var listener = new gpsd.Listener({
 listener.connect(function() {  
   //Dev Note: This message gets displayed weather or not the device was actually able to connect to the GPS. I need a way to write out to the console
   //weather the GPS was successful or not.
-  console.log('Connected to GPS');
+  console.log('Connected to gpsd service.');
   app.locals.isTracking = true;
 });
 

@@ -685,7 +685,7 @@ $(document).ready(function() {
       //debugger;
       
       if(!data) {
-        console.error('Server returned false when calling /getLog!');
+        console.error('Server returned false when calling /getLog! Is PM2 running?');
         return;
       }
       

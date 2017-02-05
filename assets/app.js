@@ -579,7 +579,8 @@ $(document).ready(function() {
         var clientDate = new Date(dateStr);
         
         //Figure out if the sync has completed
-        if(serverDate.getUTCDate() >= clientDate.getUTCDate()) {
+        if(serverDate.getTime() >= clientDate.getTime()) {
+        //if(serverDate.getUTCDate() >= clientDate.getUTCDate()) {
           //if(serverDate.getUTCHours() >= clientDate.getUTCHours()) {
             
             syncState = 3;

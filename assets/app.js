@@ -579,8 +579,8 @@ $(document).ready(function() {
         var clientDate = new Date(dateStr);
         
         //Figure out if the sync has completed
-        if(serverDate.getUTCDate() == clientDate.getUTCDate()) {
-          if(serverDate.getUTCHours() == clientDate.getUTCHours()) {
+        if(serverDate.getUTCDate() >= clientDate.getUTCDate()) {
+          //if(serverDate.getUTCHours() >= clientDate.getUTCHours()) {
             
             syncState = 3;
             
@@ -600,7 +600,7 @@ $(document).ready(function() {
                 console.error('Error while trying to stop server sync!');
               }
             });
-          }
+          //}
         }
         
       }

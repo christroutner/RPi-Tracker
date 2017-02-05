@@ -575,7 +575,7 @@ $(document).ready(function() {
       //Do the same for the client string
       if(clientStringIndex.length > 0) {
         var tempStr = logArray[clientStringIndex[clientStringIndex.length-1]];
-        var dateStr = tempStr.slice(15,39);
+        var dateStr = tempStr.slice(15);
         var clientDate = new Date(dateStr);
         
         //Figure out if the sync has completed

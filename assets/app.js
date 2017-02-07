@@ -578,8 +578,10 @@ $(document).ready(function() {
         var dateStr = tempStr.slice(15);
         var clientDate = new Date(dateStr);
         
+        var min10 = 1000*60*10; //mS in 10 minutes.
+        
         //Figure out if the sync has completed
-        if(serverDate.getTime() >= clientDate.getTime()) {
+        if(serverDate.getTime() >= clientDate.getTime()-min10) {
         //if(serverDate.getUTCDate() >= clientDate.getUTCDate()) {
           //if(serverDate.getUTCHours() >= clientDate.getUTCHours()) {
             

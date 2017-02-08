@@ -197,9 +197,15 @@ var intervalHandle = setInterval(global.dataLog.logData, global.dataLog.timeout)
 
  /* BEGIN - SERVER INTERFACE FOR LOGGING TO SERVER */
 //Skip this code if the serverInterface is not even set up.
-//if(global.serverInterface != undefined) {
-//  global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
-//}
+if(global.serverInterface != undefined) {
+  //Sync only if RPi-Tracker is setup for WiFi client mode
+  if(serverSettings.wifiType == "2") {
+    if(serverSettings.syncOnBoot == "true") {
+      console.log('syncOnBoot flag set to true and WiFi type is set to Client. Starting sync with Crumb Share server.');
+      global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
+    }
+  }
+}
 /* END - SERVER INTERFACE FOR LOGGING TO SERVER */
 
 
@@ -233,7 +239,8 @@ if(serverSettings.internalPullupConfigured == "true") {
 }
 
 
-//Determine if previous settings need to be restored if the device has been rebooted several times with rebootConfirmationNeeded set to true.
+//Determine if previous settings need to be restored if the device has been rebooted several times 
+//with rebootConfirmationNeeded set to true.
 if(serverSettings.rebootConfirmationNeeded == "true") {
   global.wifiInterface.restoreCheck();
 }

@@ -248,27 +248,6 @@ $(document).ready(function() {
       if(serverSettings.syncOnBoot == "true") {
         //Check the checkbox in the UI
         $('#autosync').prop('checked', true);
-        
-        //If Wifi is mode is selected, start the sync.
-        if(serverSettings.wifiType == "2") {
-          //Start the synchonization.
-          $.get('/startSync', '', function(data) {})
-          .fail(function( jqxhr, textStatus, error ) {
-            debugger;
-
-            //This state indicates that the RPi has been disconnected.
-            if((textStatus == "error") && (error == "")) {
-              var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
-
-            //All other reasons for the failure:
-            } else {
-              var msg = "Could not sync with server because your browser could not communicate with the Raspberry Pi.\n"+
-                "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
-            }
-          });
-        }
-        
-        
       }
 
       //debugger;

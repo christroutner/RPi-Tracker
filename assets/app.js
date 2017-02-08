@@ -578,9 +578,12 @@ $(document).ready(function() {
         var dateStr = tempStr.slice(15);
         var clientDate = new Date(dateStr);
         
+        var min10 = 1000*60*10; //mS in 10 minutes.
+        
         //Figure out if the sync has completed
-        if(serverDate.getUTCDate() == clientDate.getUTCDate()) {
-          if(serverDate.getUTCHours() == clientDate.getUTCHours()) {
+        if(serverDate.getTime() >= clientDate.getTime()-min10) {
+        //if(serverDate.getUTCDate() >= clientDate.getUTCDate()) {
+          //if(serverDate.getUTCHours() >= clientDate.getUTCHours()) {
             
             syncState = 3;
             
@@ -600,7 +603,7 @@ $(document).ready(function() {
                 console.error('Error while trying to stop server sync!');
               }
             });
-          }
+          //}
         }
         
       }
@@ -685,7 +688,7 @@ $(document).ready(function() {
       //debugger;
       
       if(!data) {
-        console.error('Server returned false when calling /getLog!');
+        console.error('Server returned false when calling /getLog! Is PM2 running?');
         return;
       }
       

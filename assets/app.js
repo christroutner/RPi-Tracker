@@ -244,7 +244,7 @@ $(document).ready(function() {
       $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
       $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
       
-      debugger;
+      
       if(serverSettings.syncOnBoot == "true") {
         //Check the checkbox in the UI
         $('#autosync').prop('checked', true);
@@ -706,7 +706,7 @@ $(document).ready(function() {
   
   //Click handler for the 'sync on boot' checkbox.
   $('#autosync').click(function(event) {
-    debugger;
+    //debugger;
     
     if($('#autosync').prop('checked'))
       serverSettings.syncOnBoot = "true";

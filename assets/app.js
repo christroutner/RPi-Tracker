@@ -687,9 +687,9 @@ $(document).ready(function() {
     debugger;
     
     if($('#autosync').prop('checked'))
-      serverSettings.syncOnBoot == "true";
+      serverSettings.syncOnBoot = "true";
     else
-      serverSettings.syncOnBoot == "false";  
+      serverSettings.syncOnBoot = "false";  
   });
   // END SETTINGS TAB CONTROL
   

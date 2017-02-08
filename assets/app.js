@@ -676,6 +676,10 @@ $(document).ready(function() {
     
     alert('Device is being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
   });
+  
+  $('#autosync').click(function(event) {
+    debugger;
+  });
   // END SETTINGS TAB CONTROL
   
   

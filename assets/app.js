@@ -244,6 +244,7 @@ $(document).ready(function() {
       $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
       $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
       
+      debugger;
       if(serverSettings.syncOnBoot == "true") {
         $('#autosync').prop('checked', true);
       }
@@ -681,14 +682,14 @@ $(document).ready(function() {
     alert('Device is being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
   });
   
+  //Click handler for the 'sync on boot' checkbox.
   $('#autosync').click(function(event) {
     debugger;
     
     if($('#autosync').prop('checked'))
       serverSettings.syncOnBoot == "true";
     else
-      serverSettings.syncOnBoot == "false";
-    
+      serverSettings.syncOnBoot == "false";  
   });
   // END SETTINGS TAB CONTROL
   

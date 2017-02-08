@@ -1,12 +1,12 @@
 var serverData = { 
 
   webServer : {
-    'url': '107.170.227.211',
-    'port': 3000
+    'url': 'crumbshare.net',
+    'port': 80
   },
   
   dbServer : {
-    'url': '107.170.227.211',
-    'port': 3000
+    'url': 'crumbshare.net',
+    'port': 80
   }
 }

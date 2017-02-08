@@ -243,6 +243,10 @@ $(document).ready(function() {
       $('#userId').val(serverSettings.userId);
       $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
       $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
+      
+      if(serverSettings.syncOnBoot == "true") {
+        $('#autosync').prop('checked', true);
+      }
 
       //debugger;
     });
@@ -679,6 +683,12 @@ $(document).ready(function() {
   
   $('#autosync').click(function(event) {
     debugger;
+    
+    if($('#autosync').prop('checked'))
+      serverSettings.syncOnBoot == "true";
+    else
+      serverSettings.syncOnBoot == "false";
+    
   });
   // END SETTINGS TAB CONTROL
   

@@ -1,1 +1,1 @@
-dummyfile
+dummyfile. This file is here so that GitHub creates the assets/logfiles directory on clone. It won't create empty directories.

@@ -243,6 +243,12 @@ $(document).ready(function() {
       $('#userId').val(serverSettings.userId);
       $('#gpsDataLogTimeout').val(serverSettings.gpsDataLogTimeout);
       $('#gpsFileSaveTimeoutCnt').val(serverSettings.gpsFileSaveTimeoutCnt);
+      
+      
+      if(serverSettings.syncOnBoot == "true") {
+        //Check the checkbox in the UI
+        $('#autosync').prop('checked', true);
+      }
 
       //debugger;
     });
@@ -675,6 +681,16 @@ $(document).ready(function() {
     });
     
     alert('Device is being rebooted. Wait approximately 15-20 seconds before refreshing the browser.');
+  });
+  
+  //Click handler for the 'sync on boot' checkbox.
+  $('#autosync').click(function(event) {
+    //debugger;
+    
+    if($('#autosync').prop('checked'))
+      serverSettings.syncOnBoot = "true";
+    else
+      serverSettings.syncOnBoot = "false";  
   });
   // END SETTINGS TAB CONTROL
   

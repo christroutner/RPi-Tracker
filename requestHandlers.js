@@ -130,37 +130,54 @@ function saveSettings(request, response, next) {
 
 //This API executes the command line 'git pull' instruction and then reboots the device.
 function updateSoftware(request, response, next) {
-  //Execute 'git pull'
-  exec('git pull', function(err, stdout, stderr) {
+  
+  //Execute 'git stash' first, otherwise 'git pull' might error out.
+  exec('git stash', function(err, stdout, stderr) {
     debugger;
-
+    
     if (err) {
-      console.log('updateSoftware() had issues while executing "git pull". Child process exited with error code ' + err.code);
+      console.log('updateSoftware() had issues while executing "git stash". Child process exited with error code ' + err.code);
       console.log(err.message);
       response.send(false);
       return;
     }
     
     console.log(stdout);
-
-    response.send(true); //Send acknowledgement that git pull was successfully executed.
     
-    var options = {
-      cachePassword: true,
-      prompt: 'Password, yo? ',
-      spawnOptions: { }
-    }
-    
-    child = sudo([ '/sbin/reboot', 'now' ], options);
-    child.stdout.on('data', function (data) {
-      console.log(data.toString());      
-    });
-    child.stderr.on('data', function (data) {
-      console.log('updateSoftware() had issues while executing "reboot now". Error: '+data);
-      response.send(false);
-    });
+    //Execute 'git pull'
+    exec('git pull', function(err, stdout, stderr) {
+      debugger;
 
+      if (err) {
+        console.log('updateSoftware() had issues while executing "git pull". Child process exited with error code ' + err.code);
+        console.log(err.message);
+        response.send(false);
+        return;
+      }
+
+      console.log(stdout);
+
+      response.send(true); //Send acknowledgement that git pull was successfully executed.
+
+      var options = {
+        cachePassword: true,
+        prompt: 'Password, yo? ',
+        spawnOptions: { }
+      }
+
+      child = sudo([ '/sbin/reboot', 'now' ], options);
+      child.stdout.on('data', function (data) {
+        console.log(data.toString());      
+      });
+      child.stderr.on('data', function (data) {
+        console.log('updateSoftware() had issues while executing "reboot now". Error: '+data);
+        response.send(false);
+      });
+
+    });
+    
   });
+  
 }
 
 //This API reboots the device.

@@ -59,7 +59,10 @@ Installation step-by-step directions are as follows:
 
 11. Reboot the device and it should now run the RPi-Tracker software on boot up. Run the 
 command `ifconfig` to retrieve the devices IP address. Put that IP in your web browser 
-and you should see the RPi-Tracker User Interface (UI). Congratulations! Consider signing up for
+and you should see the RPi-Tracker User Interface (UI). Congratulations! 
+
+You device is fully functional as a stand-alone tracking device, but you'll be able to easily
+share your breadcrumb trails on the web if you signing up for
 a [Crumb Share](http://crumbshare.com) account.
 
 

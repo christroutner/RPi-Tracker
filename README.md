@@ -38,7 +38,7 @@ Installation step-by-step directions are as follows:
 5. Clone this repository
   * `git clone https://github.com/christroutner/RPi-Tracker`
   
-6. Change into the `RPi-Tracker` directory.
+6. Change into the `RPi-Tracker` directory. To save typing, it might help to rename the directory to `rpi-tracker`.
 
 7. Install the dependencies with this command:
   * `npm install`

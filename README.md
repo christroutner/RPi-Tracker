@@ -52,10 +52,10 @@ Installation step-by-step directions are as follows:
   * Press CTL-X to exit and answer 'y' to save the file.
 
 10. Install the PM2 package, which will run the rpi-tracker application on bootup. Enter the `RPi-Tracker` directory and execute these commands:
-  a. `sudo npm install -g pm2`
-  b. `pm2 start rpi-tracker.js`
-  c. `sudo env PATH=$PATH:/usr/local/bin pm2 startup systemd -u pi --hp /home/pi`
-  d. `pm2 save`
+  * `sudo npm install -g pm2`
+  * `pm2 start rpi-tracker.js`
+  * `sudo env PATH=$PATH:/usr/local/bin pm2 startup systemd -u pi --hp /home/pi`
+  * `pm2 save`
 
 11. Reboot the device and it should now run the RPi-Tracker software on boot up. Congratulations! Consider signing up for
 a [Crumb Share](http://crumbshare.com) account.

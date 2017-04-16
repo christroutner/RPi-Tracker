@@ -57,7 +57,9 @@ Installation step-by-step directions are as follows:
   * `sudo env PATH=$PATH:/usr/local/bin pm2 startup systemd -u pi --hp /home/pi`
   * `pm2 save`
 
-11. Reboot the device and it should now run the RPi-Tracker software on boot up. Congratulations! Consider signing up for
+11. Reboot the device and it should now run the RPi-Tracker software on boot up. Run the 
+command `ifconfig` to retrieve the devices IP address. Put that IP in your web browser 
+and you should see the RPi-Tracker User Interface (UI). Congratulations! Consider signing up for
 a [Crumb Share](http://crumbshare.com) account.
 
 

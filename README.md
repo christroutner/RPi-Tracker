@@ -62,7 +62,7 @@ command `ifconfig` to retrieve the devices IP address. Put that IP in your web b
 and you should see the RPi-Tracker User Interface (UI). Congratulations! 
 
 You device is fully functional as a stand-alone tracking device, but you'll be able to easily
-share your breadcrumb trails on the web if you signing up for
+share your breadcrumb trails on the web if you sign up for
 a [Crumb Share](http://crumbshare.com) account.
 
 

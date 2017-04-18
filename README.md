@@ -4,7 +4,7 @@ The RPi-tracker is a Node/Express.js application designed to run on the Raspberr
 It uses a BU-353 USB GPS to create a simple tracking device. GPS coordinates are logged to the devices 
 SD card. Data can be downloaded in GeoJSON, KML, or GPX format. The device can also sync with 
 [CrumbShare](http://crumbshare.net) for easy embedding into a blog or sharing via social media.
-See [the project page on RPiOVN.org](http://rpiovn.org/page/simple-tracking-device) for more details.
+See [the project page on RPiOVN.org](http://rpiovn.org/project/rpi-tracker) for more details.
 
 Additional documentation can be found in [this repositories Wiki](https://github.com/christroutner/RPi-Tracker/wiki).
 
@@ -27,7 +27,7 @@ that can be downloaded in the various formats.
 
 ## Installation
 In order to create an RPi-Tracking device, you'll need one piece of hardware in addition to the Raspberry Pi. That
-piece is a [BU-353 USB GPS](http://rpiovn.org/page/rpi-tracking-device).
+piece is a [BU-353 USB GPS](http://rpiovn.org/project/rpi-tracker).
 
 Installation step-by-step directions are as follows:
 

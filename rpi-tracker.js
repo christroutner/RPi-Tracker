@@ -46,8 +46,9 @@ global.appLogAPI = new AppLogAPI.Constructor();
 //Clear the PM2 log before starting anything else.
 //if(!global.appLogAPI.clearLog())
 //  console.log('Error trying to clear the PM2 log!');
-if(!global.appLogAPI.backupLog())
-  console.log('Error trying to backup PM2 logs!');
+//if(!global.appLogAPI.backupLog())
+//  console.log('Error trying to backup PM2 logs!');
+global.appLogAPI.backupLog();
 
 /*
  * Use Handlebars for templating

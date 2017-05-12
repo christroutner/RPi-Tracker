@@ -32,9 +32,9 @@ piece is a [BU-353 USB GPS](http://rpiovn.org/project/rpi-tracker).
 Installation step-by-step directions are as follows:
 
 1. Install Raspbian and the latest updates
-  1. Ensure your Raspberry Pi is running the latest version of Raspbian by following [these instructions](https://www.raspberrypi.org/learning/noobs-install/).
-  2. The rest of the installation instructions assume that you are using an RPi v3.
-  3. Before continuing, it's always a good idea to update your system to the latest versions of software by running the following commands to update the devices operating system. This will probably take a while. It's also a good idea to make a copy of your SD card after you're done, so that you don't have to do it again.
+  a. Ensure your Raspberry Pi is running the latest version of Raspbian by following [these instructions](https://www.raspberrypi.org/learning/noobs-install/).
+  b. The rest of the installation instructions assume that you are using an RPi v3.
+  c. Before continuing, it's always a good idea to update your system to the latest versions of software by running the following commands to update the devices operating system. This will probably take a while. It's also a good idea to make a copy of your SD card after you're done, so that you don't have to do it again.
     * `sudo apt-get update`
     * `sudo apt-get upgrade`
     
@@ -47,7 +47,7 @@ Installation step-by-step directions are as follows:
   * `sudo apt-get install -y nodejs`
 
 4. Create a symbolic link to replace the old version of node:
-  * `sudo ln -s `which nodejs` /usr/local/bin/node`
+  * `sudo ln -s /usr/bin/nodejs /usr/local/bin/node`
 
 5. Although not necessary to run the RPi-Tracker, it's a good idea to install node-inspector in case 
 you need to do any debugging down the road:

@@ -18,6 +18,12 @@
     "tokml": "0.x",
     "form-data": "2.x",
     "request": "2.x",
-    "onoff": "1.x"
+    "onoff": "1.x",
+    "express": "4.x",
+    "csv-parse": "1.x",
+    "elementtree": "0.x",
+    "rander": "0.x",
+    "ya-csv": "0.x",
+    "express3-handlebars": "0.x"
   }
 }

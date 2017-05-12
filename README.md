@@ -31,8 +31,7 @@ piece is a [BU-353 USB GPS](http://rpiovn.org/project/rpi-tracker).
 
 Installation step-by-step directions are as follows:
 
-1. Install Raspbian and the latest updates
-
+1. Install Raspbian and the latest updates:
   1. Ensure your Raspberry Pi is running the latest version of Raspbian by following [these instructions](https://www.raspberrypi.org/learning/noobs-install/).
   
   2. The rest of the installation instructions assume that you are using an RPi v3.

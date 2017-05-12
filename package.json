@@ -24,6 +24,7 @@
     "elementtree": "0.x",
     "rander": "0.x",
     "ya-csv": "0.x",
-    "express3-handlebars": "0.x"
+    "express3-handlebars": "0.x",
+    "ip": "1.x"
   }
 }

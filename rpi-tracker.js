@@ -20,6 +20,7 @@ var DataLog = require('./lib/data-log.js');
 var ServerInterface = require('./lib/server-interface.js');
 var WifiInterface = require('./lib/wifi.js');
 var AppLogAPI = require('./lib/appLogAPI.js');
+var Diagnostics = require('./lib/diagnostics.js');
 
 
 var app = express();
@@ -41,6 +42,7 @@ global.dataLog = new DataLog.Constructor();
 global.serverInterface = new ServerInterface.Constructor();
 global.wifiInterface = new WifiInterface.Constructor();
 global.appLogAPI = new AppLogAPI.Constructor();
+global.diagnostics = new Diagnostics();
 //dataLog.helloWorld();
 
 //Clear the PM2 log before starting anything else.

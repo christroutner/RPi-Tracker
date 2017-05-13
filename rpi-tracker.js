@@ -42,7 +42,7 @@ global.dataLog = new DataLog.Constructor();
 global.serverInterface = new ServerInterface.Constructor();
 global.wifiInterface = new WifiInterface.Constructor();
 global.appLogAPI = new AppLogAPI.Constructor();
-global.diagnostics = new Diagnostics();
+global.diagnostics = new Diagnostics.Constructor();
 //dataLog.helloWorld();
 
 //Clear the PM2 log before starting anything else.

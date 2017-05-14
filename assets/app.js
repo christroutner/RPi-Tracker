@@ -737,7 +737,7 @@ function wifiCheckboxHandler(eventHandler) {
   
   //Find the other checkbox that did not initiate the event.
   var otherCheckbox =':checkbox:not('+"#"+this.id+')'; //jQuery selector
-  otherCheckbox = $(otherCheckbox); //jQuery object
+  otherCheckbox = $('#wifiCheckboxes').find(otherCheckbox); //jQuery object
   
   //If both check boxes are true...
   if( (otherCheckbox.prop('checked') == true) && ($this.prop('checked') == true) ) {

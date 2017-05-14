@@ -258,7 +258,7 @@ console.log('Express started on port ' + port);
 // BEGIN GLOBAL UTILITY FUNCTIONS
 
 //Save the serverSettings variable to file.
-global.saveServerSettings(thisServerSettings) {
+global.saveServerSettings = function(thisServerSettings) {
   //Write out the server_settings.json file.
   fs.writeFile('./assets/server_settings.json', JSON.stringify(thisServerSettings, null, 4), function (err) {
     if(err) {

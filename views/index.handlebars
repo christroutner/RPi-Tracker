@@ -7,7 +7,7 @@
         <li class="active"><a href="#tab1" data-toggle="tab">Log Files</a></li>
         <li><a href="#tab2" data-toggle="tab">Settings</a></li>
         <li><a href="#tab3" data-toggle="tab">WiFi</a></li>
-        <li><a href="#tab4" data-toggle="tab">Debug</a></li>
+        <li><a href="#tab4" data-toggle="tab">Diagnostics</a></li>
       </ul>
 
       <div class="tab-content" >
@@ -308,6 +308,23 @@
         
         <!-- START Debug TAB -->
         <div class="tab-pane" id="tab4">
+          
+          <form class="form-horizontal">  
+            <div class="form-group">                        
+              <label for="localIp" class="col-xs-4 control-label">Local IP:</label>
+              <div class="col-xs-8">
+                <input type="text" class="form-control" name="localIp" id="localIp" placeholder="">
+              </div>
+            </div>
+            
+            <div class="form-group">                        
+              <label for="globalIp" class="col-xs-4 control-label">Global IP:</label>
+              <div class="col-xs-8">
+                <input type="text" class="form-control" name="globalIp" id="globalIp" placeholder="">
+              </div>
+            </div>
+          </form>
+          
           <div class="row">
             <div class="col-md-12">
               <p>This tab is refreshed every 10 seconds with the last 50 lines of the PM2 log. The newest entries will show up at the top.</p>

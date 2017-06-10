@@ -719,9 +719,18 @@ $(document).ready(function() {
     });
     
     //Get the latest IP data and update the DOM
-    $('#localIp').val(serverSettings.ipData.localIp);
-    $('#globalIp').val(serverSettings.ipData.globalIp);
-    $('#timestampIp').val(serverSettings.ipData.timestamp);
+    try {
+      if(serverSettings.ipData != undefined) {
+        $('#localIp').val(serverSettings.ipData.localIp);
+        $('#globalIp').val(serverSettings.ipData.globalIp);
+        $('#timestampIp').val(serverSettings.ipData.timestamp);    
+      }
+      
+    } catch(err) {
+      debugger;
+      console.error('Problem displaying IP addresses in UI: '+err.message);
+    }
+    
     
     
   };

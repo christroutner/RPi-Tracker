@@ -723,7 +723,9 @@ $(document).ready(function() {
       if(serverSettings.ipData != undefined) {
         $('#localIp').val(serverSettings.ipData.localIp);
         $('#globalIp').val(serverSettings.ipData.globalIp);
-        $('#timestampIp').val(serverSettings.ipData.timestamp);    
+        
+        var timestamp = new Date(serverSettings.ipData.timestamp);
+        $('#timestampIp').val(timestamp);    
       }
       
     } catch(err) {

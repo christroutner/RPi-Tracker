@@ -49,5 +49,10 @@
   "gpsDataLogTimeout": "30000",
   "gpsFileSaveTimeoutCnt": "4",
   "internalPullupConfigured": "false",
-  "syncOnBoot": "false"
+  "syncOnBoot": "false",
+  "ipData": {
+    "localIp": "",
+    "globalIp": "",
+    "timestamp": ""
+  }
 }

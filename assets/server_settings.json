@@ -44,7 +44,7 @@
   "wifiType": "2",
   "rebootCnt": "0",
   "userId": "581f3a9c73f0411014b0f900",
-  "trackerServerIp": "server.crumbshare.net",
+  "trackerServerIp": "104.236.184.95",
   "trackerServerPort": "80",
   "gpsDataLogTimeout": "30000",
   "gpsFileSaveTimeoutCnt": "4",

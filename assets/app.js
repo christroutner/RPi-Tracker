@@ -720,6 +720,10 @@ $(document).ready(function() {
     
     //Get the latest IP data and update the DOM
     try {
+      
+      //Read the server_settings.js file and refresh the values.
+      getServerSettings();
+      
       if(serverSettings.ipData != undefined) {
         $('#localIp').val(serverSettings.ipData.localIp);
         $('#globalIp').val(serverSettings.ipData.globalIp);

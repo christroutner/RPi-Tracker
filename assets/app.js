@@ -728,7 +728,7 @@ $(document).ready(function() {
         $('#globalIp').val(serverSettings.ipData.globalIp);
         
         var timestamp = new Date(serverSettings.ipData.timestamp);
-        $('#timestampIp').val(timestamp);    
+        $('#timestampIp').val(timestamp.toLocaleString());    
       }
       
     } catch(err) {

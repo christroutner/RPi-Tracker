@@ -696,8 +696,6 @@ $(document).ready(function() {
   
   
   // START DEBUG TAB CONTROL
-  //$('#testLog').click(function() {
-  
   
   function getDebugLog() {
     $.get('/getLog', '', function(data) {
@@ -717,6 +715,7 @@ $(document).ready(function() {
       }
       
     });
+    
     
     //Get the latest IP data and update the DOM
     try {
@@ -742,7 +741,16 @@ $(document).ready(function() {
   };
   getDebugLog();
   debugIntervalHandle = setInterval(getDebugLog, 10000);
-  //});
+  
+  //Change a change event handler that fires any time the Reverse SSH checkbox is interacted with.
+  $('#reverseSsh').change(function(event) {
+    //debugger;
+    
+    var val = $('#reverseSsh').prop('checked');
+    
+    console.log('Reverse SSH checkbox value: '+val);
+  });
+  
   // END DEBUG TAB CONTROL
 
   //Hide the preloader after everything finished loading and document is ready.

@@ -6,6 +6,7 @@ var syncIntervalHandle; //Interveral Handle used for syncing client to server.
 var syncState = 0; //0 = not syncing, 1 = syncing in progress, 2 = syncing complete.
 
 var debugIntervalHandle //Interval Handle used for getting debug log from client.
+var cliLoaded = false; //Flag used for loading the command line interface.
 
 $(document).ready(function() {
   //debugger;
@@ -723,12 +724,21 @@ $(document).ready(function() {
       //Read the server_settings.js file and refresh the values.
       getServerSettings();
       
+      //Update the serverSettings if it's been loaded.
       if(serverSettings.ipData != undefined) {
         $('#localIp').val(serverSettings.ipData.localIp);
         $('#globalIp').val(serverSettings.ipData.globalIp);
         
         var timestamp = new Date(serverSettings.ipData.timestamp);
-        $('#timestampIp').val(timestamp.toLocaleString());    
+        $('#timestampIp').val(timestamp.toLocaleString());   
+        
+        //Load the CLI iframe. Uses the cliLoaded flag so that it only runs once.
+        if(!cliLoaded) {
+          if((serverSettings.ipData.localIp != undefined) && (serverSettings.ipData.localIp != "")) {
+            cliLoaded = true;
+            $('#commandLine').attr('src', 'http://'+serverSettings.ipData.localIp+':3002/');
+          }
+        }
       }
       
     } catch(err) {

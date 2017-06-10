@@ -717,6 +717,13 @@ $(document).ready(function() {
       }
       
     });
+    
+    //Get the latest IP data and update the DOM
+    $('#localIp').val(serverSettings.ipData.localIp);
+    $('#globalIp').val(serverSettings.ipData.globalIp);
+    $('#timestampIp').val(serverSettings.ipData.timestamp);
+    
+    
   };
   getDebugLog();
   debugIntervalHandle = setInterval(getDebugLog, 10000);

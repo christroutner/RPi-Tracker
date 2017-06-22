@@ -45,12 +45,18 @@ global.appLogAPI = new AppLogAPI.Constructor();
 global.diagnostics = new Diagnostics.Constructor();
 //dataLog.helloWorld();
 
-//Clear the PM2 log before starting anything else.
-//if(!global.appLogAPI.clearLog())
-//  console.log('Error trying to clear the PM2 log!');
-//if(!global.appLogAPI.backupLog())
-//  console.log('Error trying to backup PM2 logs!');
-global.appLogAPI.backupLog();
+
+//Backup the PM2 log if the device is configured for it.
+try {
+  if(serverSettings.backupPm2Log == "true") {
+    global.appLogAPI.backupLog();
+  } else {
+    console.log('Leaving PM2 logs alone because backupPm2Log set to false');
+  }
+  
+} catch(err) {
+  console.error('Problem trying to read backupPm2Log setting. Err: ',err);
+}
 
 /*
  * Use Handlebars for templating

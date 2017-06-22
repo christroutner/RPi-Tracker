@@ -252,6 +252,11 @@ $(document).ready(function() {
         //Check the checkbox in the UI
         $('#autosync').prop('checked', true);
       }
+      
+      //Initialize the 'save log files' checkbox on the Diagnostics tab. By default it is checked.
+      if(serverSettings.backupPm2Log == "false") {
+        $('#saveLogs').prop('checked', false);
+      }
 
       //debugger;
     });
@@ -702,11 +707,6 @@ $(document).ready(function() {
   
   
   // START DEBUG TAB CONTROL
-  //Initialize the 'save log files' checkbox. By default it is checked.
-  if(serverSettings.backupPm2Log == "false") {
-    $('#saveLogs').prop('checked', false);
-  }
-  
   
   function getDebugLog() {
     $.get('/getLog', '', function(data) {

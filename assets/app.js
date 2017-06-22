@@ -773,6 +773,16 @@ $(document).ready(function() {
     var val = $('#saveLogs').prop('checked');
     
     console.log('Save Log Files checkbox value: '+val);
+    
+    //Reflect the value of the checkbox in the server settings file.
+    if(val) {
+      serverSettings.backupPm2Log = "true";
+    } else {
+      serverSettings.backupPm2Log = "false";
+    }
+    
+    //Save the settings
+    saveServerSettings();
   });
   
   // END DEBUG TAB CONTROL
@@ -869,6 +879,41 @@ function updateClientSettings() {
     serverSettings.wifiClientSettings.push(newEntry);
   }
 }
+
+function saveServerSettings() {
+  debugger;
+  
+  //Send the updated serverSettings to the server to update the server_settings.json file.
+  $.get('/saveSettings', serverSettings, function(data) {
+    //debugger;
+    if(data == true) {
+      console.log('server_settings.json updated.');
+
+    } else {
+      console.error('server_settings.json changes rejected by server!');
+    }      
+  })
+  .fail(function( jqxhr, textStatus, error ) {
+    debugger;
+
+    //This state indicates that the RPi has been disconnected.
+    if((textStatus == "error") && (error == "")) {
+      var msg = "Could not save settings because the browser could not communicate with the Raspberry Pi.";
+
+    //All other reasons for the failure:
+    } else {
+      var msg = "Could not save settings because your browser could not communicate with the Raspberry Pi.\n"+
+        "Request failed because of: "+error+'. Error Message: '+jqxhr.responseText;
+    }
+
+    //Hide the spinny waiting gif.
+    $('#waitingGif').hide();
+    //Replace the image with a complete message.
+    $('#waitingGif').parent().prepend('<h2><center><b>Could not save settings!</b></center></h2><br><p>'+msg+'</p>');
+
+  });
+}
+
 // END UTILITY FUNCTIONS
 
 

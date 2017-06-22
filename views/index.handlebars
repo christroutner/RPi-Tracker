@@ -332,7 +332,7 @@
             </div>
             
             <div class="form-group">
-              <div class="col-xs-offset-3 col-xs-9">
+              <div class="col-sm-offset-3 col-xs-9 col-xs-12">
                 <input type="checkbox" name="reverseSsh" id="reverseSsh" value="reverseSsh">
                 <label class="checkbox inline" for="reverseSsh"><span></span>Enable Reverse SSH</label>
                 
@@ -340,6 +340,18 @@
                   Enabling Reverse SSH will allow a technician to connect directly to your device in order
                   to update software and do any repairs. This box should be unchecked unless you have specifically
                   been asked to turn it on by CrumbShare staff.
+                </p>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9 col-xs-12">
+                <input type="checkbox" name="saveLogs" id="saveLogs" value="saveLogs" checked>
+                <label class="checkbox inline" for="saveLogs"><span></span>Save Log Files</label>                
+                <p>
+                  Saving log files makes it possible for a technician to debug issues on your device.
+                  However, log files take up hard drive space. This should be checked unless hard drive
+                  space is an issue.
                 </p>
               </div>
             </div>

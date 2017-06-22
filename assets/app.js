@@ -702,6 +702,11 @@ $(document).ready(function() {
   
   
   // START DEBUG TAB CONTROL
+  //Initialize the 'save log files' checkbox. By default it is checked.
+  if(serverSettings.backupPm2Log == "false") {
+    $('#saveLogs').prop('checked', false);
+  }
+  
   
   function getDebugLog() {
     $.get('/getLog', '', function(data) {

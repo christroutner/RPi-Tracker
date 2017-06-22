@@ -757,13 +757,22 @@ $(document).ready(function() {
   getDebugLog();
   debugIntervalHandle = setInterval(getDebugLog, 10000);
   
-  //Change a change event handler that fires any time the Reverse SSH checkbox is interacted with.
+  //A change event handler that fires any time the Reverse SSH checkbox is interacted with.
   $('#reverseSsh').change(function(event) {
     //debugger;
     
     var val = $('#reverseSsh').prop('checked');
     
     console.log('Reverse SSH checkbox value: '+val);
+  });
+  
+  //Achange event handler that fires any time the Save Log Files checkbox is interacted with.
+  $('#saveLogs').change(function(event) {
+    debugger;
+    
+    var val = $('#reverseSsh').prop('checked');
+    
+    console.log('Save Log Files checkbox value: '+val);
   });
   
   // END DEBUG TAB CONTROL

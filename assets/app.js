@@ -770,7 +770,7 @@ $(document).ready(function() {
   $('#saveLogs').change(function(event) {
     debugger;
     
-    var val = $('#reverseSsh').prop('checked');
+    var val = $('#saveLogs').prop('checked');
     
     console.log('Save Log Files checkbox value: '+val);
   });

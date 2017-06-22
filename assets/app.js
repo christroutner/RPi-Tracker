@@ -8,6 +8,8 @@ var syncState = 0; //0 = not syncing, 1 = syncing in progress, 2 = syncing compl
 var debugIntervalHandle //Interval Handle used for getting debug log from client.
 var cliLoaded = false; //Flag used for loading the command line interface.
 
+var syncIsDone = false; //Flag used to signal when the sync has completed.
+
 $(document).ready(function() {
   //debugger;
 
@@ -592,6 +594,9 @@ $(document).ready(function() {
         //if(serverDate.getUTCDate() >= clientDate.getUTCDate()) {
           //if(serverDate.getUTCHours() >= clientDate.getUTCHours()) {
             
+          if(!syncIsDone) {
+          
+            syncIsDone = true;
             syncState = 3;
             
             //Stop the synchronization
@@ -610,7 +615,7 @@ $(document).ready(function() {
                 console.error('Error while trying to stop server sync!');
               }
             });
-          //}
+          }
         }
         
       }

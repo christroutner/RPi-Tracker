@@ -221,6 +221,9 @@ if(global.serverInterface != undefined) {
     if(serverSettings.syncOnBoot == "true") {
       console.log('syncOnBoot flag set to true and WiFi type is set to Client. Starting sync with Crumb Share server.');
       global.serverInterface.intervalHandle = setInterval(global.serverInterface.updateServer, global.serverInterface.timeout);
+      
+      //Also start uploading the IP address
+      global.diagnostics.startIpSync();
     }
   }
 }

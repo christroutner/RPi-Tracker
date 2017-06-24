@@ -163,6 +163,14 @@ var getGPSTimeStamp = setInterval(function() {
     
     console.log('Time stamp retrieved from GPS: '+timeStamp+'. Opening log files.')
     
+    //Error Handling
+    if((global.gpsInterface.coordinateBuffer[0][0] == null) || (global.gpsInterface.coordinateBuffer[0][1] == null)) {
+      console.log('GPS values are still null... waiting for more data.');
+      return;
+    } else {
+      console.log('GPS values are good. Beging data logging.');
+    }
+      
     //Generate a file name based on the current date.
     //Dev Note: The RPi date/time can't be trusted. I should update this data with data from the GPS.
     global.dataLog.fileNameGeoJSONPoint = timeStamp.getFullYear()+'-'+('00'+(timeStamp.getUTCMonth()+1)).slice(-2)+'-'+('00'+(timeStamp.getUTCDate())).slice(-2)+'-PT'+'.json';

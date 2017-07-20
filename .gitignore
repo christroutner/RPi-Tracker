@@ -5,4 +5,3 @@ assets/logfiles/*.json
 assets/logfiles/*.kml
 assets/*.json
 wifi_AP/rpi3/wifi_client/wpa_supplicant.conf
-assets/server_settings.json

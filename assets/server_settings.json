@@ -55,5 +55,5 @@
     "globalIp": "",
     "timestamp": ""
   },
-  "backupPm2Log": "true"
+  "backupPm2Log": "false"
 }
